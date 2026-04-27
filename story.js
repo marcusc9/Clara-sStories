@@ -8,6 +8,12 @@ function storyHtml(item) {
     ? `<figure class="reader-image"><img src="${item.image}" alt="${item.imageAlt}" /></figure>`
     : "";
   const story = item.story.map((paragraph) => `<p>${paragraph}</p>`).join("");
+  const tags = (item.tags ?? [item.theme])
+    .map(
+      (tag) =>
+        `<a class="tag-pill" href="./index.html#stories" data-story-tag="${tag.toLowerCase()}">${tag}</a>`
+    )
+    .join("");
 
   return `
     <a class="back-link" href="./index.html#stories">Back to stories</a>
@@ -34,6 +40,10 @@ function storyHtml(item) {
           <div><dt>Book</dt><dd><cite>${item.book}</cite></dd></div>
           <div><dt>Chapter</dt><dd>${item.chapter}</dd></div>
         </dl>
+        <div class="tag-panel">
+          <p class="kicker">Story tags</p>
+          <div class="tag-list">${tags}</div>
+        </div>
         <a class="button primary" href="${item.source}" target="_blank" rel="noopener noreferrer">Open original</a>
       </aside>
     </section>
