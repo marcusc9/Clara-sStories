@@ -1,15 +1,30 @@
 const stories = window.ClaraStories ?? [];
 const grid = document.querySelector("[data-story-grid]");
-const filters = Array.from(document.querySelectorAll("[data-filter]"));
+const filterList = document.querySelector("[data-story-filters]");
 const header = document.querySelector("[data-header]");
 const hero = document.querySelector(".hero");
 const searchInput = document.querySelector("[data-story-search]");
 const storyCount = document.querySelector("[data-story-count]");
+const bahaiDate = document.querySelector("[data-bahai-date]");
 
 let activeFilter = "all";
+let lastScroll = 0;
+let ticking = false;
 
 function normalise(value) {
   return String(value ?? "").toLowerCase();
+}
+
+const bahaiDateOverride = "18 Jalál, 183 BE";
+
+function getBahaiDateLabel(date = new Date()) {
+  return bahaiDateOverride;
+}
+
+function applyBahaiDate() {
+  if (bahaiDate) {
+    bahaiDate.textContent = getBahaiDateLabel();
+  }
 }
 
 function renderStories() {
@@ -38,6 +53,26 @@ function renderStories() {
           <span class="story-link">Open story</span>
         </a>
       `;
+    })
+    .join("");
+}
+
+function formatTheme(value) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function renderFilters() {
+  if (!filterList) {
+    return;
+  }
+
+  const themes = ["all", ...new Set(stories.map((story) => story.theme))];
+
+  filterList.innerHTML = themes
+    .map((theme) => {
+      const activeClass = theme === activeFilter ? " is-active" : "";
+      const label = theme === "all" ? "All" : formatTheme(theme);
+      return `<button class="filter${activeClass}" type="button" data-filter="${theme}">${label}</button>`;
     })
     .join("");
 }
@@ -80,30 +115,42 @@ function observeReveals() {
   revealTargets.forEach((target) => revealObserver.observe(target));
 }
 
-filters.forEach((filter) => {
-  filter.addEventListener("click", () => {
+filterList?.addEventListener("click", (event) => {
+  const filter = event.target.closest("[data-filter]");
+
+  if (filter) {
     activeFilter = filter.dataset.filter ?? "all";
 
-    filters.forEach((item) => item.classList.toggle("is-active", item === filter));
+    Array.from(document.querySelectorAll("[data-filter]")).forEach((item) =>
+      item.classList.toggle("is-active", item === filter)
+    );
     updateStories();
-  });
+  }
 });
 
 searchInput?.addEventListener("input", updateStories);
 
-let lastScroll = 0;
-
 window.addEventListener(
   "scroll",
   () => {
-    const currentScroll = window.scrollY;
-    header?.classList.toggle("is-compact", currentScroll > 80 && currentScroll > lastScroll);
-    hero?.style.setProperty("--hero-shift", `${Math.min(currentScroll, 360)}px`);
-    lastScroll = currentScroll;
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const currentScroll = window.scrollY;
+        const scrollingDown = currentScroll > lastScroll;
+
+        header?.classList.toggle("is-hidden", scrollingDown && currentScroll > 120);
+        hero?.style.setProperty("--hero-shift", `${Math.min(currentScroll, 360)}px`);
+        lastScroll = Math.max(currentScroll, 0);
+        ticking = false;
+      });
+      ticking = true;
+    }
   },
   { passive: true }
 );
 
 renderStories();
+renderFilters();
 observeReveals();
+applyBahaiDate();
 updateStories();
