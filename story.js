@@ -1,5 +1,6 @@
 const stories = window.ClaraStories ?? [];
 const page = document.querySelector("[data-story-page]");
+const header = document.querySelector("[data-header]");
 const params = new URLSearchParams(window.location.search);
 const story = stories.find((item) => item.id === params.get("id")) ?? stories[0];
 
@@ -54,3 +55,31 @@ if (page && story) {
   document.title = `${story.title} | Clara's Stories`;
   page.innerHTML = storyHtml(story);
 }
+
+let lastScroll = 0;
+let ticking = false;
+
+window.addEventListener(
+  "scroll",
+  () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const currentScroll = window.scrollY;
+        const scrollDelta = currentScroll - lastScroll;
+
+        if (currentScroll < 80) {
+          header?.classList.remove("is-hidden");
+        } else if (scrollDelta > 8) {
+          header?.classList.add("is-hidden");
+        } else if (scrollDelta < -8) {
+          header?.classList.remove("is-hidden");
+        }
+
+        lastScroll = Math.max(currentScroll, 0);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  },
+  { passive: true }
+);

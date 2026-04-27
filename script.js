@@ -15,10 +15,106 @@ function normalise(value) {
   return String(value ?? "").toLowerCase();
 }
 
-const bahaiDateOverride = "18 Jalál, 183 BE";
+const bahaiMonths183 = [
+  { name: "Bahá", starts: "2026-03-21" },
+  { name: "Jalál", starts: "2026-04-09" },
+  { name: "Jamál", starts: "2026-04-28" },
+  { name: "‘Aẓamat", starts: "2026-05-17" },
+  { name: "Núr", starts: "2026-06-05" },
+  { name: "Raḥmat", starts: "2026-06-24" },
+  { name: "Kalimát", starts: "2026-07-13" },
+  { name: "Kamál", starts: "2026-08-01" },
+  { name: "Asmá’", starts: "2026-08-20" },
+  { name: "‘Izzat", starts: "2026-09-08" },
+  { name: "Mashíyyat", starts: "2026-09-27" },
+  { name: "‘Ilm", starts: "2026-10-16" },
+  { name: "Qudrat", starts: "2026-11-04" },
+  { name: "Qawl", starts: "2026-11-23" },
+  { name: "Masá’il", starts: "2026-12-12" },
+  { name: "Sharaf", starts: "2026-12-31" },
+  { name: "Sulṭán", starts: "2027-01-19" },
+  { name: "Mulk", starts: "2027-02-07" },
+  { name: "Ayyám-i-Há", starts: "2027-02-26", days: 4 },
+  { name: "‘Alá’", starts: "2027-03-02" }
+];
+
+const dayMs = 24 * 60 * 60 * 1000;
+
+function localDateKey(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function dateFromKey(key) {
+  const [year, month, day] = key.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day));
+}
+
+function addDays(date, days) {
+  const nextDate = new Date(date);
+  nextDate.setDate(nextDate.getDate() + days);
+  return nextDate;
+}
+
+function localSunset(date) {
+  const londonLatitude = 51.5072;
+  const londonLongitude = -0.1276;
+  const zenith = 90.833;
+  const start = new Date(date.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((date - start) / dayMs);
+  const longitudeHour = londonLongitude / 15;
+  const approximateTime = dayOfYear + (18 - longitudeHour) / 24;
+  const meanAnomaly = 0.9856 * approximateTime - 3.289;
+  const trueLongitude =
+    meanAnomaly +
+    1.916 * Math.sin((Math.PI / 180) * meanAnomaly) +
+    0.02 * Math.sin((Math.PI / 180) * 2 * meanAnomaly) +
+    282.634;
+  const normalizedLongitude = (trueLongitude + 360) % 360;
+  let rightAscension =
+    (180 / Math.PI) *
+    Math.atan(0.91764 * Math.tan((Math.PI / 180) * normalizedLongitude));
+  rightAscension = (rightAscension + 360) % 360;
+  rightAscension +=
+    Math.floor(normalizedLongitude / 90) * 90 - Math.floor(rightAscension / 90) * 90;
+  rightAscension /= 15;
+
+  const sinDeclination = 0.39782 * Math.sin((Math.PI / 180) * normalizedLongitude);
+  const cosDeclination = Math.cos(Math.asin(sinDeclination));
+  const cosHour =
+    (Math.cos((Math.PI / 180) * zenith) -
+      sinDeclination * Math.sin((Math.PI / 180) * londonLatitude)) /
+    (cosDeclination * Math.cos((Math.PI / 180) * londonLatitude));
+
+  if (cosHour < -1 || cosHour > 1) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 18, 0);
+  }
+
+  const hourAngle = (180 / Math.PI) * Math.acos(cosHour);
+  const localMeanTime = hourAngle / 15 + rightAscension - 0.06571 * approximateTime - 6.622;
+  const utcHour = (localMeanTime - longitudeHour + 24) % 24;
+  const localSunsetDate = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0)
+  );
+  localSunsetDate.setUTCMinutes(Math.round(utcHour * 60));
+  return localSunsetDate;
+}
 
 function getBahaiDateLabel(date = new Date()) {
-  return bahaiDateOverride;
+  const bahaiDay = date >= localSunset(date) ? addDays(date, 1) : date;
+  const bahaiKey = localDateKey(bahaiDay);
+  let month = bahaiMonths183[0];
+
+  bahaiMonths183.forEach((candidate) => {
+    if (candidate.starts <= bahaiKey) {
+      month = candidate;
+    }
+  });
+
+  const day = Math.floor((dateFromKey(bahaiKey) - dateFromKey(month.starts)) / dayMs) + 1;
+  return `${day} ${month.name}, 183 BE`;
 }
 
 function applyBahaiDate() {
@@ -136,9 +232,16 @@ window.addEventListener(
     if (!ticking) {
       window.requestAnimationFrame(() => {
         const currentScroll = window.scrollY;
-        const scrollingDown = currentScroll > lastScroll;
+        const scrollDelta = currentScroll - lastScroll;
 
-        header?.classList.toggle("is-hidden", scrollingDown && currentScroll > 120);
+        if (currentScroll < 80) {
+          header?.classList.remove("is-hidden");
+        } else if (scrollDelta > 8) {
+          header?.classList.add("is-hidden");
+        } else if (scrollDelta < -8) {
+          header?.classList.remove("is-hidden");
+        }
+
         hero?.style.setProperty("--hero-shift", `${Math.min(currentScroll, 360)}px`);
         lastScroll = Math.max(currentScroll, 0);
         ticking = false;
