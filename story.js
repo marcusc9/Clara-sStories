@@ -7,13 +7,13 @@ function storyHtml(item) {
   const image = item.image
     ? `<figure class="reader-image"><img src="${item.image}" alt="${item.imageAlt}" /></figure>`
     : "";
-  const notes = item.reflection.map((paragraph) => `<p>${paragraph}</p>`).join("");
+  const story = item.story.map((paragraph) => `<p>${paragraph}</p>`).join("");
 
   return `
     <a class="back-link" href="./index.html#stories">Back to stories</a>
     <section class="reader-hero">
       <div>
-        <p class="kicker">${item.theme}</p>
+        <p class="kicker">${item.theme} · ${item.readTime}</p>
         <h1>${item.title}</h1>
         <p class="reader-summary">${item.summary}</p>
       </div>
@@ -21,11 +21,11 @@ function storyHtml(item) {
     </section>
     <section class="reader-layout">
       <article class="reader-card">
-        <p class="kicker">Quoted passage</p>
-        <blockquote>“${item.quote}”</blockquote>
+        <p class="kicker">Story</p>
         <div class="reader-note">
-          ${notes}
+          ${story}
         </div>
+        <blockquote class="reader-pullquote">“${item.quote}”</blockquote>
       </article>
       <aside class="source-card">
         <p class="kicker">Source</p>

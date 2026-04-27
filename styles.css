@@ -161,8 +161,7 @@ main,
 
 .hero-copy,
 .hero-image,
-.story-card,
-.journal article {
+.story-card {
   border: 1px solid rgba(255, 255, 255, 0.78);
   box-shadow: var(--shadow);
 }
@@ -208,8 +207,7 @@ h3 {
 }
 
 .hero-copy p:not(.kicker),
-.story-card p,
-.journal p {
+.story-card p {
   color: var(--muted);
   line-height: 1.65;
 }
@@ -261,8 +259,7 @@ h3 {
   object-fit: cover;
 }
 
-.story-stage,
-.journal {
+.story-stage {
   margin-top: 78px;
 }
 
@@ -405,39 +402,6 @@ blockquote {
   text-decoration: none;
 }
 
-.journal {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.journal article {
-  min-height: 230px;
-  padding: 22px;
-  border-radius: 8px;
-  background: rgba(169, 204, 227, 0.7);
-}
-
-.journal article:nth-child(2) {
-  background: rgba(244, 217, 130, 0.72);
-}
-
-.journal article:nth-child(3) {
-  background: rgba(240, 163, 154, 0.7);
-}
-
-.journal span {
-  display: block;
-  margin-bottom: 40px;
-  font-weight: 800;
-}
-
-.journal p {
-  margin-bottom: 0;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
 .story-page {
   padding-top: 42px;
 }
@@ -499,22 +463,27 @@ blockquote {
 }
 
 .reader-card blockquote {
-  max-width: 13ch;
-  font-size: clamp(2.45rem, 6vw, 5.8rem);
+  max-width: 20ch;
+  font-size: clamp(1.8rem, 3.3vw, 3.25rem);
 }
 
 .reader-note {
   display: grid;
-  gap: 16px;
-  max-width: 68ch;
-  margin-top: 32px;
+  gap: 18px;
+  max-width: 72ch;
+  margin-top: 0;
 }
 
 .reader-note p {
   margin: 0;
-  color: var(--muted);
-  font-size: 1.08rem;
+  color: var(--ink);
+  font-size: clamp(1.03rem, 1.25vw, 1.18rem);
   line-height: 1.8;
+}
+
+.reader-pullquote {
+  margin-top: 34px;
+  color: var(--muted);
 }
 
 .source-card dl {
@@ -582,7 +551,6 @@ blockquote {
   .site-header,
   .hero,
   .section-heading,
-  .journal,
   .library-tools {
     grid-template-columns: 1fr;
   }
