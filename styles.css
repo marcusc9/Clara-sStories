@@ -9,6 +9,9 @@
   --clay: #bc6c4f;
   --line: rgba(21, 33, 43, 0.14);
   --shadow: 0 24px 70px rgba(56, 45, 32, 0.12);
+  --font-ui: Inter, "Segoe UI", system-ui, sans-serif;
+  --font-serif: "EB Garamond", "Adobe Garamond Pro", Garamond, Georgia, serif;
+  --font-technical: "DM Serif Display", Georgia, serif;
 }
 
 * {
@@ -22,7 +25,7 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-ui);
   font-synthesis: none;
   background:
     linear-gradient(90deg, rgba(21, 33, 43, 0.045) 1px, transparent 1px),
@@ -96,7 +99,7 @@ main,
   border-radius: 16px;
   background: #13212a;
   color: var(--paper);
-  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-ui);
   font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: 0;
@@ -108,10 +111,30 @@ main,
   position: absolute;
   right: 9px;
   bottom: 9px;
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 0;
   background: var(--lemon);
+  clip-path: polygon(
+    50% 0%,
+    57.52% 29.33%,
+    82.14% 11.7%,
+    69.05% 39%,
+    99.24% 41.32%,
+    71.67% 53.82%,
+    93.3% 75%,
+    64.14% 66.85%,
+    67.1% 96.98%,
+    50% 72%,
+    32.9% 96.98%,
+    35.86% 66.85%,
+    6.7% 75%,
+    28.33% 53.82%,
+    0.76% 41.32%,
+    30.95% 39%,
+    17.86% 11.7%,
+    42.48% 29.33%
+  );
 }
 
 .brand strong,
@@ -120,7 +143,7 @@ main,
 }
 
 .brand strong {
-  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-ui);
   font-weight: 800;
   letter-spacing: -0.01em;
 }
@@ -131,8 +154,9 @@ main,
 .footer,
 .story-link,
 .back-link {
+  font-family: var(--font-technical);
   font-size: 0.76rem;
-  font-weight: 800;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -140,7 +164,6 @@ main,
 .brand small {
   margin-top: 2px;
   color: var(--muted);
-  font-family: Inter, "Segoe UI", system-ui, sans-serif;
   font-size: 0.69rem;
   letter-spacing: 0.07em;
   white-space: normal;
@@ -162,7 +185,7 @@ main,
   display: grid;
   place-items: center;
   padding: 0 16px;
-  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.92rem;
   font-weight: 800;
 }
@@ -208,9 +231,9 @@ h2,
 h3,
 blockquote {
   margin: 0;
-  font-family: "DM Serif Display", "Iowan Old Style", Georgia, serif;
-  font-weight: 400;
-  line-height: 0.98;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 0.96;
   letter-spacing: 0;
 }
 
@@ -222,6 +245,10 @@ h1 {
 h2 {
   max-width: 13ch;
   font-size: clamp(2.55rem, 5.3vw, 5rem);
+}
+
+h2 span {
+  color: var(--clay);
 }
 
 h3 {
@@ -251,6 +278,7 @@ h3 {
   place-items: center;
   padding: 0 18px;
   border: 1px solid var(--ink);
+  font-family: var(--font-ui);
   font-weight: 800;
 }
 
@@ -281,6 +309,11 @@ h3 {
   object-fit: cover;
 }
 
+.hero-image img {
+  opacity: 0;
+  animation: image-fade-in 900ms ease 120ms forwards;
+}
+
 .story-stage {
   margin-top: 78px;
 }
@@ -309,8 +342,9 @@ h3 {
 .search-field span,
 .library-count {
   color: var(--muted);
+  font-family: var(--font-technical);
   font-size: 0.76rem;
-  font-weight: 800;
+  font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -348,7 +382,8 @@ h3 {
   background: rgba(255, 250, 240, 0.64);
   color: var(--ink);
   cursor: pointer;
-  font-weight: 800;
+  font-family: var(--font-technical);
+  font-weight: 400;
 }
 
 .filter.is-active {
@@ -499,8 +534,10 @@ blockquote {
 .reader-note p {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(1.03rem, 1.25vw, 1.18rem);
-  line-height: 1.8;
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 1.45vw, 1.36rem);
+  font-weight: 500;
+  line-height: 1.68;
 }
 
 .reader-pullquote {
@@ -521,8 +558,9 @@ blockquote {
 
 .source-card dt {
   color: var(--muted);
+  font-family: var(--font-technical);
   font-size: 0.76rem;
-  font-weight: 800;
+  font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -534,38 +572,46 @@ blockquote {
 }
 
 .tag-panel {
+  display: block;
   margin-bottom: 26px;
 }
 
-.tag-list {
+.source-card .tag-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 10px;
+  gap: 9px;
+  margin-top: 11px;
 }
 
 .tag-pill {
   display: inline-flex;
-  min-height: 28px;
+  min-height: 24px;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(21, 33, 43, 0.1);
+  border: 1px solid rgba(21, 33, 43, 0.08);
   border-radius: 999px;
-  padding: 0 10px;
-  background: rgba(255, 250, 240, 0.78);
+  padding: 0 9px;
+  background: rgba(21, 33, 43, 0.045);
   color: var(--ink);
-  font-family: Inter, "Segoe UI", system-ui, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.01em;
+  font-family: var(--font-technical);
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
   line-height: 1;
   text-decoration: none;
-  box-shadow: 0 1px 0 rgba(21, 33, 43, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 
 .tag-pill:hover {
-  background: var(--mint);
+  border-color: rgba(21, 33, 43, 0.18);
+  background: rgba(184, 216, 192, 0.36);
   transform: translateY(-1px);
+}
+
+.source-card > .button {
+  margin-inline: auto;
 }
 
 .footer {
@@ -595,6 +641,25 @@ blockquote {
 
 .story-card.reveal:nth-child(3n) {
   transition-delay: 140ms;
+}
+
+@keyframes image-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.012);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-image img {
+    opacity: 1;
+    animation: none;
+  }
 }
 
 @media (max-width: 900px) {
