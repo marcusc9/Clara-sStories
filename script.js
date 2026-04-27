@@ -30,7 +30,7 @@ function renderStories() {
           ${image}
           <div class="story-meta">
             <span>${story.theme}</span>
-            <span>${story.author}</span>
+            <span>${story.readTime}</span>
           </div>
           <h3>${story.title}</h3>
           <blockquote>“${story.quote}”</blockquote>
