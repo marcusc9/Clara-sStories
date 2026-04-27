@@ -1,2 +1,2 @@
 # Clara-sStories
-Collection of Bahá'í Stories
+Collection of Bahá'í Stories, refreshed daily.
