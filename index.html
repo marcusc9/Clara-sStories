@@ -8,6 +8,12 @@
       name="description"
       content="A quiet place to read Bahá'í stories, with each passage held close to its author and source."
     />
+    <script>
+      if (window.location.hash === "#stories") {
+        history.replaceState(null, "", window.location.href.split("#")[0]);
+        window.scrollTo(0, 0);
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -36,7 +42,7 @@
           <p class="kicker" data-bahai-date>Bahá'í day</p>
           <h1 id="hero-title">Stories kept close to the heart.</h1>
           <p>
-            Come in for a story of faith, sacrifice, or courage. Stay with it as long as it asks.
+            Come in for a story of faith, sacrifice, or courage.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#stories">Read the stories</a>
@@ -51,10 +57,10 @@
         </figure>
       </section>
 
-      <section class="story-stage" id="stories">
+      <section class="story-stage">
         <div class="section-heading">
-          <p class="kicker">Stories</p>
-          <h2>Choose any, sit back and <span>settle.</span></h2>
+          <p class="kicker" id="stories-anchor">Stories</p>
+          <h2>Choose any, sit back and <span>settle in.</span></h2>
         </div>
 
         <div class="library-tools">
