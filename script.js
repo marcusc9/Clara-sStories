@@ -1,3 +1,11 @@
+if (window.location.hash === "#stories") {
+  history.scrollRestoration = "manual";
+  history.replaceState(null, "", window.location.href.split("#")[0]);
+  window.scrollTo(0, 0);
+  window.requestAnimationFrame(() => window.scrollTo(0, 0));
+  window.addEventListener("load", () => window.scrollTo(0, 0), { once: true });
+}
+
 const stories = window.ClaraStories ?? [];
 const grid = document.querySelector("[data-story-grid]");
 const filterList = document.querySelector("[data-story-filters]");
@@ -10,6 +18,8 @@ const bahaiDate = document.querySelector("[data-bahai-date]");
 let activeFilter = "all";
 let lastScroll = 0;
 let ticking = false;
+let programmaticScroll = false;
+let scrollAnimationFrame = null;
 
 function normalise(value) {
   return String(value ?? "").toLowerCase();
@@ -123,6 +133,58 @@ function applyBahaiDate() {
   }
 }
 
+function easeInOutSine(progress) {
+  return -(Math.cos(Math.PI * progress) - 1) / 2;
+}
+
+function scrollToStories() {
+  const target = document.querySelector("#stories-anchor") ?? document.querySelector("#stories");
+
+  if (!target) {
+    return;
+  }
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const headerOffset = header ? header.getBoundingClientRect().height + 24 : 0;
+  const start = window.scrollY;
+  const destination = Math.max(
+    0,
+    target.getBoundingClientRect().top + window.scrollY - headerOffset
+  );
+  const distance = destination - start;
+
+  if (scrollAnimationFrame) {
+    window.cancelAnimationFrame(scrollAnimationFrame);
+  }
+
+  if (reduceMotion || Math.abs(distance) < 2) {
+    window.scrollTo(0, destination);
+    return;
+  }
+
+  programmaticScroll = true;
+  header?.classList.remove("is-hidden");
+
+  const duration = Math.min(2400, Math.max(1500, Math.abs(distance) * 1.15));
+  const startedAt = performance.now();
+
+  function step(now) {
+    const progress = Math.min(1, (now - startedAt) / duration);
+    window.scrollTo(0, start + distance * easeInOutSine(progress));
+
+    if (progress < 1) {
+      scrollAnimationFrame = window.requestAnimationFrame(step);
+      return;
+    }
+
+    window.scrollTo(0, destination);
+    programmaticScroll = false;
+    scrollAnimationFrame = null;
+  }
+
+  scrollAnimationFrame = window.requestAnimationFrame(step);
+}
+
 function renderStories() {
   if (!grid) {
     return;
@@ -151,6 +213,19 @@ function renderStories() {
       `;
     })
     .join("");
+}
+
+function applyImageFallbacks() {
+  Array.from(document.querySelectorAll(".story-card.image-card img")).forEach((image) => {
+    image.addEventListener(
+      "error",
+      () => {
+        image.closest(".story-card")?.classList.remove("image-card");
+        image.remove();
+      },
+      { once: true }
+    );
+  });
 }
 
 function formatTheme(value) {
@@ -226,6 +301,33 @@ filterList?.addEventListener("click", (event) => {
 
 searchInput?.addEventListener("input", updateStories);
 
+["wheel", "touchstart", "keydown"].forEach((eventName) => {
+  window.addEventListener(
+    eventName,
+    () => {
+      if (scrollAnimationFrame) {
+        window.cancelAnimationFrame(scrollAnimationFrame);
+        scrollAnimationFrame = null;
+        programmaticScroll = false;
+      }
+    },
+    { passive: true }
+  );
+});
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('.nav a[href="#stories"]');
+
+  if (!link) {
+    return;
+  }
+
+  event.preventDefault();
+  history.pushState(null, "", "#stories");
+  header?.classList.remove("is-hidden");
+  scrollToStories();
+});
+
 window.addEventListener(
   "scroll",
   () => {
@@ -234,7 +336,9 @@ window.addEventListener(
         const currentScroll = window.scrollY;
         const scrollDelta = currentScroll - lastScroll;
 
-        if (currentScroll < 80) {
+        if (programmaticScroll) {
+          header?.classList.remove("is-hidden");
+        } else if (currentScroll < 80) {
           header?.classList.remove("is-hidden");
         } else if (scrollDelta > 8) {
           header?.classList.add("is-hidden");
@@ -242,7 +346,11 @@ window.addEventListener(
           header?.classList.remove("is-hidden");
         }
 
-        hero?.style.setProperty("--hero-shift", `${Math.min(currentScroll, 360)}px`);
+        const heroShift = Math.min(currentScroll, 520);
+        const heroFade = Math.max(0, 1 - currentScroll / 620);
+
+        hero?.style.setProperty("--hero-shift", `${heroShift}px`);
+        hero?.style.setProperty("--hero-image-opacity", heroFade.toFixed(3));
         lastScroll = Math.max(currentScroll, 0);
         ticking = false;
       });
@@ -253,6 +361,7 @@ window.addEventListener(
 );
 
 renderStories();
+applyImageFallbacks();
 renderFilters();
 observeReveals();
 applyBahaiDate();
