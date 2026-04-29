@@ -2,6 +2,7 @@ const stories = window.ClaraStories ?? [];
 const page = document.querySelector("[data-story-page]");
 const header = document.querySelector("[data-header]");
 const themeToggle = document.querySelector("[data-theme-toggle]");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const params = new URLSearchParams(window.location.search);
 const requestedStoryId = params.get("id");
 const story = stories.find((item) => item.id === requestedStoryId);
@@ -10,13 +11,13 @@ function applyTheme(theme) {
   const isDark = theme === "dark";
   document.documentElement.dataset.theme = isDark ? "dark" : "light";
 
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", isDark ? "#09131a" : "#fbf6e8");
+  }
+
   if (themeToggle) {
     themeToggle.setAttribute("aria-pressed", String(isDark));
     themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-    const icon = themeToggle.querySelector("span");
-    if (icon) {
-      icon.textContent = isDark ? "☀" : "☾";
-    }
   }
 }
 

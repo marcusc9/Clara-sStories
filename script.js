@@ -15,6 +15,7 @@ const searchInput = document.querySelector("[data-story-search]");
 const storyCount = document.querySelector("[data-story-count]");
 const bahaiDate = document.querySelector("[data-bahai-date]");
 const themeToggle = document.querySelector("[data-theme-toggle]");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
 let activeFilter = "all";
 let lastScroll = 0;
@@ -30,13 +31,13 @@ function applyTheme(theme) {
   const isDark = theme === "dark";
   document.documentElement.dataset.theme = isDark ? "dark" : "light";
 
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", isDark ? "#09131a" : "#fbf6e8");
+  }
+
   if (themeToggle) {
     themeToggle.setAttribute("aria-pressed", String(isDark));
     themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-    const icon = themeToggle.querySelector("span");
-    if (icon) {
-      icon.textContent = isDark ? "☀" : "☾";
-    }
   }
 }
 

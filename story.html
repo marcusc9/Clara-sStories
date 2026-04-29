@@ -8,10 +8,11 @@
       name="description"
       content="Read a Bahá'í story excerpt with its author, book, chapter, and source."
     />
-    <meta name="theme-color" content="#13212a" />
+    <meta name="theme-color" content="#fbf6e8" />
     <script>
       if (localStorage.getItem("claraTheme") === "dark") {
         document.documentElement.dataset.theme = "dark";
+        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#09131a");
       }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,7 +44,7 @@
           aria-label="Switch to dark mode"
           aria-pressed="false"
         >
-          <span aria-hidden="true">☾</span>
+          <span aria-hidden="true"></span>
         </button>
       </nav>
     </header>
