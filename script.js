@@ -147,15 +147,31 @@ function getBahaiDateLabel(date = new Date()) {
   return `${day} ${month.name}, 183 BE`;
 }
 
+function getLibraryOrder() {
+  return stories
+    .map((story, index) => {
+      const addedTime = Date.parse(story.addedOn ?? story.addedAt ?? "");
+      return {
+        story,
+        index,
+        addedTime: Number.isNaN(addedTime) ? 0 : addedTime
+      };
+    })
+    .sort((first, second) => second.addedTime - first.addedTime || first.index - second.index)
+    .map(({ story }) => story);
+}
+
 function getDailyStoryOrder() {
-  if (!stories.length) {
+  const libraryOrder = getLibraryOrder();
+
+  if (!libraryOrder.length) {
     return [];
   }
 
   const today = Math.floor(dateFromKey(localDateKey(new Date())).getTime() / dayMs);
-  const featuredIndex = today % stories.length;
-  const featuredStory = stories[featuredIndex];
-  return [featuredStory, ...stories.filter((story) => story !== featuredStory)];
+  const featuredIndex = today % libraryOrder.length;
+  const featuredStory = libraryOrder[featuredIndex];
+  return [featuredStory, ...libraryOrder.filter((story) => story !== featuredStory)];
 }
 
 function applyBahaiDate() {
@@ -226,7 +242,7 @@ function renderStories() {
       const featureImage = index === 0 ? story.featureImage || story.image : "";
       const featureImageAlt = index === 0 ? story.featureImageAlt || story.imageAlt : "";
       const image = featureImage
-        ? `<img src="${featureImage}" alt="${featureImageAlt}" loading="lazy" />`
+        ? `<img src="${featureImage}" alt="${featureImageAlt}" loading="eager" decoding="async" fetchpriority="high" />`
         : "";
       const imageClass = featureImage ? " image-card" : "";
       const featureClass = index === 0 ? " feature" : "";
@@ -282,7 +298,7 @@ function renderFilters() {
 }
 
 function updateStories() {
-  const cards = Array.from(document.querySelectorAll("[data-theme]"));
+  const cards = Array.from(document.querySelectorAll(".story-card[data-theme]"));
   const query = normalise(searchInput?.value).trim();
   let visibleCount = 0;
 
