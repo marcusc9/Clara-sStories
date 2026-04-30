@@ -71,6 +71,18 @@ function storyHtml(item) {
     </section>
     <section class="reader-layout">
       <article class="reader-card">
+        <div class="reader-toolbar">
+          <button
+            class="narration-button"
+            type="button"
+            data-narration-toggle
+            aria-label="Listen to story"
+            aria-pressed="false"
+          >
+            <span class="narration-icon" aria-hidden="true"></span>
+            <span data-narration-label>Listen</span>
+          </button>
+        </div>
         <p class="kicker">Story</p>
         <div class="reader-note">
           ${story}
@@ -96,9 +108,202 @@ function storyHtml(item) {
   `;
 }
 
+const narrationState = {
+  isSpeaking: false,
+  isPaused: false,
+  paragraphs: [],
+  index: 0,
+  voice: null,
+  pauseTimer: 0
+};
+
+function isNarrationSupported() {
+  return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+}
+
+function storyCentresFemaleFigure(item) {
+  const text = [item.title, item.summary, item.author, ...(item.tags ?? [])]
+    .join(" ")
+    .toLowerCase();
+
+  return [
+    "woman",
+    "women",
+    "female",
+    "tahirih",
+    "ṭáhirih",
+    "rizwanea",
+    "martha",
+    "mary",
+    "queen",
+    "princess",
+    "mother",
+    "daughter",
+    "wife"
+  ].some((signal) => text.includes(signal));
+}
+
+function scoreNarrationVoice(voice, preferFemale) {
+  const name = voice.name.toLowerCase();
+  const lang = voice.lang.toLowerCase();
+  const femaleHints = [
+    "samantha",
+    "victoria",
+    "karen",
+    "moira",
+    "serena",
+    "susan",
+    "zira",
+    "hazel",
+    "ava",
+    "allison",
+    "joanna",
+    "joana",
+    "jenny",
+    "aria",
+    "natasha",
+    "shelley",
+    "sara",
+    "female",
+    "woman"
+  ];
+  const naturalHints = ["enhanced", "premium", "neural", "natural", "siri"];
+  const artificialHints = ["novelty", "compact", "whisper", "robot", "bubbles", "bells"];
+
+  let score = 0;
+  if (lang.startsWith("en-gb")) score += 16;
+  if (lang.startsWith("en")) score += 10;
+  if (voice.localService) score += 2;
+  if (preferFemale && femaleHints.some((hint) => name.includes(hint))) score += 18;
+  if (!preferFemale && femaleHints.some((hint) => name.includes(hint))) score += 5;
+  if (naturalHints.some((hint) => name.includes(hint))) score += 7;
+  if (artificialHints.some((hint) => name.includes(hint))) score -= 20;
+
+  return score;
+}
+
+function chooseNarrationVoice(item) {
+  const voices = window.speechSynthesis.getVoices();
+  const preferFemale = storyCentresFemaleFigure(item);
+
+  return voices
+    .filter((voice) => voice.lang.toLowerCase().startsWith("en"))
+    .sort((a, b) => scoreNarrationVoice(b, preferFemale) - scoreNarrationVoice(a, preferFemale))[0] ??
+    voices.sort((a, b) => scoreNarrationVoice(b, preferFemale) - scoreNarrationVoice(a, preferFemale))[0] ??
+    null;
+}
+
+function setNarrationButtonState(button, label, state) {
+  const isActive = state === "playing";
+  const isPaused = state === "paused";
+
+  button.classList.toggle("is-paused", isPaused);
+  button.setAttribute("aria-pressed", String(isActive));
+  button.setAttribute("aria-label", isActive ? "Pause story narration" : "Listen to story");
+  label.textContent = isActive ? "Pause" : isPaused ? "Resume" : "Listen";
+}
+
+function stopNarration(button, label) {
+  window.clearTimeout(narrationState.pauseTimer);
+  window.speechSynthesis.cancel();
+  narrationState.isSpeaking = false;
+  narrationState.isPaused = false;
+  narrationState.index = 0;
+  setNarrationButtonState(button, label, "idle");
+}
+
+function speakNarrationParagraph(button, label) {
+  if (!narrationState.isSpeaking || narrationState.index >= narrationState.paragraphs.length) {
+    stopNarration(button, label);
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(narrationState.paragraphs[narrationState.index]);
+  if (narrationState.voice) {
+    utterance.voice = narrationState.voice;
+  }
+  utterance.rate = 0.82;
+  utterance.pitch = storyCentresFemaleFigure(story) ? 1.02 : 0.98;
+  utterance.volume = 1;
+
+  utterance.onend = () => {
+    if (!narrationState.isSpeaking || narrationState.isPaused) {
+      return;
+    }
+
+    narrationState.index += 1;
+    narrationState.pauseTimer = window.setTimeout(
+      () => speakNarrationParagraph(button, label),
+      narrationState.index === 1 ? 650 : 850
+    );
+  };
+
+  utterance.onerror = () => stopNarration(button, label);
+  window.speechSynthesis.speak(utterance);
+}
+
+function startNarration(item, button, label) {
+  window.clearTimeout(narrationState.pauseTimer);
+  window.speechSynthesis.cancel();
+  narrationState.paragraphs = [
+    item.title,
+    ...item.story.map((paragraph) => paragraph.trim()).filter(Boolean)
+  ];
+  narrationState.index = 0;
+  narrationState.voice = chooseNarrationVoice(item);
+  narrationState.isSpeaking = true;
+  narrationState.isPaused = false;
+  setNarrationButtonState(button, label, "playing");
+  speakNarrationParagraph(button, label);
+}
+
+function initialiseNarration(item) {
+  const button = document.querySelector("[data-narration-toggle]");
+  const label = document.querySelector("[data-narration-label]");
+
+  if (!button || !label) {
+    return;
+  }
+
+  if (!isNarrationSupported()) {
+    button.disabled = true;
+    button.setAttribute("aria-label", "Story narration is not available in this browser");
+    label.textContent = "Unavailable";
+    return;
+  }
+
+  window.speechSynthesis.onvoiceschanged = () => {
+    if (narrationState.isSpeaking) {
+      return;
+    }
+    narrationState.voice = chooseNarrationVoice(item);
+  };
+
+  button.addEventListener("click", () => {
+    if (narrationState.isSpeaking && !narrationState.isPaused) {
+      narrationState.isPaused = true;
+      window.speechSynthesis.pause();
+      setNarrationButtonState(button, label, "paused");
+      return;
+    }
+
+    if (narrationState.isSpeaking && narrationState.isPaused) {
+      narrationState.isPaused = false;
+      window.speechSynthesis.resume();
+      setNarrationButtonState(button, label, "playing");
+      return;
+    }
+
+    startNarration(item, button, label);
+  });
+
+  window.addEventListener("pagehide", () => stopNarration(button, label));
+}
+
 if (page && story) {
   document.title = `${story.title} | Clara's Stories`;
   page.innerHTML = storyHtml(story);
+  initialiseNarration(story);
 } else if (page) {
   document.title = "Story unavailable | Clara's Stories";
   page.innerHTML = `
