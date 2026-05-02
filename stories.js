@@ -1,5 +1,88 @@
 window.ClaraStories = [
   {
+    id: "mirza-jafar-yazdi",
+    theme: "service",
+    author: "‘Abdu'l-Bahá",
+    book: "Memorials of the Faithful",
+    chapter: "Mírzá Ja‘far-i-Yazdí",
+    sourcePages: "section 60",
+    sourceDetail:
+      "From the Bahá'í Reference Library; ‘Abdu'l-Bahá, Memorials of the Faithful, section 60.",
+    title: "Mírzá Ja‘far rises and laughs.",
+    quote: "Very rapidly, he will be as well as ever.",
+    readTime: "6 minute read",
+    tags: ["Service", "Humility", "Healing", "Steadfastness", "Detachment"],
+    summary:
+      "A complete memorial of the learned servant who hid his learning, labored for the friends, and recovered after Bahá'u'lláh ordered the prayer of healing.",
+    source: "https://www.bahai.org/library/authoritative-texts/abdul-baha/memorials-faithful/5",
+    image: "",
+    imageAlt: "",
+    featureImage: "https://commons.wikimedia.org/wiki/Special:FilePath/Mansion_of_Bahji_2.jpg",
+    featureImageAlt: "The Mansion of Bahjí where Bahá'u'lláh spent His final years",
+    addedOn: "2026-05-02",
+    featuredOn: "2026-05-02",
+    story: [
+      "This knight of the battlefield was one of the most learned of seekers after truth, well versed in many branches of knowledge. For a long time he was in the schools, specializing in the fundamentals of religion and religious jurisprudence, and making researches into philosophy and metaphysics, logic and history, the contemplative and the narrated sciences. He began, however, to note that his fellows were arrogant and self-satisfied, and this repelled him.",
+      "It was then that he heard the cry out of the Supreme Concourse, and without a moment’s hesitation he raised up his voice and shouted, “Yea, verily!”; and he repeated the words, “O our Lord! We have heard the voice of one that called. He called us to the Faith—‘Believe ye on your Lord’—and we have believed.”",
+      "When he saw the great tumult and the riots in Yazd, he left his homeland and went to Najaf, the noble city; here for safety’s sake he mingled with the scholars of religion, becoming renowned among them for his own wide knowledge. Then, listening to the voice from Baghdad, he hastened there, and changed his mode of dress. That is, he put a layman’s hat on his head, and went to work as a carpenter to earn his living.",
+      "He traveled once to Ṭihrán, returned, and sheltered by the grace of Bahá’u’lláh was patient and content, rejoicing in his garb of poverty. In spite of his great learning he was humble, self-effacing, lowly. He kept silent at all times, and was a good companion to every sort of man.",
+      "On the journey from Iraq to Constantinople, Mírzá Ja‘far was one of Bahá’u’lláh’s retinue, and in seeing to the needs of the friends, he was a partner to this servant. When we would come to a stopping-place the believers, exhausted by the long hours of travel, would rest or sleep.",
+      "Mírzá Ja‘far and I would go here and there to the surrounding villages to find oats, straw and other provisions for the caravan. Since there was a famine in that area, it sometimes happened that we would be roaming from village to village from after the noon hour until half the night was gone. As best we could, we would procure whatever was available, then return to the convoy.",
+      "Mírzá Ja‘far was patient and long-suffering, a faithful attendant at the Holy Threshold. He was a servant to all the friends, working day and night. A quiet man, sparing of speech, in all things relying entirely upon God. He continued to serve in Adrianople until the banishment to ‘Akká was brought about and he too was made a prisoner. He was grateful for this, continually offering thanks, and saying, “Praise be to God! I am in the fully-laden Ark!”",
+      "The Prison was a garden of roses to him, and his narrow cell a wide and fragrant place. At the time when we were in the barracks he fell dangerously ill and was confined to his bed. He suffered many complications, until finally the doctor gave him up and would visit him no more. Then the sick man breathed his last. Mírzá Áqá Ján ran to Bahá’u’lláh, with word of the death. Not only had the patient ceased to breathe, but his body was already going limp.",
+      "His family were gathered about him, mourning him, shedding bitter tears. The Blessed Beauty said, “Go; chant the prayer of Yá Sháfí—O Thou, the Healer—and Mírzá Ja‘far will come alive. Very rapidly, he will be as well as ever.” I reached his bedside. His body was cold and all the signs of death were present. Slowly, he began to stir; soon he could move his limbs, and before an hour had passed he lifted his head, sat up, and proceeded to laugh and tell jokes.",
+      "He lived for a long time after that, occupied as ever with serving the friends. This giving service was a point of pride with him: to all, he was a servant. He was always modest and humble, calling God to mind, and to the highest degree full of hope and faith. Finally, while in the Most Great Prison, he abandoned this earthly life and winged his way to the life beyond.",
+      "Greetings and praise be unto him; upon him be the glory of the All-Glorious, and the favoring glances of the Lord. His luminous grave is in ‘Akká."
+    ]
+  },
+  {
+    id: "hermit-hospitality",
+    theme: "hospitality",
+    author: "Annamarie Honnold",
+    book: "Vignettes from the Life of ‘Abdu’l-Bahá",
+    chapter: "Hospitality",
+    sourceDetail:
+      "From Bahá'í Stories; Honnold, Vignettes from the Life of ‘Abdu’l-Bahá, on the Hospitality page.",
+    title: "The hermit offers dry bread with love.",
+    quote: "He had never been more nobly entertained nor received greater hospitality and love.",
+    readTime: "3 minute read",
+    tags: ["Hospitality", "Love", "Contentment", "Bahá'u'lláh", "Detachment"],
+    collectionTags: ["Anecdotes"],
+    summary:
+      "Mary Bolles Maxwell recounts the Master's story of a hermit whose poor cave became the setting for perfect hospitality.",
+    source: "https://bahaistories.com/subject/hospitality",
+    image: "",
+    imageAlt: "",
+    addedOn: "2026-05-02",
+    story: [
+      "Mary Bolles (Maxwell) took an early pilgrimage to the prison city. She heard that the food man eats is of no importance, as its effect endures but a short time. But the food of the spirit is life to the soul and its effects endure eternally. She heard ‘Abdu’l-Bahá tell the touching ‘story of the hermit’. Bahá’u’lláh ‘was traveling from one place to another with His followers’ and ‘He passed through a lonely country where, at some little distance from the highway, a hermit lived alone in a cave. He was a holy man, and having heard that Our Lord, Bahá’u’lláh, would pass that way, he watched eagerly for His approach. When the Manifestation arrived at that spot the hermit knelt down and kissed the dust before His feet and said to Him: “Oh, my Lord, I am a poor man living alone in a cave nearby; but henceforth I shall account myself the happiest of mortals if Thou wilt but come for a moment to my cave and bless it by Thy Presence.” Then Bahá’u’lláh told the man that He would come, not for a moment but for three days, and He bade His followers cast their tents, and await His return. The poor man was so overcome with joy and with gratitude that he was speechless, and led the way in humble silence to his lowly dwelling in a rock. There the Glorious One sat with him, talking to him and teaching him, and toward evening the man bethought himself that he had nothing to offer his great Guest but some dry meat and some dark bread, and water from a spring nearby. Not knowing what to do he threw himself at the feet of his Lord and confessed his dilemma. Bahá’u’lláh comforted him and by a word bade him fetch the meat and bread and water; then the Lord of the universe partook of this frugal repast with joy and fragrance as though it had been a banquet, and during the three days of His visit they ate only of this food which seemed to the poor hermit the most delicious he had ever eaten. Bahá’u’lláh declared that He had never been more nobly entertained nor received greater hospitality and love. “This,” explained the Master, when He had finished the story, shows us how little man requires when he is nourished by the sweetness of all foods - the love of God.”"
+    ]
+  },
+  {
+    id: "ruth-randall-healed",
+    theme: "healing",
+    author: "Reginald Grant Barrow",
+    book: "Mother's Stories: Stories of ‘Abdu’l-Bahá and Early Believers",
+    chapter: "Healing",
+    sourcePages: "p. 23",
+    sourceDetail:
+      "From Bahá'í Stories; Reginald Grant Barrow, Mother's Stories, p. 23, on the Healing page.",
+    title: "Ruth Randall is healed after tea.",
+    quote: "She was healed.",
+    readTime: "4 minute read",
+    tags: ["Healing", "Faith", "Recognition", "Teaching", "‘Abdu'l-Bahá"],
+    collectionTags: ["Anecdotes"],
+    summary:
+      "Harry Randall reluctantly welcomes ‘Abdu’l-Bahá for tea, and the visit changes both his wife Ruth and the course of their lives.",
+    source: "https://bahaistories.com/subject/healing",
+    image: "",
+    imageAlt: "",
+    addedOn: "2026-05-02",
+    story: [
+      "Harry Randall, the brother of Loulie Mathews, was a man of wealth and affairs. He had been a classmate of Harlan Ober at Harvard and so, when Harlan learned of the Faith and became a Bahá’í, he very soon gave the Message to Harry, only to discover that, busy and occupied as he was with his manifold affairs, Harry Randall's interest went no farther than a polite and courteous response, which was far from satisfactory to Harlan. He persisted in trying to interest Harry further and when ‘Abdu’l-Bahá was to come to Boston, Harlan grew more and more pressing: Harry must go to hear ‘Abdu’l-Bahá speak; Harry must meet Him; Harry really owed it to himself not to miss this wonderful opportunity. Finally, Harry still uninterested, but courteously anxious to please this eager friend of his, agreed to go with Harlan to hear ‘Abdu’l-Bahá. Ruth - Harry's wife would not be able to go with him since she was a semi invalid, in and out of sanitariums for tuberculosis a great part of the time. Just then she had come home from one of these hospitals but she was far too frail to do anything but rest quietly at home. Harlan and Harry Randall went to the meeting together and after it was over, Harlan insisted upon taking Harry to meet ‘Abdu’l-Bahá. Harry, still uninterested but always courteous, did as Harlan wished, and what was his astonishment when ‘Abdu’l-Bahá warmly accepted an invitation to have tea the following afternoon at Harry's home! An invitation Harry had in no way extended. Appalled, Harry asked Harlan what on earth he should do about it? Harlan said. \"Give a tea for Him what else can you do?\" \"But how can I? Ruth is ill. I'm busy. How on earth - ?\" Harlan laughed, \"You don't know ‘Abdu’l-Bahá or you'd know there's some sort of reason for this, and it'll get done. You have a houseful of servants - let them brew a cup of tea for the Master and invite a few friends in to share it.\" So this is what Harry did and the next afternoon when ‘Abdu’l-Bahá arrived at the lovely suburban home he found quite a group of people assembled on a wide verandah to receive Him. Ruth Randall, delicate and lovely, was also there, seated in a far corner where she might be safe from any draft. And it was to her, ignoring all the others, that ‘Abdu’l-Bahá strode, His white aba billowing with the swiftness of His tread; His beautiful eyes filled with light and love. Reaching her He bent above her, murmuring \"My daughter My dear daughter\" and lovingly He rested His hands on her shoulders Then He turned and, smilingly, met all the other guests. The following day, Ruth had an appointment with her doctor, who had examined her the previous week and had said that it might be necessary for her to return to the sanitarium for further treatment. He would be sure after he had seen her again. Ruth went to this appointment fearfully she was so longing to remain at home, so very reluctant to be sent again to the hospital. The doctor examined her - and was amazed. What had she been doing? What could have happened to her? She was healed. There was not the least trace left of the tuberculosis. Of course, this was an experience that neither Harry nor Ruth could ignore, so it was the beginning of their long and glorious life-time of teaching and serving the Cause they came to love so well."
+    ]
+  },
+  {
     id: "sulayman-khan-tunukabani",
     theme: "teaching",
     author: "‘Abdu'l-Bahá",
