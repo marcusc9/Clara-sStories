@@ -384,7 +384,9 @@ function renderFilters() {
   const moreFilters = overflowThemeFilters.length
     ? `
       <details class="filter-menu">
-        <summary class="filter filter-more">More</summary>
+        <summary class="filter filter-more" aria-label="Show more filters">
+          <span class="visually-hidden">More filters</span>
+        </summary>
         <div class="filter-menu-panel">
           ${overflowThemeFilters.map(renderFilterButton).join("")}
         </div>

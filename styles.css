@@ -19,6 +19,18 @@
   box-sizing: border-box;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -420,20 +432,20 @@ h3 {
 .source-card > .button.primary {
   min-height: 44px;
   min-width: 184px;
-  border-color: rgba(21, 33, 43, 0.9);
-  background: #173c5c;
-  color: #f5efe2;
+  border-color: rgba(103, 136, 112, 0.62);
+  background: #c7dec6;
+  color: #10202a;
   font-family: var(--font-ui);
   font-size: 0.95rem;
   letter-spacing: 0;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14),
-    0 12px 26px rgba(23, 60, 92, 0.16);
+  box-shadow: inset 0 -2px 0 rgba(103, 136, 112, 0.2),
+    0 12px 26px rgba(21, 33, 43, 0.09);
 }
 
 :root[data-theme="dark"] .source-card > .button.primary {
-  border-color: rgba(104, 159, 211, 0.72);
-  background: #173c5c;
-  color: #f3ead9;
+  border-color: rgba(232, 199, 111, 0.66);
+  background: #ead083;
+  color: #09131a;
 }
 
 .button.secondary {
@@ -554,7 +566,7 @@ h3 {
 }
 
 .filter-menu {
-  position: relative;
+  display: contents;
 }
 
 .filter-menu summary {
@@ -565,11 +577,15 @@ h3 {
   display: none;
 }
 
+.filter-more {
+  width: 56px;
+  padding-inline: 0;
+}
+
 .filter-more::after {
   content: "";
   width: 0.48em;
   height: 0.48em;
-  margin-left: 0.45em;
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
   transform: translateY(-0.12em) rotate(45deg);
@@ -581,19 +597,7 @@ h3 {
 }
 
 .filter-menu-panel {
-  position: absolute;
-  right: 0;
-  z-index: 8;
-  display: flex;
-  width: min(260px, calc(100vw - 40px));
-  margin-top: 8px;
-  padding: 10px;
-  flex-wrap: wrap;
-  gap: 8px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 250, 240, 0.94);
-  box-shadow: 0 16px 42px rgba(21, 33, 43, 0.14);
+  display: contents;
 }
 
 .filter.is-active {
@@ -615,7 +619,7 @@ h3 {
 }
 
 :root[data-theme="dark"] .filter-menu-panel {
-  background: rgba(9, 19, 26, 0.96);
+  background: transparent;
 }
 
 .story-grid {

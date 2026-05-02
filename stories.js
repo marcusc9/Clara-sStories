@@ -137,7 +137,7 @@ window.ClaraStories = [
     sourceDetail:
       "From Bahá'í Stories; Lady Blomfield, The Chosen Highway.",
     title: "‘Abdu’l-Bahá had prepared for the famine.",
-    quote: "I have corn for the British Army,",
+    quote: "Provisions which He had grown, buried in under-ground pits",
     readTime: "2 minute read",
     tags: ["Service", "Foresight", "Haifa", "Generosity", "War"],
     collectionTags: ["Anecdotes"],
