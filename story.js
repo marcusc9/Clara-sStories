@@ -197,6 +197,67 @@ const narrationState = {
   lastAutoScrollAt: 0
 };
 
+function setMediaSessionMetadata(item) {
+  if (!("mediaSession" in navigator)) {
+    return;
+  }
+
+  const asset = narrationState.asset ?? getNarrationAsset(item);
+  const artwork = asset?.artwork ?? [
+    {
+      src: "./icons/icon-512.png",
+      sizes: "512x512",
+      type: "image/png"
+    },
+    {
+      src: "./icons/icon-192.png",
+      sizes: "192x192",
+      type: "image/png"
+    }
+  ];
+
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: asset?.title ?? item.title,
+    artist: asset?.artist ?? item.author,
+    album: asset?.album ?? item.book,
+    artwork
+  });
+}
+
+function setMediaSessionPlaybackState(state) {
+  if (!("mediaSession" in navigator)) {
+    return;
+  }
+
+  navigator.mediaSession.playbackState = state;
+}
+
+function clearMediaSession() {
+  if (!("mediaSession" in navigator)) {
+    return;
+  }
+
+  navigator.mediaSession.playbackState = "none";
+}
+
+function updateMediaSessionPositionState() {
+  if (!("mediaSession" in navigator) || !navigator.mediaSession.setPositionState) {
+    return;
+  }
+
+  const audio = narrationState.audio;
+
+  if (!audio || !Number.isFinite(audio.duration) || audio.duration <= 0) {
+    return;
+  }
+
+  navigator.mediaSession.setPositionState({
+    duration: audio.duration,
+    playbackRate: audio.playbackRate || 1,
+    position: audio.currentTime
+  });
+}
+
 function getNarrationAsset(item) {
   const key = item.narration?.assetKey ?? item.id;
   return window.ClaraNarrationAssets?.[key] ?? null;
@@ -337,6 +398,8 @@ function syncNarrationFrame() {
     }
   }
 
+  updateMediaSessionPositionState();
+
   narrationState.animationFrame = window.requestAnimationFrame(syncNarrationFrame);
 }
 
@@ -351,6 +414,7 @@ function stopNarration(button, label, stopButton) {
   narrationState.activeCueIndex = -1;
   clearNarrationHighlights();
   clearReadState();
+  clearMediaSession();
   setNarrationButtonState(button, label, "idle");
   if (stopButton) {
     stopButton.hidden = true;
@@ -366,6 +430,7 @@ function prepareAudioChunk(button, label, stopButton) {
 
   const audio = new Audio(chunk.src);
   audio.preload = "auto";
+  audio.playsInline = true;
   audio.addEventListener("ended", () => {
     narrationState.chunkIndex += 1;
     const nextAudio = prepareAudioChunk(button, label, stopButton);
@@ -374,11 +439,20 @@ function prepareAudioChunk(button, label, stopButton) {
     }
   });
   audio.addEventListener("error", () => {
+    clearMediaSession();
     setNarrationButtonState(button, label, "unavailable");
     if (stopButton) {
       stopButton.hidden = true;
     }
   });
+  audio.addEventListener("play", () => setMediaSessionPlaybackState("playing"));
+  audio.addEventListener("pause", () => {
+    if (narrationState.status !== "idle") {
+      setMediaSessionPlaybackState("paused");
+    }
+  });
+  audio.addEventListener("loadedmetadata", updateMediaSessionPositionState);
+  audio.addEventListener("timeupdate", updateMediaSessionPositionState);
 
   narrationState.audio = audio;
   return audio;
@@ -393,6 +467,7 @@ function startNarration(item, button, label, stopButton) {
     return;
   }
 
+  setMediaSessionMetadata(item);
   clearNarrationHighlights();
   clearReadState();
   narrationState.chunkIndex = 0;
@@ -434,7 +509,9 @@ function initialiseNarration(item) {
     }
 
     if (narrationState.status === "paused") {
-      narrationState.audio?.play();
+      narrationState.audio?.play().catch(() => {
+        setNarrationButtonState(button, label, "unavailable");
+      });
       setNarrationButtonState(button, label, "playing");
       syncNarrationFrame();
       return;
@@ -459,7 +536,30 @@ function initialiseNarration(item) {
     setNarrationButtonState(button, label, "unavailable");
   }
 
-  window.addEventListener("pagehide", () => stopNarration(button, label, stopButton));
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.setActionHandler("play", () => {
+      if (narrationState.status === "paused") {
+        narrationState.audio?.play().catch(() => {});
+        setNarrationButtonState(button, label, "playing");
+        syncNarrationFrame();
+        return;
+      }
+
+      if (narrationState.status === "idle") {
+        startNarration(item, button, label, stopButton);
+      }
+    });
+
+    navigator.mediaSession.setActionHandler("pause", () => {
+      if (narrationState.status === "playing") {
+        narrationState.audio?.pause();
+        window.cancelAnimationFrame(narrationState.animationFrame);
+        setNarrationButtonState(button, label, "paused");
+      }
+    });
+
+    navigator.mediaSession.setActionHandler("stop", () => stopNarration(button, label, stopButton));
+  }
 }
 
 if (page && story) {

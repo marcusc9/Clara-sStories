@@ -299,11 +299,10 @@ window.ClaraStories = [
     quote: "Let deeds, not words, be our adorning!",
     readTime: "20 minute read",
     narration: {
-      provider: "openai",
+      provider: "elevenlabs",
       assetKey: "tahirih",
-      model: "gpt-4o-mini-tts",
-      voice: "coral",
-      status: "pending"
+      voice: "uploaded",
+      status: "ready"
     },
     tags: ["Courage", "Learning", "Women", "Martyrdom", "Badasht"],
     summary:

@@ -2,21 +2,23 @@
   "name": "Clara's Stories",
   "short_name": "Clara",
   "description": "Bahá'í stories to read with their source close by.",
-  "start_url": "./index.html",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#fbf6e8",
   "theme_color": "#13212a",
   "icons": [
     {
-      "src": "./icons/clara-logo.svg.png",
-      "sizes": "180x180",
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "./icons/clara-logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
