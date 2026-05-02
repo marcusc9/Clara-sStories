@@ -121,54 +121,15 @@ main,
 }
 
 .brand-mark {
-  position: relative;
-  display: grid;
-  place-items: center;
+  display: block;
   width: 46px;
   height: 46px;
-  border-radius: 16px;
-  background: #13212a;
-  color: #fbf6e8;
-  font-family: var(--font-ui);
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  flex: 0 0 46px;
+  border-radius: 14px;
 }
 
 :root[data-theme="dark"] .brand-mark {
-  background: #081017;
-}
-
-.brand-mark::after {
-  content: "";
-  position: absolute;
-  right: 9px;
-  bottom: 9px;
-  width: 10px;
-  height: 10px;
-  border-radius: 0;
-  background: var(--lemon);
-  clip-path: polygon(
-    50% 0%,
-    57.52% 29.33%,
-    82.14% 11.7%,
-    69.05% 39%,
-    99.24% 41.32%,
-    71.67% 53.82%,
-    93.3% 75%,
-    64.14% 66.85%,
-    67.1% 96.98%,
-    50% 72%,
-    32.9% 96.98%,
-    35.86% 66.85%,
-    6.7% 75%,
-    28.33% 53.82%,
-    0.76% 41.32%,
-    30.95% 39%,
-    17.86% 11.7%,
-    42.48% 29.33%
-  );
+  filter: brightness(0.98);
 }
 
 .brand strong,
