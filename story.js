@@ -38,16 +38,81 @@ function quoteIsStoryEnding(item) {
   return clean(finalParagraph).includes(clean(item.quote));
 }
 
+function sourceLabel(item) {
+  const url = String(item.source ?? "");
+
+  if (url.includes("bahai.org/library")) {
+    return "Bahá’í Reference Library";
+  }
+
+  if (url.includes("bahaistories.com")) {
+    return "Bahá’í Stories";
+  }
+
+  return String(item.sourceDetail ?? item.book ?? "").replace(/^From\s+/i, "").replace(/\.$/, "");
+}
+
+function sourcePagesLabel(value) {
+  const text = String(value ?? "").trim().toLowerCase();
+
+  if (text.startsWith("section ")) {
+    return "Section";
+  }
+
+  if (text.startsWith("chapter ")) {
+    return "Chapter";
+  }
+
+  if (text.startsWith("p.") || text.startsWith("pp.")) {
+    return "Pages";
+  }
+
+  return "Location";
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function renderNarrationParagraph(paragraph, index, wordState) {
+  let offset = 0;
+  const words = String(paragraph)
+    .split(/(\s+)/)
+    .map((token) => {
+      const start = offset;
+      offset += token.length;
+
+      if (/^\s+$/.test(token)) {
+        return token;
+      }
+
+      const wordIndex = wordState.index;
+      wordState.index += 1;
+
+      return `<span class="reader-word" data-word-index="${wordIndex}" data-word-start="${start}" data-word-end="${offset}">${escapeHtml(
+        token
+      )}</span>`;
+    })
+    .join("");
+
+  return `<p data-narration-paragraph="${index}">${words}</p>`;
+}
+
 function storyHtml(item) {
   const image = item.image
     ? `<figure class="reader-image"><img src="${item.image}" alt="${item.imageAlt}" /></figure>`
     : "";
-  const story = item.story.map((paragraph) => `<p>${paragraph}</p>`).join("");
+  const wordState = { index: 0 };
+  const story = item.story
+    .map((paragraph, index) => renderNarrationParagraph(paragraph, index, wordState))
+    .join("");
   const sourcePages = item.sourcePages
-    ? `<div><dt>Pages</dt><dd>${item.sourcePages}</dd></div>`
-    : "";
-  const sourceDetail = item.sourceDetail
-    ? `<div><dt>Reference</dt><dd>${item.sourceDetail}</dd></div>`
+    ? `<div><dt>${sourcePagesLabel(item.sourcePages)}</dt><dd>${item.sourcePages}</dd></div>`
     : "";
   const tags = (item.tags ?? [item.theme])
     .map(
@@ -82,6 +147,14 @@ function storyHtml(item) {
             <span class="narration-icon" aria-hidden="true"></span>
             <span data-narration-label>Listen</span>
           </button>
+          <button
+            class="narration-option"
+            type="button"
+            data-narration-stop
+            hidden
+          >
+            Stop
+          </button>
         </div>
         <p class="kicker">Story</p>
         <div class="reader-note">
@@ -92,11 +165,11 @@ function storyHtml(item) {
       <aside class="source-card">
         <p class="kicker">Source</p>
         <dl>
-          <div><dt>Author</dt><dd>${item.author}</dd></div>
-          <div><dt>Book</dt><dd><cite>${item.book}</cite></dd></div>
+          <div><dt>Source</dt><dd>${sourceLabel(item)}</dd></div>
+          <div><dt>By</dt><dd>${item.author}</dd></div>
+          <div><dt>Work</dt><dd><cite>${item.book}</cite></dd></div>
           <div><dt>Chapter</dt><dd>${item.chapter}</dd></div>
           ${sourcePages}
-          ${sourceDetail}
         </dl>
         <div class="tag-panel">
           <p class="kicker">Story tags</p>
@@ -109,195 +182,284 @@ function storyHtml(item) {
 }
 
 const narrationState = {
-  isSpeaking: false,
-  isPaused: false,
-  paragraphs: [],
-  index: 0,
-  voice: null,
-  pauseTimer: 0
+  status: "idle",
+  audio: null,
+  asset: null,
+  chunkIndex: 0,
+  activeParagraph: null,
+  activeWord: null,
+  activeCueIndex: -1,
+  animationFrame: 0,
+  autoFollow: true,
+  highlightMotion: true,
+  isAutoScrolling: false,
+  autoFollowPausedUntil: 0,
+  lastAutoScrollAt: 0
 };
 
-function isNarrationSupported() {
-  return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
-}
-
-function storyCentresFemaleFigure(item) {
-  const text = [item.title, item.summary, item.author, ...(item.tags ?? [])]
-    .join(" ")
-    .toLowerCase();
-
-  return [
-    "woman",
-    "women",
-    "female",
-    "tahirih",
-    "ṭáhirih",
-    "rizwanea",
-    "martha",
-    "mary",
-    "queen",
-    "princess",
-    "mother",
-    "daughter",
-    "wife"
-  ].some((signal) => text.includes(signal));
-}
-
-function scoreNarrationVoice(voice, preferFemale) {
-  const name = voice.name.toLowerCase();
-  const lang = voice.lang.toLowerCase();
-  const femaleHints = [
-    "samantha",
-    "victoria",
-    "karen",
-    "moira",
-    "serena",
-    "susan",
-    "zira",
-    "hazel",
-    "ava",
-    "allison",
-    "joanna",
-    "joana",
-    "jenny",
-    "aria",
-    "natasha",
-    "shelley",
-    "sara",
-    "female",
-    "woman"
-  ];
-  const naturalHints = ["enhanced", "premium", "neural", "natural", "siri"];
-  const artificialHints = ["novelty", "compact", "whisper", "robot", "bubbles", "bells"];
-
-  let score = 0;
-  if (lang.startsWith("en-gb")) score += 16;
-  if (lang.startsWith("en")) score += 10;
-  if (voice.localService) score += 2;
-  if (preferFemale && femaleHints.some((hint) => name.includes(hint))) score += 18;
-  if (!preferFemale && femaleHints.some((hint) => name.includes(hint))) score += 5;
-  if (naturalHints.some((hint) => name.includes(hint))) score += 7;
-  if (artificialHints.some((hint) => name.includes(hint))) score -= 20;
-
-  return score;
-}
-
-function chooseNarrationVoice(item) {
-  const voices = window.speechSynthesis.getVoices();
-  const preferFemale = storyCentresFemaleFigure(item);
-
-  return voices
-    .filter((voice) => voice.lang.toLowerCase().startsWith("en"))
-    .sort((a, b) => scoreNarrationVoice(b, preferFemale) - scoreNarrationVoice(a, preferFemale))[0] ??
-    voices.sort((a, b) => scoreNarrationVoice(b, preferFemale) - scoreNarrationVoice(a, preferFemale))[0] ??
-    null;
+function getNarrationAsset(item) {
+  const key = item.narration?.assetKey ?? item.id;
+  return window.ClaraNarrationAssets?.[key] ?? null;
 }
 
 function setNarrationButtonState(button, label, state) {
-  const isActive = state === "playing";
-  const isPaused = state === "paused";
+  const labels = {
+    idle: "Listen",
+    loading: "Loading",
+    playing: "Pause",
+    paused: "Resume",
+    unavailable: "Audio not ready"
+  };
 
-  button.classList.toggle("is-paused", isPaused);
-  button.setAttribute("aria-pressed", String(isActive));
-  button.setAttribute("aria-label", isActive ? "Pause story narration" : "Listen to story");
-  label.textContent = isActive ? "Pause" : isPaused ? "Resume" : "Listen";
+  narrationState.status = state;
+  button.classList.toggle("is-loading", state === "loading");
+  button.classList.toggle("is-paused", state === "paused");
+  button.setAttribute("aria-busy", String(state === "loading"));
+  button.setAttribute("aria-pressed", String(state === "playing"));
+  button.setAttribute(
+    "aria-label",
+    state === "playing"
+      ? "Pause story narration"
+      : state === "paused"
+        ? "Resume story narration"
+        : "Listen to story"
+  );
+  button.disabled = state === "loading" || state === "unavailable";
+  label.textContent = labels[state] ?? labels.idle;
 }
 
-function stopNarration(button, label) {
-  window.clearTimeout(narrationState.pauseTimer);
-  window.speechSynthesis.cancel();
-  narrationState.isSpeaking = false;
-  narrationState.isPaused = false;
-  narrationState.index = 0;
-  setNarrationButtonState(button, label, "idle");
+function clearNarrationHighlights() {
+  narrationState.activeParagraph?.classList.remove("is-narrating");
+  narrationState.activeWord?.classList.remove("is-current-word");
+  narrationState.activeParagraph = null;
+  narrationState.activeWord = null;
 }
 
-function speakNarrationParagraph(button, label) {
-  if (!narrationState.isSpeaking || narrationState.index >= narrationState.paragraphs.length) {
-    stopNarration(button, label);
+function activeElementIsComfortablyVisible(element) {
+  const rect = element.getBoundingClientRect();
+  const topComfort = window.innerHeight * 0.24;
+  const bottomComfort = window.innerHeight * 0.76;
+  return rect.top >= topComfort && rect.bottom <= bottomComfort;
+}
+
+function maybeAutoScrollTo(element) {
+  const now = Date.now();
+  if (
+    !narrationState.autoFollow ||
+    now < narrationState.autoFollowPausedUntil ||
+    now - narrationState.lastAutoScrollAt < 900 ||
+    activeElementIsComfortablyVisible(element)
+  ) {
     return;
   }
 
-  const utterance = new SpeechSynthesisUtterance(narrationState.paragraphs[narrationState.index]);
-  if (narrationState.voice) {
-    utterance.voice = narrationState.voice;
-  }
-  utterance.rate = 0.82;
-  utterance.pitch = storyCentresFemaleFigure(story) ? 1.02 : 0.98;
-  utterance.volume = 1;
-
-  utterance.onend = () => {
-    if (!narrationState.isSpeaking || narrationState.isPaused) {
-      return;
-    }
-
-    narrationState.index += 1;
-    narrationState.pauseTimer = window.setTimeout(
-      () => speakNarrationParagraph(button, label),
-      narrationState.index === 1 ? 650 : 850
-    );
-  };
-
-  utterance.onerror = () => stopNarration(button, label);
-  window.speechSynthesis.speak(utterance);
+  narrationState.lastAutoScrollAt = now;
+  narrationState.isAutoScrolling = true;
+  element.scrollIntoView({ behavior: "smooth", block: "center" });
+  window.setTimeout(() => {
+    narrationState.isAutoScrolling = false;
+  }, 700);
 }
 
-function startNarration(item, button, label) {
-  window.clearTimeout(narrationState.pauseTimer);
-  window.speechSynthesis.cancel();
-  narrationState.paragraphs = [
-    item.title,
-    ...item.story.map((paragraph) => paragraph.trim()).filter(Boolean)
-  ];
-  narrationState.index = 0;
-  narrationState.voice = chooseNarrationVoice(item);
-  narrationState.isSpeaking = true;
-  narrationState.isPaused = false;
+function setActiveNarrationParagraph(paragraph) {
+  if (!paragraph) {
+    clearNarrationHighlights();
+    return;
+  }
+
+  if (narrationState.activeParagraph !== paragraph) {
+    narrationState.activeParagraph?.classList.remove("is-narrating");
+    narrationState.activeWord?.classList.remove("is-current-word");
+    narrationState.activeWord = null;
+    narrationState.activeParagraph = paragraph;
+    paragraph.classList.add("is-narrating");
+  }
+
+  maybeAutoScrollTo(paragraph);
+}
+
+function setActiveNarrationWord(wordIndex) {
+  const activeWord = document.querySelector(`[data-word-index="${wordIndex}"]`);
+
+  if (!activeWord || narrationState.activeWord === activeWord) {
+    return;
+  }
+
+  narrationState.activeWord?.classList.remove("is-current-word");
+  narrationState.activeWord = activeWord;
+  activeWord.classList.add("is-current-word");
+  setActiveNarrationParagraph(activeWord.closest("[data-narration-paragraph]"));
+}
+
+function clearReadState() {
+  document.querySelectorAll(".reader-word.is-read").forEach((word) => {
+    word.classList.remove("is-read");
+  });
+}
+
+function markReadThrough(wordIndex) {
+  document.querySelectorAll(".reader-word").forEach((word) => {
+    const index = Number(word.dataset.wordIndex);
+    word.classList.toggle("is-read", Number.isFinite(index) && index < wordIndex);
+  });
+}
+
+function getChunkStart(chunk) {
+  return Number(chunk.start ?? chunk.offset ?? 0);
+}
+
+function getCurrentNarrationTime() {
+  const chunk = narrationState.asset?.chunks?.[narrationState.chunkIndex];
+  return getChunkStart(chunk) + (narrationState.audio?.currentTime ?? 0);
+}
+
+function findCueAt(time) {
+  const cues = narrationState.asset?.cues ?? [];
+  if (!cues.length) {
+    return null;
+  }
+
+  const current = cues.find((cue) => cue.start <= time && time < cue.end);
+  return current ?? cues.findLast?.((cue) => cue.start <= time) ?? null;
+}
+
+function syncNarrationFrame() {
+  if (narrationState.status !== "playing") {
+    return;
+  }
+
+  const cue = findCueAt(getCurrentNarrationTime());
+  if (cue && cue.index !== narrationState.activeCueIndex) {
+    narrationState.activeCueIndex = cue.index;
+    if (narrationState.highlightMotion) {
+      setActiveNarrationWord(cue.wordIndex);
+      markReadThrough(cue.wordIndex);
+    }
+  }
+
+  narrationState.animationFrame = window.requestAnimationFrame(syncNarrationFrame);
+}
+
+function stopNarration(button, label, stopButton) {
+  window.cancelAnimationFrame(narrationState.animationFrame);
+  narrationState.audio?.pause();
+  if (narrationState.audio) {
+    narrationState.audio.currentTime = 0;
+  }
+  narrationState.audio = null;
+  narrationState.chunkIndex = 0;
+  narrationState.activeCueIndex = -1;
+  clearNarrationHighlights();
+  clearReadState();
+  setNarrationButtonState(button, label, "idle");
+  if (stopButton) {
+    stopButton.hidden = true;
+  }
+}
+
+function prepareAudioChunk(button, label, stopButton) {
+  const chunk = narrationState.asset?.chunks?.[narrationState.chunkIndex];
+  if (!chunk) {
+    stopNarration(button, label, stopButton);
+    return null;
+  }
+
+  const audio = new Audio(chunk.src);
+  audio.preload = "auto";
+  audio.addEventListener("ended", () => {
+    narrationState.chunkIndex += 1;
+    const nextAudio = prepareAudioChunk(button, label, stopButton);
+    if (nextAudio) {
+      nextAudio.play().catch(() => stopNarration(button, label, stopButton));
+    }
+  });
+  audio.addEventListener("error", () => {
+    setNarrationButtonState(button, label, "unavailable");
+    if (stopButton) {
+      stopButton.hidden = true;
+    }
+  });
+
+  narrationState.audio = audio;
+  return audio;
+}
+
+function startNarration(item, button, label, stopButton) {
+  setNarrationButtonState(button, label, "loading");
+  narrationState.asset = getNarrationAsset(item);
+
+  if (!narrationState.asset?.chunks?.length) {
+    setNarrationButtonState(button, label, "unavailable");
+    return;
+  }
+
+  clearNarrationHighlights();
+  clearReadState();
+  narrationState.chunkIndex = 0;
+  narrationState.activeCueIndex = -1;
+  const audio = prepareAudioChunk(button, label, stopButton);
+  if (!audio) {
+    setNarrationButtonState(button, label, "unavailable");
+    return;
+  }
+
   setNarrationButtonState(button, label, "playing");
-  speakNarrationParagraph(button, label);
+  if (stopButton) {
+    stopButton.hidden = false;
+  }
+  syncNarrationFrame();
+  audio.play().catch(() => {
+    setNarrationButtonState(button, label, "unavailable");
+  });
 }
 
 function initialiseNarration(item) {
   const button = document.querySelector("[data-narration-toggle]");
   const label = document.querySelector("[data-narration-label]");
+  const stopButton = document.querySelector("[data-narration-stop]");
 
   if (!button || !label) {
     return;
   }
 
-  if (!isNarrationSupported()) {
-    button.disabled = true;
-    button.setAttribute("aria-label", "Story narration is not available in this browser");
-    label.textContent = "Unavailable";
-    return;
-  }
-
-  window.speechSynthesis.onvoiceschanged = () => {
-    if (narrationState.isSpeaking) {
-      return;
-    }
-    narrationState.voice = chooseNarrationVoice(item);
-  };
+  narrationState.autoFollow = true;
+  narrationState.highlightMotion = true;
 
   button.addEventListener("click", () => {
-    if (narrationState.isSpeaking && !narrationState.isPaused) {
-      narrationState.isPaused = true;
-      window.speechSynthesis.pause();
+    if (narrationState.status === "playing") {
+      narrationState.audio?.pause();
+      window.cancelAnimationFrame(narrationState.animationFrame);
       setNarrationButtonState(button, label, "paused");
       return;
     }
 
-    if (narrationState.isSpeaking && narrationState.isPaused) {
-      narrationState.isPaused = false;
-      window.speechSynthesis.resume();
+    if (narrationState.status === "paused") {
+      narrationState.audio?.play();
       setNarrationButtonState(button, label, "playing");
+      syncNarrationFrame();
       return;
     }
 
-    startNarration(item, button, label);
+    startNarration(item, button, label, stopButton);
   });
 
-  window.addEventListener("pagehide", () => stopNarration(button, label));
+  stopButton?.addEventListener("click", () => stopNarration(button, label, stopButton));
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (narrationState.status === "playing" && !narrationState.isAutoScrolling) {
+        narrationState.autoFollowPausedUntil = Date.now() + 4200;
+      }
+    },
+    { passive: true }
+  );
+
+  if (!item.narration || !getNarrationAsset(item)) {
+    setNarrationButtonState(button, label, "unavailable");
+  }
+
+  window.addEventListener("pagehide", () => stopNarration(button, label, stopButton));
 }
 
 if (page && story) {

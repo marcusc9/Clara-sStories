@@ -17,14 +17,51 @@ const bahaiDate = document.querySelector("[data-bahai-date]");
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
-let activeFilter = "all";
+const activeFilters = new Set();
 let lastScroll = 0;
 let ticking = false;
 let programmaticScroll = false;
 let scrollAnimationFrame = null;
 
 function normalise(value) {
-  return String(value ?? "").toLowerCase();
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+function filterKey(value) {
+  return normalise(value);
+}
+
+function storyFilterValues(story) {
+  return [
+    story.theme,
+    ...(story.collectionTags ?? [])
+  ]
+    .map(filterKey)
+    .filter(Boolean);
+}
+
+function isAnecdote(story) {
+  return (story.collectionTags ?? []).some((tag) => filterKey(tag) === "anecdotes");
+}
+
+function storySearchText(story) {
+  return [
+    story.theme,
+    story.title,
+    story.quote,
+    story.summary,
+    story.author,
+    story.book,
+    story.chapter,
+    story.readTime,
+    ...(story.tags ?? []),
+    ...(story.collectionTags ?? []),
+    ...(story.story ?? [])
+  ].join(" ");
 }
 
 function applyTheme(theme) {
@@ -169,6 +206,16 @@ function getDailyStoryOrder() {
     return [];
   }
 
+  const todayKey = localDateKey(new Date());
+  const explicitlyFeaturedStory = libraryOrder.find((story) => story.featuredOn === todayKey);
+
+  if (explicitlyFeaturedStory) {
+    return [
+      explicitlyFeaturedStory,
+      ...libraryOrder.filter((story) => story !== explicitlyFeaturedStory)
+    ];
+  }
+
   const today = Math.floor(dateFromKey(localDateKey(new Date())).getTime() / dayMs);
   const featuredIndex = today % libraryOrder.length;
   const featuredStory = libraryOrder[featuredIndex];
@@ -247,9 +294,11 @@ function renderStories() {
         : "";
       const imageClass = featureImage ? " image-card" : "";
       const featureClass = index === 0 ? " feature" : "";
+      const filterValues = storyFilterValues(story).join(" ");
+      const searchText = normalise(storySearchText(story));
 
       return `
-        <a class="story-card${featureClass}${imageClass} reveal" href="./story.html?id=${story.id}" data-theme="${story.theme}">
+        <a class="story-card${featureClass}${imageClass} reveal" href="./story.html?id=${story.id}" data-theme="${story.theme}" data-filter-values="${filterValues}" data-search="${searchText}">
           ${image}
           <div class="story-meta">
             <span>${story.theme}</span>
@@ -279,6 +328,10 @@ function applyImageFallbacks() {
 }
 
 function formatTheme(value) {
+  if (value === "anecdotes") {
+    return "Anecdotes";
+  }
+
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
@@ -287,25 +340,73 @@ function renderFilters() {
     return;
   }
 
-  const themes = ["all", ...new Set(stories.map((story) => story.theme))];
+  const filterMap = new Map([["all", "All"]]);
+  const themeCounts = new Map();
 
-  filterList.innerHTML = themes
-    .map((theme) => {
-      const activeClass = theme === activeFilter ? " is-active" : "";
-      const label = theme === "all" ? "All" : formatTheme(theme);
-      return `<button class="filter${activeClass}" type="button" data-filter="${theme}">${label}</button>`;
-    })
-    .join("");
+  stories.forEach((story) => {
+    const theme = filterKey(story.theme);
+    const current = themeCounts.get(theme) ?? { label: formatTheme(story.theme), total: 0, anecdotes: 0 };
+    current.total += 1;
+    current.anecdotes += isAnecdote(story) ? 1 : 0;
+    themeCounts.set(theme, current);
+  });
+
+  themeCounts.forEach((count, theme) => {
+    if (count.total !== count.anecdotes) {
+      filterMap.set(theme, count.label);
+    }
+  });
+  stories.forEach((story) => {
+    (story.collectionTags ?? []).forEach((tag) => {
+      filterMap.set(filterKey(tag), formatTheme(filterKey(tag)));
+    });
+  });
+
+  const allFilter = filterMap.get("all");
+  const anecdotesFilter = filterMap.get("anecdotes");
+  const themeFilters = Array.from(filterMap.entries()).filter(
+    ([filter]) => filter !== "all" && filter !== "anecdotes"
+  );
+  const visibleThemeFilters = themeFilters.slice(0, 6);
+  const overflowThemeFilters = themeFilters.slice(6);
+  const visibleFilters = [
+    ["all", allFilter],
+    ...visibleThemeFilters,
+    ...(anecdotesFilter ? [["anecdotes", anecdotesFilter]] : [])
+  ];
+
+  function renderFilterButton([filter, label]) {
+    const isActive = filter === "all" ? activeFilters.size === 0 : activeFilters.has(filter);
+    const activeClass = isActive ? " is-active" : "";
+    return `<button class="filter${activeClass}" type="button" data-filter="${filter}" aria-pressed="${isActive}">${label}</button>`;
+  }
+
+  const moreFilters = overflowThemeFilters.length
+    ? `
+      <details class="filter-menu">
+        <summary class="filter filter-more">More</summary>
+        <div class="filter-menu-panel">
+          ${overflowThemeFilters.map(renderFilterButton).join("")}
+        </div>
+      </details>
+    `
+    : "";
+
+  filterList.innerHTML = `${visibleFilters.map(renderFilterButton).join("")}${moreFilters}`;
+  syncFilterControls();
 }
 
 function updateStories() {
-  const cards = Array.from(document.querySelectorAll(".story-card[data-theme]"));
+  const cards = Array.from(document.querySelectorAll(".story-card[data-filter-values]"));
   const query = normalise(searchInput?.value).trim();
+  const selectedFilters = Array.from(activeFilters);
   let visibleCount = 0;
 
   cards.forEach((card) => {
-    const matchesFilter = activeFilter === "all" || card.dataset.theme === activeFilter;
-    const matchesSearch = !query || normalise(card.textContent).includes(query);
+    const filterValues = (card.dataset.filterValues ?? "").split(/\s+/);
+    const matchesFilter =
+      selectedFilters.length === 0 || selectedFilters.some((filter) => filterValues.includes(filter));
+    const matchesSearch = !query || (card.dataset.search ?? normalise(card.textContent)).includes(query);
     const isVisible = matchesFilter && matchesSearch;
 
     card.classList.toggle("is-hidden", !isVisible);
@@ -317,6 +418,24 @@ function updateStories() {
   if (storyCount) {
     storyCount.textContent = `Showing ${visibleCount} ${visibleCount === 1 ? "story" : "stories"}`;
   }
+}
+
+function syncFilterControls() {
+  const hasActiveFilters = activeFilters.size > 0;
+
+  Array.from(document.querySelectorAll("[data-filter]")).forEach((item) => {
+    const filter = item.dataset.filter ?? "all";
+    const isActive = filter === "all" ? !hasActiveFilters : activeFilters.has(filter);
+    item.classList.toggle("is-active", isActive);
+    item.setAttribute("aria-pressed", String(isActive));
+  });
+
+  Array.from(document.querySelectorAll(".filter-menu")).forEach((menu) => {
+    const hasActiveMenuFilter = Array.from(menu.querySelectorAll("[data-filter]")).some((item) =>
+      activeFilters.has(item.dataset.filter ?? "")
+    );
+    menu.classList.toggle("has-active", hasActiveMenuFilter);
+  });
 }
 
 function observeReveals() {
@@ -340,11 +459,17 @@ filterList?.addEventListener("click", (event) => {
   const filter = event.target.closest("[data-filter]");
 
   if (filter) {
-    activeFilter = filter.dataset.filter ?? "all";
+    const selectedFilter = filter.dataset.filter ?? "all";
 
-    Array.from(document.querySelectorAll("[data-filter]")).forEach((item) =>
-      item.classList.toggle("is-active", item === filter)
-    );
+    if (selectedFilter === "all") {
+      activeFilters.clear();
+    } else if (activeFilters.has(selectedFilter)) {
+      activeFilters.delete(selectedFilter);
+    } else {
+      activeFilters.add(selectedFilter);
+    }
+
+    syncFilterControls();
     updateStories();
   }
 });
