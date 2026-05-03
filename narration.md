@@ -4,10 +4,11 @@ Clara's Stories uses cached OpenAI narration files instead of device-native brow
 
 ## Generate Tahirih's Audio
 
-Run this once when you have an OpenAI API key:
+Run this locally after exporting an OpenAI API key in your shell or loading it from an uncommitted local env file. Do not put keys in browser code, checked-in files, or static site configuration.
 
 ```sh
-OPENAI_API_KEY=your_key_here node scripts/generate-openai-narration.mjs tahirih
+export OPENAI_API_KEY="your_key_here"
+node scripts/generate-openai-narration.mjs tahirih
 ```
 
 The script creates:
@@ -16,6 +17,8 @@ The script creates:
 - `narration-assets.js` timing metadata for progressive word highlighting
 
 The site then plays the cached files directly. It does not call OpenAI from the browser and does not regenerate audio on each play.
+
+If this project later adds live narration or other API-backed features, keep all provider calls in server or edge functions, read secrets only from environment variables, validate request bodies, and rate-limit the routes.
 
 ## Voice Direction
 

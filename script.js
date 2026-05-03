@@ -16,6 +16,7 @@ const storyCount = document.querySelector("[data-story-count]");
 const bahaiDate = document.querySelector("[data-bahai-date]");
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const MAX_SEARCH_QUERY_LENGTH = 120;
 
 const activeFilters = new Set();
 let lastScroll = 0;
@@ -29,6 +30,47 @@ function normalise(value) {
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "");
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value).replace(/`/g, "&#096;");
+}
+
+function sanitiseSearchInput(value) {
+  return String(value ?? "")
+    .replace(/[\u0000-\u001f\u007f]/g, " ")
+    .replace(/[<>]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, MAX_SEARCH_QUERY_LENGTH);
+}
+
+function safeStoryHref(id) {
+  const safeId = String(id ?? "").trim();
+  return `./story.html?id=${encodeURIComponent(safeId)}`;
+}
+
+function safeResourceUrl(url) {
+  const value = String(url ?? "").trim();
+
+  if (!value) {
+    return "";
+  }
+
+  if (/^(https?:)?\/\//i.test(value) || value.startsWith("./") || value.startsWith("../")) {
+    return value;
+  }
+
+  return "";
 }
 
 function filterKey(value) {
@@ -289,24 +331,31 @@ function renderStories() {
     .map((story, index) => {
       const featureImage = index === 0 ? story.featureImage || story.image : "";
       const featureImageAlt = index === 0 ? story.featureImageAlt || story.imageAlt : "";
-      const image = featureImage
-        ? `<img src="${featureImage}" alt="${featureImageAlt}" loading="eager" decoding="async" fetchpriority="high" />`
+      const safeImage = safeResourceUrl(featureImage);
+      const image = safeImage
+        ? `<img src="${escapeAttribute(safeImage)}" alt="${escapeAttribute(
+            featureImageAlt
+          )}" loading="eager" decoding="async" fetchpriority="high" />`
         : "";
-      const imageClass = featureImage ? " image-card" : "";
+      const imageClass = safeImage ? " image-card" : "";
       const featureClass = index === 0 ? " feature" : "";
       const filterValues = storyFilterValues(story).join(" ");
       const searchText = normalise(storySearchText(story));
 
       return `
-        <a class="story-card${featureClass}${imageClass} reveal" href="./story.html?id=${story.id}" data-theme="${story.theme}" data-filter-values="${filterValues}" data-search="${searchText}">
+        <a class="story-card${featureClass}${imageClass} reveal" href="${safeStoryHref(
+          story.id
+        )}" data-theme="${escapeAttribute(story.theme)}" data-filter-values="${escapeAttribute(
+          filterValues
+        )}" data-search="${escapeAttribute(searchText)}">
           ${image}
           <div class="story-meta">
-            <span>${story.theme}</span>
-            <span>${story.readTime}</span>
+            <span>${escapeHtml(story.theme)}</span>
+            <span>${escapeHtml(story.readTime)}</span>
           </div>
-          <h3>${story.title}</h3>
-          <blockquote>“${story.quote}”</blockquote>
-          <p>${story.summary}</p>
+          <h3>${escapeHtml(story.title)}</h3>
+          <blockquote>“${escapeHtml(story.quote)}”</blockquote>
+          <p>${escapeHtml(story.summary)}</p>
           <span class="story-link">Open story</span>
         </a>
       `;
@@ -400,9 +449,14 @@ function renderFilters() {
 
 function updateStories() {
   const cards = Array.from(document.querySelectorAll(".story-card[data-filter-values]"));
-  const query = normalise(searchInput?.value).trim();
+  const cleanSearch = sanitiseSearchInput(searchInput?.value);
+  const query = normalise(cleanSearch).trim();
   const selectedFilters = Array.from(activeFilters);
   let visibleCount = 0;
+
+  if (searchInput && searchInput.value !== cleanSearch) {
+    searchInput.value = cleanSearch;
+  }
 
   cards.forEach((card) => {
     const filterValues = (card.dataset.filterValues ?? "").split(/\s+/);
@@ -476,7 +530,10 @@ filterList?.addEventListener("click", (event) => {
   }
 });
 
-searchInput?.addEventListener("input", updateStories);
+searchInput?.addEventListener("input", () => {
+  searchInput.value = sanitiseSearchInput(searchInput.value);
+  updateStories();
+});
 
 themeToggle?.addEventListener("click", () => {
   const isDark = document.documentElement.dataset.theme === "dark";

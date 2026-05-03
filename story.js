@@ -4,8 +4,16 @@ const header = document.querySelector("[data-header]");
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const params = new URLSearchParams(window.location.search);
-const requestedStoryId = params.get("id");
+const requestedStoryId = sanitiseStoryId(params.get("id"));
 const story = stories.find((item) => item.id === requestedStoryId);
+
+function sanitiseStoryId(value) {
+  const candidate = String(value ?? "")
+    .trim()
+    .slice(0, 120);
+
+  return /^[a-z0-9-]+$/i.test(candidate) ? candidate : "";
+}
 
 function applyTheme(theme) {
   const isDark = theme === "dark";
@@ -71,12 +79,30 @@ function sourcePagesLabel(value) {
 }
 
 function escapeHtml(value) {
-  return String(value)
+  return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value).replace(/`/g, "&#096;");
+}
+
+function safeResourceUrl(url) {
+  const value = String(url ?? "").trim();
+
+  if (!value) {
+    return "";
+  }
+
+  if (/^(https?:)?\/\//i.test(value) || value.startsWith("./") || value.startsWith("../")) {
+    return value;
+  }
+
+  return "";
 }
 
 function renderNarrationParagraph(paragraph, index, wordState) {
@@ -104,33 +130,41 @@ function renderNarrationParagraph(paragraph, index, wordState) {
 }
 
 function storyHtml(item) {
-  const image = item.image
-    ? `<figure class="reader-image"><img src="${item.image}" alt="${item.imageAlt}" /></figure>`
+  const safeImage = safeResourceUrl(item.image);
+  const safeSource = safeResourceUrl(item.source);
+  const image = safeImage
+    ? `<figure class="reader-image"><img src="${escapeAttribute(safeImage)}" alt="${escapeAttribute(
+        item.imageAlt
+      )}" /></figure>`
     : "";
   const wordState = { index: 0 };
   const story = item.story
     .map((paragraph, index) => renderNarrationParagraph(paragraph, index, wordState))
     .join("");
   const sourcePages = item.sourcePages
-    ? `<div><dt>${sourcePagesLabel(item.sourcePages)}</dt><dd>${item.sourcePages}</dd></div>`
+    ? `<div><dt>${escapeHtml(sourcePagesLabel(item.sourcePages))}</dt><dd>${escapeHtml(
+        item.sourcePages
+      )}</dd></div>`
     : "";
   const tags = (item.tags ?? [item.theme])
     .map(
       (tag) =>
-        `<a class="tag-pill" href="./index.html#stories" data-story-tag="${tag.toLowerCase()}">${tag}</a>`
+        `<a class="tag-pill" href="./index.html#stories" data-story-tag="${escapeAttribute(
+          String(tag).toLowerCase()
+        )}">${escapeHtml(tag)}</a>`
     )
     .join("");
   const pullquote = quoteIsStoryEnding(item)
     ? ""
-    : `<blockquote class="reader-pullquote">“${item.quote}”</blockquote>`;
+    : `<blockquote class="reader-pullquote">“${escapeHtml(item.quote)}”</blockquote>`;
 
   return `
     <a class="back-link" href="./index.html#stories">Back to stories</a>
     <section class="reader-hero">
       <div>
-        <p class="kicker">${item.theme} · ${item.readTime}</p>
-        <h1>${item.title}</h1>
-        <p class="reader-summary">${item.summary}</p>
+        <p class="kicker">${escapeHtml(item.theme)} · ${escapeHtml(item.readTime)}</p>
+        <h1>${escapeHtml(item.title)}</h1>
+        <p class="reader-summary">${escapeHtml(item.summary)}</p>
       </div>
       ${image}
     </section>
@@ -165,17 +199,19 @@ function storyHtml(item) {
       <aside class="source-card">
         <p class="kicker">Source</p>
         <dl>
-          <div><dt>Source</dt><dd>${sourceLabel(item)}</dd></div>
-          <div><dt>By</dt><dd>${item.author}</dd></div>
-          <div><dt>Work</dt><dd><cite>${item.book}</cite></dd></div>
-          <div><dt>Chapter</dt><dd>${item.chapter}</dd></div>
+          <div><dt>Source</dt><dd>${escapeHtml(sourceLabel(item))}</dd></div>
+          <div><dt>By</dt><dd>${escapeHtml(item.author)}</dd></div>
+          <div><dt>Work</dt><dd><cite>${escapeHtml(item.book)}</cite></dd></div>
+          <div><dt>Chapter</dt><dd>${escapeHtml(item.chapter)}</dd></div>
           ${sourcePages}
         </dl>
         <div class="tag-panel">
           <p class="kicker">Story tags</p>
           <div class="tag-list">${tags}</div>
         </div>
-        <a class="button primary" href="${item.source}" target="_blank" rel="noopener noreferrer">Open original</a>
+        <a class="button primary" href="${escapeAttribute(
+          safeSource
+        )}" target="_blank" rel="noopener noreferrer">Open original</a>
       </aside>
     </section>
   `;
