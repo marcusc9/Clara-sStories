@@ -1,5 +1,87 @@
 window.ClaraStories = [
   {
+    id: "haji-mirza-jani-kashan",
+    theme: "hospitality",
+    author: "Nabíl-i-A‘ẓam",
+    book: "The Dawn-Breakers",
+    chapter: "Chapter XI: The Báb's Stay in Kashan",
+    sourcePages: "pp. 217-222",
+    sourceDetail:
+      "From Bahai Library; Nabíl-i-A‘ẓam, The Dawn-Breakers, chapter XI, on the chapter page for The Báb's Stay in Kashan.",
+    title: "Hájí Mírzá Jání prepares for three nights.",
+    quote: "We are to be your Guest for three nights.",
+    readTime: "8 minute read",
+    tags: ["Hospitality", "Devotion", "Recognition", "The Báb", "Steadfastness"],
+    summary:
+      "A dream, a Naw-Rúz welcome, and three days of lavish care make Hají Mírzá Jání's house a place of meeting, test, and farewell.",
+    source: "https://bahai-library.com/books/dawnbreakers/chapters/11.html",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Tabatabaei-House-Kashan.jpg",
+    featureImageAlt: "Historic courtyard house architecture in Kashan, Iran",
+    addedOn: "2026-05-03",
+    featuredOn: "2026-05-03",
+    story: [
+      "ON THE eve of the Bab's arrival at Kashan, Haji Mirza Jani, surnamed Parpa, a noted resident of that city, dreamed that he was standing at a late hour in the afternoon at the gate of Attar, one of the gates of the city, when his eyes suddenly beheld the Bab on horseback wearing, instead of His customary turban, the kulah usually worn by the merchants of Persia. Before Him, as well as behind Him, marched a number of horsemen into whose custody He seemed to have been delivered. As they approached the gate, the Bab saluted him and said: \" Haji Mirza Jani, We are to be your Guest for three nights. Prepare yourself to receive Us.\" When he awoke, the vividness of his dream convinced him of the reality of his vision. This unexpected apparition constituted in his eyes a providential warning which he felt it his duty to heed and observe. He accordingly set out to prepare his house for the reception of the Visitor, and to provide whatever seemed necessary for His comfort. As soon as he had completed the preliminary arrangements for the banquet which he had decided to offer the Bab that night, Haji Mirza Jani proceeded to the gate of Attar, and there waited for the signs of the Bab's expected arrival. At the appointed hour, as he was scanning the horizon, he descried in the distance what seemed to him a company of horsemen",
+      "approaching the gate of the city. As he hastened to meet them, his eyes recognised the Bab surrounded by His escort dressed in the same clothes and wearing the same expression as he had seen the night before in his dream. Haji Mirza Jani joyously approached Him and bent to kiss His stirrups. The Bab prevented him, saying: \"We are to be your Guest for three nights. To-morrow is the day of Naw-Ruz; we shall celebrate it together in your home.\" Muhammad Big, who had been riding close to the Bab, thought Him to be",
+      "an intimate acquaintance of Haji Mirza Jani. Turning to him, he said: \"I am ready to abide by whatever is the desire of the Siyyid-i-Bab. I would ask you, however, to obtain the approval of my colleague who shares with me the charge of conducting the Siyyid-i-Bab to Tihran.\" Haji Mirza Jani submitted his request and was met with a flat refusal. \"I decline your suggestion,\" he was told. \"I have been most emphatically instructed not to allow this youth to enter any city until his arrival at the capital. I have been particularly commanded to spend the night outside the gate of the city,",
+      "to break my march at the hour of sunset, and to resume it the next day at the hour of dawn. I cannot depart from the orders that have been given to me.\" This gave rise to a heated altercation which was eventually settled in favour of Muhammad Big, who succeeded in inducing his opponent to deliver the Bab into the custody of Haji Mirza Jani with the express understanding that on the third morning he should safely deliver back his Guest into their hands. Haji Mirza Jani, who had intended to invite to his home the entire escort of the Bab, was advised by Him to abandon this intention. \"No one but you,\" He urged, \"should accompany Me to your home.\" Haji Mirza Jani requested to be allowed to defray the expense of the horsemen's three days' stay in Kashan. \"It is unnecessary,\" observed the Bab; \"but for My will, nothing whatever could have induced them to deliver Me into your hands. All things lie prisoned within the grasp of His might. Nothing is impossible to Him. He removes every difficulty and surmounts every obstacle.\" The horsemen were lodged in a caravanserai in the immediate neighbourhood of the gate of the city. Muhammad Big, following the instructions of the Bab, accompanied Him until they drew near the house of Haji Mirza Jani. Having ascertained the actual situation of the house, he returned and joined his companions. The night the Bab arrived at Kashan coincided with the eve preceding the third Naw-Ruz, after the declaration of His Mission, which fell on the second day of the month of Rabi'u'th-Thani, in the year 1263 A.H. On that same night, Siyyid Husayn-i-Yazdi, who had previously, in accordance with the directions of the Bab, come to Kashan, was invited to the house of Haji Mirza Jani and introduced into the presence of his Master. The Bab was dictating to him a Tablet in honour of His host, when a friend of the latter, a certain Siyyid Abdu'l-Baqi, who was noted in Kashan for his learning, arrived. The Bab invited him to enter, permitted him to hear the verses which He was revealing, but refused to disclose His identity. In the concluding passages of the Tablet which He was addressing to Haji Mirza Jani, He prayed in his behalf, supplicated the Almighty to illumine",
+      "his heart with the light of Divine knowledge, and to unloose his tongue for the service and proclamation of His Cause. Unschooled and unlettered though he was, Haji Mirza Jani was able, by virtue of this prayer, to impress with his speech even the most accomplished divine of Kashan. He became endowed with such power that he was able to silence every idle pretender who dared to challenge the precepts of his Faith. Even the haughty and imperious Mulla Ja'far-i-Naraqi was unable, despite his consummate eloquence, to resist the force of his argument, and was compelled to acknowledge outwardly the merits of the Cause of his adversary, though at heart he refused to believe in its truth. Siyyid Abdu'l-Baqi sat and listened to the Bab. He heard His voice, watched His movements, looked upon the expression of His face, and noted the words which streamed unceasingly from His lips, and yet failed to be moved by their majesty and power. Wrapt in the veils of his own idle fancy and learning, he was powerless to appreciate the meaning of the utterances of the Bab. He did not even trouble to enquire the name or the character of the Guest into whose presence he had been introduced. Unmoved by the things he had heard and seen, he retired from that presence, unaware of the unique opportunity which, through his apathy, he had irretrievably lost. A few days later, when informed of the name of the Youth whom he had treated with such careless indifference, he was filled with chagrin and remorse. It was too late, however, for him to seek His presence and atone for his conduct, for the Bab had already departed from Kashan. In his grief, he renounced the society of his fellowmen, and led, to the end of his days, a life of unrelieved seclusion. Among those who were privileged to meet the Bab in the home of Haji Mirza Jani was a man named Mihdi, who was destined at a later time, in the year 1268 A.H., to suffer martyrdom in Tihran. He and a few others were, during those three days, affectionately entertained by Haji Mirza Jani, whose lavish hospitality earned him the praise and commendation of his Master. To even the members of the Bab's escort he extended the same loving-kindness, and, by",
+      "his liberality and charm of manner, won their lasting gratitude. On the morning of the second day after Naw-Ruz, he, mindful of his pledge, delivered the Prisoner into their hands, and, with a heart overflowing with grief, bade Him a last and touching farewell."
+    ]
+  },
+  {
+    id: "greek-friends-chain-of-lovers",
+    theme: "teaching",
+    author: "Mírzá Maḥmúd-i-Zarqání",
+    book: "Mahmúd's Diary: The Diary of Mírzá Mahmúd-i-Zarqání Chronicling 'Abdu'l-Bahá's Journey to America",
+    chapter: "Monday, July 1, 1912",
+    sourcePages: "chapter 5",
+    sourceDetail:
+      "From Bahai Library; Mahmúd's Diary, chapter 5, on the Monday, July 1, 1912 entry.",
+    title: "They become links in the chain of lovers.",
+    quote: "He was so compelling that they were immediately influenced.",
+    readTime: "2 minute read",
+    tags: ["Teaching", "Attraction", "Inquiry", "Friendship", "Receptivity"],
+    collectionTags: ["Anecdotes"],
+    summary:
+      "A chance meeting in a park turns into an evening of seeking as strangers gather around the Master and return for more.",
+    source: "https://bahai-library.com/zarqani_mahmuds_diary&chapter=5",
+    image: "",
+    imageAlt: "",
+    addedOn: "2026-05-03",
+    story: [
+      "During the Master's stroll in the park near the house, a person of Greek ancestry walked by. When he saw `Abdu'l-Bahá, he was attracted and approached Him. The passerby immediately summoned his friends, who were in the park, to gather round. In those green surroundings the Master spoke to them about Greek philosophers and about the progress and civilization of their country in ancient times. He then exhorted and encouraged them to acquire the virtues of the world of humanity. He was so compelling that they were immediately influenced. That evening they came to the Bahá'í gathering and became yet more links in the chain of lovers.",
+      "Every night after the public meeting, seekers are invited to visit `Abdu'l-Bahá in His own room. As they listen to His solutions to complex spiritual problems, to His convincing arguments and to answers to their questions, they are drawn towards the Kingdom of God and attracted to the Abhá horizon. Although it is summer and intensely hot, every day and night a new group of inquirers is introduced."
+    ]
+  },
+  {
+    id: "we-would-die-rather-than-be-separated",
+    theme: "steadfastness",
+    author: "Myron Henry Phelps and Bahiyyih Khánum",
+    book: "Life and Teachings of Abbas Effendi",
+    chapter: "Bahá’u’lláh - Exile",
+    sourcePages: "pp. 48-55",
+    sourceDetail:
+      "From Bahá'í Stories; Myron Henry Phelps and Bahiyyih Khánum, Life and Teachings of Abbas Effendi, on the Bahá’u’lláh - Exile page.",
+    title: "We would die rather than be separated.",
+    quote: "It is impossible, we cannot separate these people.",
+    readTime: "4 minute read",
+    tags: ["Steadfastness", "Loyalty", "Sacrifice", "Courage", "Unity"],
+    collectionTags: ["Anecdotes"],
+    summary:
+      "A false report drives one believer to the brink, then `Abbas Effendi's fierce defense turns a threatened separation into a reprieve.",
+    source: "https://www.bahaistories.com/subject/bahaullah-exile",
+    image: "",
+    imageAlt: "",
+    addedOn: "2026-05-03",
+    story: [
+      "A servant who had accompanied my brother overheard a part of this despatch read and misunderstood it. Without waiting to inquire whether he had heard aright, he returned to us with the report that the first order was not to be rescinded; that the Blessed Perfection was to be separated from his family and his followers. After telling us this he ran out and spread the news among the believers who were gathered near our house. They were as though stunned, paralysed. One of them, an old and faithful follower, seized a knife, and exclaiming, 'If I must be separated from my Lord, I will go now and join my God,' cut his throat. Fortunately this man's knife was partially arrested by a bystander so that his jugular vein was not severed; with the aid of a physician his life was ultimately saved. The attempted suicide caused a great noise and disturbance, which attracted our attention. My mother and I went out to inquire into the cause of the commotion. We came near, and saw a man lying on the ground with blood streaming from him. The soldiers surrounding the group prevented us from approaching closely enough to determine with certainty who it was, but the first thought which came to us was that my poor brother, on hearing that the order was to be carried out, had, in his despair, killed himself. We could hear the gulping utterances of the man - 'You have separated me from my Lord, - I prefer to die.' Though unable to distinguish the voice, we still thought it was my brother. We remained in this agonising suspense for some time, until we suddenly heard my brother's voice rising high above the din, and speaking with tremendous force.",
+      "On hearing him, two things amazed us. First, he seemed to be wrought up to the highest pitch of anger and indignation. Never before had we heard him speak an angry word. We had known him sometimes impatient and peremptory, but never angry. And then, his great excitement had apparently given him command of the Turkish language, which no one had ever heard him speak before. He was, in Turkish, and in the most impassioned and vehement manner, protesting against, and denouncing, the treatment of the officers and demanding the presence of the Governor, who in the meantime had returned to the city. The officers seemed cowed by his vehemence, and the Governor was sent for. He came, and seeing the situation said, 'It is impossible, we cannot separate these people.' The Governor returned to his palace and telegraphed to Constantinople. The next day he received a reply granting permission to the followers of the Blessed Perfection to accompany him. We were told to prepare for immediate departure, but were not told to what place we were to be sent. When we set out there were seventy-seven in all in our band."
+    ]
+  },
+  {
     id: "mirza-jafar-yazdi",
     theme: "service",
     author: "‘Abdu'l-Bahá",
