@@ -132,6 +132,7 @@ function renderNarrationParagraph(paragraph, index, wordState) {
 function storyHtml(item) {
   const safeImage = safeResourceUrl(item.image);
   const safeSource = safeResourceUrl(item.source);
+  const hasNarration = Boolean(getNarrationAsset(item)?.chunks?.length);
   const image = safeImage
     ? `<figure class="reader-image"><img src="${escapeAttribute(safeImage)}" alt="${escapeAttribute(
         item.imageAlt
@@ -157,20 +158,8 @@ function storyHtml(item) {
   const pullquote = quoteIsStoryEnding(item)
     ? ""
     : `<blockquote class="reader-pullquote">“${escapeHtml(item.quote)}”</blockquote>`;
-
-  return `
-    <a class="back-link" href="./index.html#stories">Back to stories</a>
-    <section class="reader-hero">
-      <div>
-        <p class="kicker">${escapeHtml(item.theme)} · ${escapeHtml(item.readTime)}</p>
-        <h1>${escapeHtml(item.title)}</h1>
-        <p class="reader-summary">${escapeHtml(item.summary)}</p>
-      </div>
-      ${image}
-    </section>
-    <section class="reader-layout">
-      <article class="reader-card">
-        <div class="reader-toolbar">
+  const narrationToolbar = hasNarration
+    ? `<div class="reader-toolbar">
           <button
             class="narration-button"
             type="button"
@@ -189,7 +178,22 @@ function storyHtml(item) {
           >
             Stop
           </button>
-        </div>
+        </div>`
+    : "";
+
+  return `
+    <a class="back-link" href="./index.html#stories">Back to stories</a>
+    <section class="reader-hero">
+      <div>
+        <p class="kicker">${escapeHtml(item.theme)} · ${escapeHtml(item.readTime)}</p>
+        <h1>${escapeHtml(item.title)}</h1>
+        <p class="reader-summary">${escapeHtml(item.summary)}</p>
+      </div>
+      ${image}
+    </section>
+    <section class="reader-layout">
+      <article class="reader-card">
+        ${narrationToolbar}
         <p class="kicker">Story</p>
         <div class="reader-note">
           ${story}

@@ -1,11 +1,3 @@
-if (window.location.hash === "#stories") {
-  history.scrollRestoration = "manual";
-  history.replaceState(null, "", window.location.href.split("#")[0]);
-  window.scrollTo(0, 0);
-  window.requestAnimationFrame(() => window.scrollTo(0, 0));
-  window.addEventListener("load", () => window.scrollTo(0, 0), { once: true });
-}
-
 const stories = window.ClaraStories ?? [];
 const grid = document.querySelector("[data-story-grid]");
 const filterList = document.querySelector("[data-story-filters]");
@@ -322,6 +314,30 @@ function scrollToStories() {
   scrollAnimationFrame = window.requestAnimationFrame(step);
 }
 
+function jumpToStories() {
+  const target = document.querySelector("#stories-anchor") ?? document.querySelector("#stories");
+
+  if (!target) {
+    return;
+  }
+
+  const headerOffset = header ? header.getBoundingClientRect().height + 24 : 0;
+  const destination = Math.max(
+    0,
+    target.getBoundingClientRect().top + window.scrollY - headerOffset
+  );
+
+  programmaticScroll = true;
+  header?.classList.remove("is-hidden");
+  window.scrollTo({ top: destination, behavior: "instant" });
+  lastScroll = destination;
+  window.requestAnimationFrame(() => {
+    programmaticScroll = false;
+    header?.classList.remove("is-hidden");
+  });
+  window.setTimeout(() => header?.classList.remove("is-hidden"), 260);
+}
+
 function renderStories() {
   if (!grid) {
     return;
@@ -608,3 +624,10 @@ renderFilters();
 observeReveals();
 applyBahaiDate();
 updateStories();
+
+if (window.location.hash === "#stories") {
+  window.requestAnimationFrame(() => {
+    jumpToStories();
+    window.setTimeout(jumpToStories, 140);
+  });
+}

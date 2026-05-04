@@ -15,10 +15,6 @@
         document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#09131a");
       }
 
-      if (window.location.hash === "#stories") {
-        history.replaceState(null, "", window.location.href.split("#")[0]);
-        window.scrollTo(0, 0);
-      }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,7 +32,7 @@
     <meta name="apple-mobile-web-app-title" content="Clara's Stories" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260504-ui" />
   </head>
   <body>
     <header class="site-header" data-header>
@@ -82,7 +78,7 @@
         </figure>
       </section>
 
-      <section class="story-stage">
+      <section class="story-stage" id="stories">
         <div class="section-heading">
           <p class="kicker" id="stories-anchor">Stories</p>
           <h2>Choose any, sit back and <span>settle in.</span></h2>
@@ -115,6 +111,6 @@
     </footer>
 
     <script src="./stories.js"></script>
-    <script src="./script.js"></script>
+    <script src="./script.js?v=20260504-ui"></script>
   </body>
 </html>
