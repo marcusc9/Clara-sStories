@@ -262,6 +262,16 @@ function applyBahaiDate() {
   }
 }
 
+function syncHeaderSurface(currentScroll = window.scrollY) {
+  if (!header || !hero) {
+    return;
+  }
+
+  const headerTop = header.getBoundingClientRect().top;
+  const heroBottom = hero.offsetTop + hero.offsetHeight;
+  header.classList.toggle("is-over-content", currentScroll + headerTop > heroBottom - 16);
+}
+
 function easeInOutSine(progress) {
   return -(Math.cos(Math.PI * progress) - 1) / 2;
 }
@@ -608,6 +618,7 @@ window.addEventListener(
 
         hero?.style.setProperty("--hero-shift", `${heroShift}px`);
         hero?.style.setProperty("--hero-image-opacity", heroFade.toFixed(3));
+        syncHeaderSurface(currentScroll);
         lastScroll = Math.max(currentScroll, 0);
         ticking = false;
       });
@@ -623,6 +634,7 @@ applyImageFallbacks();
 renderFilters();
 observeReveals();
 applyBahaiDate();
+syncHeaderSurface();
 updateStories();
 
 if (window.location.hash === "#stories") {
