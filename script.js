@@ -15,6 +15,7 @@ let lastScroll = 0;
 let ticking = false;
 let programmaticScroll = false;
 let scrollAnimationFrame = null;
+let scrollDirectionDistance = 0;
 
 function normalise(value) {
   return String(value ?? "")
@@ -602,15 +603,25 @@ window.addEventListener(
       window.requestAnimationFrame(() => {
         const currentScroll = window.scrollY;
         const scrollDelta = currentScroll - lastScroll;
+        const isSameDirection =
+          (scrollDelta > 0 && scrollDirectionDistance >= 0) ||
+          (scrollDelta < 0 && scrollDirectionDistance <= 0);
+        scrollDirectionDistance = isSameDirection
+          ? scrollDirectionDistance + scrollDelta
+          : scrollDelta;
 
         if (programmaticScroll) {
           header?.classList.remove("is-hidden");
+          scrollDirectionDistance = 0;
         } else if (currentScroll < 80) {
           header?.classList.remove("is-hidden");
-        } else if (scrollDelta > 8) {
+          scrollDirectionDistance = 0;
+        } else if (scrollDirectionDistance > 72 && currentScroll > 220) {
           header?.classList.add("is-hidden");
-        } else if (scrollDelta < -8) {
+          scrollDirectionDistance = 0;
+        } else if (scrollDirectionDistance < -32) {
           header?.classList.remove("is-hidden");
+          scrollDirectionDistance = 0;
         }
 
         const heroShift = Math.min(currentScroll, 520);
