@@ -101,10 +101,11 @@ function storySearchText(story) {
 
 function applyTheme(theme) {
   const isDark = theme === "dark";
+  const isHomePage = document.body.classList.contains("home-page");
   document.documentElement.dataset.theme = isDark ? "dark" : "light";
 
   if (themeColorMeta) {
-    themeColorMeta.setAttribute("content", isDark ? "#09131a" : "#fbf6e8");
+    themeColorMeta.setAttribute("content", isDark ? "#09131a" : (isHomePage ? "#13212a" : "#fbf6e8"));
   }
 
   if (themeToggle) {
