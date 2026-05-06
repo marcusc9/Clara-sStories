@@ -9,6 +9,8 @@
   --clay: #bc6c4f;
   --line: rgba(21, 33, 43, 0.14);
   --shadow: 0 24px 70px rgba(56, 45, 32, 0.12);
+  --home-surface: #fbf6e8;
+  --hero-shade: #09131a;
   --font-ui: Inter, "Segoe UI", system-ui, sans-serif;
   --font-serif: "EB Garamond", "Adobe Garamond Pro", Garamond, Georgia, serif;
   --font-technical: "DM Serif Display", Georgia, serif;
@@ -33,7 +35,7 @@
 
 html {
   min-height: 100%;
-  background: #09131a;
+  background: var(--home-surface);
   scroll-behavior: smooth;
 }
 
@@ -59,7 +61,7 @@ body {
 
 .home-page {
   min-height: 100dvh;
-  background: #09131a;
+  background: var(--home-surface);
 }
 
 :root[data-theme="dark"] {
@@ -73,6 +75,8 @@ body {
   --clay: #e39a78;
   --line: rgba(243, 234, 217, 0.15);
   --shadow: 0 28px 78px rgba(0, 0, 0, 0.34);
+  --home-surface: #09131a;
+  --hero-shade: #09131a;
   color-scheme: dark;
 }
 
@@ -85,7 +89,7 @@ body {
 }
 
 :root[data-theme="dark"] body.home-page {
-  background: #09131a;
+  background: var(--home-surface);
 }
 
 body,
@@ -106,7 +110,7 @@ main,
 
 .home-page main {
   width: 100%;
-  background: #09131a;
+  background: var(--home-surface);
 }
 
 .site-header {
@@ -444,7 +448,7 @@ main,
   align-items: end;
   padding: calc(clamp(132px, 24vh, 240px) + env(safe-area-inset-top))
     max(16px, calc((100vw - 1180px) / 2)) clamp(24px, 6vh, 64px);
-  background: #09131a;
+  background: var(--home-surface);
   isolation: isolate;
   --hero-shift: 0px;
   --hero-image-opacity: 1;
@@ -457,7 +461,7 @@ main,
   z-index: 0;
   background:
     linear-gradient(90deg, rgba(11, 20, 26, 0.72), rgba(11, 20, 26, 0.18) 58%, rgba(11, 20, 26, 0.58)),
-    linear-gradient(0deg, #09131a 0%, rgba(11, 20, 26, 0) 52%);
+    linear-gradient(0deg, var(--home-surface) 0%, rgba(11, 20, 26, 0) 52%);
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, rgba(0, 0, 0, 0.64) 90%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 82%, rgba(0, 0, 0, 0.64) 90%, transparent 100%);
   pointer-events: none;
@@ -466,7 +470,7 @@ main,
 :root[data-theme="dark"] .hero::after {
   background:
     linear-gradient(90deg, rgba(11, 20, 26, 0.72), rgba(11, 20, 26, 0.18) 58%, rgba(11, 20, 26, 0.58)),
-    linear-gradient(0deg, #09131a 0%, rgba(11, 20, 26, 0) 52%);
+    linear-gradient(0deg, var(--home-surface) 0%, rgba(11, 20, 26, 0) 52%);
 }
 
 .hero-copy,
@@ -603,7 +607,7 @@ h3 {
   margin: 0;
   overflow: hidden;
   border-radius: 0;
-  background: #09131a;
+  background: var(--home-surface);
   opacity: 1;
   pointer-events: none;
   transform: none;
@@ -640,7 +644,7 @@ h3 {
   margin-left: 0;
   margin-top: 0;
   padding-top: 58px;
-  background: #09131a;
+  background: var(--home-surface);
   scroll-margin-top: 112px;
 }
 
@@ -1281,7 +1285,7 @@ blockquote {
 }
 
 .home-page .footer {
-  background: #09131a;
+  background: var(--home-surface);
 }
 
 .footer p {

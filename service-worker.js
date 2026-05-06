@@ -1,12 +1,12 @@
-const CACHE_NAME = "clara-stories-v1";
+const CACHE_NAME = "clara-stories-v2-bg";
 const SHELL_ASSETS = [
   "./",
   "./index.html",
   "./story.html",
-  "./styles.css?v=20260504-ui",
+  "./styles.css?v=20260506-bg",
   "./stories.js",
-  "./script.js?v=20260504-ui",
-  "./story.js?v=20260504-ui",
+  "./script.js?v=20260506-bg",
+  "./story.js?v=20260506-bg",
   "./narration-assets.js",
   "./manifest.json",
   "./icons/icon-180.png",
@@ -37,24 +37,27 @@ self.addEventListener("fetch", (event) => {
   }
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) {
-        return cached;
-      }
-
-      return fetch(event.request)
-        .then((response) => {
+    fetch(event.request)
+      .then((response) => {
+        if (response && response.ok) {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => {
+        }
+
+        return response;
+      })
+      .catch(() =>
+        caches.match(event.request).then((cached) => {
+          if (cached) {
+            return cached;
+          }
+
           if (event.request.mode === "navigate") {
             return caches.match("./index.html");
           }
 
           return Response.error();
-        });
-    })
+        })
+      )
   );
 });
