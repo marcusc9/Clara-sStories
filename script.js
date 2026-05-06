@@ -105,7 +105,7 @@ function applyTheme(theme) {
   document.documentElement.dataset.theme = isDark ? "dark" : "light";
 
   if (themeColorMeta) {
-    themeColorMeta.setAttribute("content", isDark ? "#09131a" : (isHomePage ? "#13212a" : "#fbf6e8"));
+    themeColorMeta.setAttribute("content", isDark ? "#09131a" : (isHomePage ? "#09131a" : "#fbf6e8"));
   }
 
   if (themeToggle) {
