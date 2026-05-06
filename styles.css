@@ -45,6 +45,27 @@ html.home-shell {
     var(--home-hero-image) center top / cover no-repeat #09131a;
 }
 
+html.home-shell .home-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: max(96px, calc(env(safe-area-inset-top) + 72px));
+  background:
+    linear-gradient(90deg, rgba(11, 20, 26, 0.54), rgba(11, 20, 26, 0.08) 58%, rgba(11, 20, 26, 0.44)),
+    linear-gradient(0deg, rgba(11, 20, 26, 0.28), rgba(11, 20, 26, 0.08)),
+    var(--home-hero-image) center top / cover no-repeat #09131a;
+  pointer-events: none;
+}
+
+html.home-shell .site-header,
+html.home-shell main,
+html.home-shell .footer {
+  position: relative;
+}
+
 body {
   min-height: 100dvh;
   margin: 0;
