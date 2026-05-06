@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Clara's Stories maskable logo</title>
+  <rect width="512" height="512" fill="#13212a"/>
+  <rect x="36" y="36" width="440" height="440" rx="124" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="7"/>
+  <text x="164" y="326" fill="#fbf6e8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="216" font-weight="800">C</text>
+  <path fill="#f4d982" d="M378 316 395 250 412 316 466 276 437 338 505 344 443 372 491 420 426 403 432 471 395 415 358 471 364 403 299 420 347 372 285 344 353 338 324 276Z"/>
+</svg>

@@ -1307,6 +1307,11 @@ blockquote {
     border-radius: 8px;
   }
 
+  .home-page .site-header {
+    display: flex;
+    grid-template-columns: none;
+  }
+
   .nav {
     justify-content: space-between;
   }
@@ -1378,6 +1383,8 @@ blockquote {
 
   .home-page .site-header {
     width: min(100% - 20px, 1180px);
+    align-items: center;
+    justify-content: space-between;
     gap: 12px;
     padding: 8px 10px;
   }
