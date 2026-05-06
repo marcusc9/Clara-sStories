@@ -37,12 +37,6 @@ html {
   scroll-behavior: smooth;
 }
 
-html.home-shell .site-header,
-html.home-shell main,
-html.home-shell .footer {
-  position: relative;
-}
-
 body {
   min-height: 100dvh;
   margin: 0;
