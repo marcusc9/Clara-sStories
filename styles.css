@@ -635,13 +635,21 @@ h3 {
 .home-page .story-stage {
   position: relative;
   z-index: 2;
-  width: min(1180px, calc(100% - 32px));
-  margin-right: auto;
-  margin-left: auto;
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
   margin-top: 0;
   padding-top: 58px;
   background: #09131a;
   scroll-margin-top: 112px;
+}
+
+.home-page .story-stage > .section-heading,
+.home-page .story-stage > .library-tools,
+.home-page .story-stage > .story-grid {
+  width: min(1180px, calc(100% - 32px));
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .section-heading {
