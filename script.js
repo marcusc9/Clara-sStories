@@ -373,7 +373,7 @@ function renderStories() {
       return `
         <a class="story-card${featureClass}${imageClass} reveal" href="${safeStoryHref(
           story.id
-        )}" data-theme="${escapeAttribute(story.theme)}" data-filter-values="${escapeAttribute(
+        )}" data-story-id="${escapeAttribute(story.id)}" data-theme="${escapeAttribute(story.theme)}" data-filter-values="${escapeAttribute(
           filterValues
         )}" data-search="${escapeAttribute(searchText)}">
           ${image}

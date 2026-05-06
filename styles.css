@@ -834,6 +834,10 @@ h3 {
   margin: 0;
 }
 
+.story-card[data-story-id="badi-carries-the-letter"].feature.image-card img {
+  object-position: center 18%;
+}
+
 .story-card.feature.image-card > :not(img) {
   margin-inline: 24px;
 }
@@ -1520,6 +1524,7 @@ blockquote {
   }
 
   blockquote {
-    max-width: 12ch;
+    max-width: 14ch;
+    font-size: clamp(1.82rem, 8.6vw, 3.25rem);
   }
 }
