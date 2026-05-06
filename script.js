@@ -17,6 +17,12 @@ let programmaticScroll = false;
 let scrollAnimationFrame = null;
 let scrollDirectionDistance = 0;
 
+if ("serviceWorker" in navigator && window.isSecureContext) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
+
 function normalise(value) {
   return String(value ?? "")
     .normalize("NFD")

@@ -2,13 +2,16 @@
   "name": "Clara's Stories",
   "short_name": "Clara",
   "description": "Bahá'í stories to read with their source close by.",
-  "id": "./",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "fullscreen",
-  "display_override": ["fullscreen", "standalone"],
+  "id": "/Clara-sStories/",
+  "start_url": "/Clara-sStories/index.html",
+  "scope": "/Clara-sStories/",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
   "background_color": "#09131a",
   "theme_color": "#09131a",
+  "orientation": "portrait",
+  "prefer_related_applications": false,
+  "categories": ["books", "education", "lifestyle"],
   "icons": [
     {
       "src": "./icons/icon-180.png",
@@ -32,13 +35,13 @@
       "src": "./icons/maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }

@@ -7,6 +7,12 @@ const params = new URLSearchParams(window.location.search);
 const requestedStoryId = sanitiseStoryId(params.get("id"));
 const story = stories.find((item) => item.id === requestedStoryId);
 
+if ("serviceWorker" in navigator && window.isSecureContext) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
+
 function sanitiseStoryId(value) {
   const candidate = String(value ?? "")
     .trim()
