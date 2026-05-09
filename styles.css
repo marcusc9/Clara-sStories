@@ -915,23 +915,24 @@ h3 {
     0 12px 26px rgba(21, 33, 43, 0.09);
 }
 
-.about-shell .site-header {
-  margin-top: 14px;
-}
-
 .about-page {
   display: grid;
   gap: 70px;
-  padding: 72px 0 54px;
+  width: 100%;
+  padding: 0 0 54px;
 }
 
 .about-hero {
   position: relative;
   display: grid;
-  min-height: min(760px, calc(100svh - 108px));
+  width: 100%;
+  min-height: calc(100svh + env(safe-area-inset-top));
   align-items: end;
   overflow: hidden;
-  border-radius: 28px;
+  padding: calc(clamp(132px, 24vh, 240px) + env(safe-area-inset-top))
+    max(16px, calc((100vw - 1180px) / 2)) clamp(24px, 6vh, 64px);
+  background: var(--home-surface);
+  border-radius: 0;
   isolation: isolate;
   --about-shift: 0px;
 }
@@ -945,14 +946,27 @@ h3 {
     linear-gradient(90deg, rgba(9, 19, 26, 0.74), rgba(9, 19, 26, 0.18) 58%, rgba(9, 19, 26, 0.52)),
     linear-gradient(0deg, rgba(9, 19, 26, 0.7), transparent 58%);
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 74%, rgba(0, 0, 0, 0.72) 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 74%, rgba(0, 0, 0, 0.72) 88%, transparent 100%);
+}
+
+.about-hero::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 2;
+  height: 34%;
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--home-surface) 22%, transparent) 42%, var(--home-surface) 100%);
+  pointer-events: none;
 }
 
 .about-hero-copy {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: min(680px, 100%);
-  padding: clamp(28px, 6vw, 72px);
+  padding: 0;
   color: #fffaf0;
+  transform: translateY(calc(var(--about-shift) * -0.08));
 }
 
 .about-hero-copy h1 {
@@ -970,8 +984,13 @@ h3 {
 .about-hero-image {
   position: absolute;
   inset: 0;
+  z-index: 0;
   margin: 0;
+  overflow: hidden;
   background: var(--home-surface);
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, rgba(0, 0, 0, 0.7) 87%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, rgba(0, 0, 0, 0.7) 87%, transparent 100%);
 }
 
 .about-hero-image img {
@@ -984,28 +1003,6 @@ h3 {
 
 :root[data-theme="dark"] .about-hero-image img {
   filter: saturate(0.9) brightness(0.76);
-}
-
-.about-ribbon {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
-.about-ribbon span {
-  min-height: 42px;
-  padding: 10px 16px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 250, 240, 0.58);
-  font-family: var(--font-technical);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-:root[data-theme="dark"] .about-ribbon span {
-  background: rgba(243, 234, 217, 0.07);
 }
 
 .about-section {
@@ -1076,10 +1073,32 @@ body.about-shell {
   gap: clamp(56px, 9vw, 112px);
 }
 
+.about-shell main.about-page {
+  width: 100%;
+}
+
+.about-shell .site-header {
+  position: fixed;
+  top: max(12px, calc(env(safe-area-inset-top) + 8px));
+  left: 50%;
+  width: min(1180px, calc(100% - 32px));
+  margin-top: 0;
+  border-color: transparent;
+  background: transparent;
+  color: #fffaf0;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.32);
+  box-shadow: none;
+  transform: translateX(-50%);
+}
+
+.about-shell .site-header.is-hidden {
+  transform: translate(-50%, calc(-100% - 28px));
+}
+
 .about-orbit {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
 }
 
@@ -1117,27 +1136,13 @@ body.about-shell {
   transform: scale(0.9);
 }
 
-.about-ribbon {
-  display: flex;
-  justify-content: center;
-  overflow: visible;
-  padding: 0;
-  border: 0;
-}
-
-.about-ribbon > div {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  width: min(100%, 980px);
-}
-
 .about-ledger {
   display: grid;
   grid-template-columns: minmax(190px, 0.32fr) minmax(0, 1fr);
   gap: clamp(22px, 5vw, 70px);
   align-items: start;
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
 }
 
 .about-spine {
@@ -1189,12 +1194,47 @@ body.about-shell {
 }
 
 .about-ledger-row p,
+.about-founder p,
 .about-letters p,
 .about-support p {
   margin: 0;
   color: var(--muted);
   font-size: 1.06rem;
   line-height: 1.72;
+}
+
+.about-founder {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 74px);
+  align-items: center;
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.about-founder figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--home-surface);
+  box-shadow: 0 24px 70px rgba(36, 44, 46, 0.14);
+}
+
+.about-founder img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 48%;
+}
+
+.about-founder div {
+  display: grid;
+  gap: 18px;
+}
+
+.about-founder h2 {
+  max-width: 10ch;
 }
 
 .about-letters {
@@ -1238,6 +1278,13 @@ body.about-shell {
 .about-support .button {
   min-width: 180px;
   min-height: 46px;
+}
+
+.about-support a:not(.button) {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
 }
 
 :root[data-theme="dark"] .about-letters {
@@ -2086,6 +2133,7 @@ blockquote {
   .reader-layout,
   .about-principles,
   .about-ledger,
+  .about-founder,
   .about-letters,
   .about-support {
     grid-template-columns: 1fr;
@@ -2279,16 +2327,17 @@ blockquote {
 
   .about-page {
     gap: 46px;
-    padding-top: 34px;
+    padding-top: 0;
   }
 
   .about-hero {
-    min-height: calc(100svh - 120px);
-    border-radius: 18px;
+    min-height: calc(100svh + env(safe-area-inset-top));
+    padding: calc(132px + env(safe-area-inset-top)) 20px 52px;
+    border-radius: 0;
   }
 
   .about-hero-copy {
-    padding: 26px 20px;
+    padding: 0;
     max-width: 320px;
   }
 
@@ -2300,21 +2349,6 @@ blockquote {
 
   .about-hero-copy p:not(.kicker) {
     max-width: 27ch;
-  }
-
-  .about-ribbon {
-    display: block;
-    overflow-x: auto;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    padding: 10px 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    scrollbar-width: none;
-  }
-
-  .about-ribbon::-webkit-scrollbar {
-    display: none;
   }
 
   .about-orbit span {
@@ -2338,13 +2372,6 @@ blockquote {
     bottom: 16%;
   }
 
-  .about-ribbon > div {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    width: max-content;
-    padding-inline: 10px;
-  }
-
   .about-ledger-row {
     grid-template-columns: 34px minmax(0, 1fr);
     gap: 10px 14px;
@@ -2356,6 +2383,15 @@ blockquote {
 
   .about-ledger-row p {
     grid-column: 1 / -1;
+  }
+
+  .about-founder {
+    gap: 22px;
+  }
+
+  .about-founder h2 {
+    max-width: 11ch;
+    font-size: clamp(2.35rem, 10vw, 3.6rem);
   }
 
   .about-letters {
