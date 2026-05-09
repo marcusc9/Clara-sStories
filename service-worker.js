@@ -1,12 +1,12 @@
-const CACHE_NAME = "clara-stories-v14-copy-polish";
+const CACHE_NAME = "clara-stories-v15-install-hide";
 const SHELL_ASSETS = [
   "./",
   "./index.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260509-copy-polish",
+  "./styles.css?v=20260509-install-hide",
   "./stories.js",
-  "./install.js?v=20260509-copy-polish",
+  "./install.js?v=20260509-install-hide",
   "./script.js?v=20260509-copy-polish",
   "./story.js?v=20260509-copy-polish",
   "./about.js?v=20260509-copy-polish",

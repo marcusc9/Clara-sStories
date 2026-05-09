@@ -1,5 +1,6 @@
 const INSTALL_STORAGE_KEY = "claraAppInstalled";
 const MENU_CLOSE_MS = 220;
+const INSTALLED_DISPLAY_MODES = ["standalone", "fullscreen", "minimal-ui", "window-controls-overlay"];
 let deferredInstallPrompt = null;
 let navMenuScrollY = window.scrollY;
 
@@ -21,8 +22,7 @@ function registerServiceWorker() {
 
 function isStandaloneApp() {
   return (
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.matchMedia("(display-mode: fullscreen)").matches ||
+    INSTALLED_DISPLAY_MODES.some((mode) => window.matchMedia(`(display-mode: ${mode})`).matches) ||
     window.navigator.standalone === true
   );
 }
@@ -299,6 +299,15 @@ function initialiseInstallFlow() {
   initialiseNavMenus();
   installButtons().forEach((button) => {
     button.addEventListener("click", handleInstallClick);
+  });
+  INSTALLED_DISPLAY_MODES.forEach((mode) => {
+    const query = window.matchMedia(`(display-mode: ${mode})`);
+
+    if (query.addEventListener) {
+      query.addEventListener("change", syncInstallVisibility);
+    } else if (query.addListener) {
+      query.addListener(syncInstallVisibility);
+    }
   });
   syncInstallVisibility();
 }

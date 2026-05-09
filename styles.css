@@ -376,6 +376,12 @@ main,
   display: inline-grid;
 }
 
+@media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui), (display-mode: window-controls-overlay) {
+  .show-install-action [data-install-app] {
+    display: none;
+  }
+}
+
 .install-icon,
 .menu-icon {
   position: relative;
