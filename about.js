@@ -2,7 +2,7 @@ const header = document.querySelector("[data-header]");
 const themeToggles = document.querySelectorAll("[data-theme-toggle]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const aboutHero = document.querySelector("[data-about-hero]");
-const aboutRibbon = document.querySelector("[data-about-ribbon]");
+const navMenus = document.querySelectorAll(".nav-menu");
 
 function applyTheme(theme) {
   const isDark = theme === "dark";
@@ -50,6 +50,15 @@ themeToggles.forEach((toggle) => {
   });
 });
 
+navMenus.forEach((menu) => {
+  menu.addEventListener("click", (event) => {
+    const link = event.target.closest("a");
+    if (link) {
+      menu.removeAttribute("open");
+    }
+  });
+});
+
 window.addEventListener(
   "scroll",
   () => {
@@ -62,7 +71,6 @@ window.addEventListener(
       header.dataset.lastScroll = String(Math.max(currentScroll, 0));
     }
     aboutHero?.style.setProperty("--about-shift", `${Math.min(currentScroll, 520)}px`);
-    aboutRibbon?.style.setProperty("--ribbon-shift", `${Math.min(currentScroll * -0.18, 0)}px`);
   },
   { passive: true }
 );

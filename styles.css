@@ -1118,23 +1118,19 @@ body.about-shell {
 }
 
 .about-ribbon {
-  display: block;
-  overflow: hidden;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  padding: 14px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  --ribbon-shift: 0px;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+  padding: 0;
+  border: 0;
 }
 
 .about-ribbon > div {
   display: flex;
-  width: max-content;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
-  padding-inline: max(16px, calc((100vw - 1180px) / 2));
-  transform: translateX(var(--ribbon-shift));
-  transition: transform 80ms linear;
+  width: min(100%, 980px);
 }
 
 .about-ledger {
@@ -2136,9 +2132,18 @@ blockquote {
   }
 
   .nav {
-    overflow-x: auto;
+    overflow: visible;
     justify-content: space-between;
     padding-bottom: 2px;
+  }
+
+  .nav-menu-panel {
+    position: fixed;
+    top: calc(82px + env(safe-area-inset-top));
+    right: 20px;
+    left: 20px;
+    z-index: 30;
+    min-width: 0;
   }
 
   .home-page .site-header {
@@ -2298,7 +2303,18 @@ blockquote {
   }
 
   .about-ribbon {
-    justify-content: flex-start;
+    display: block;
+    overflow-x: auto;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+
+  .about-ribbon::-webkit-scrollbar {
+    display: none;
   }
 
   .about-orbit span {
@@ -2323,6 +2339,9 @@ blockquote {
   }
 
   .about-ribbon > div {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: max-content;
     padding-inline: 10px;
   }
 
@@ -2350,6 +2369,15 @@ blockquote {
 
   .about-support {
     gap: 18px;
+  }
+
+  .about-support h2 {
+    max-width: 11ch;
+    font-size: clamp(2.35rem, 10vw, 3.6rem);
+  }
+
+  .about-support .button {
+    width: 100%;
   }
 
   .about-principle > span {
