@@ -7,12 +7,10 @@ const searchInput = document.querySelector("[data-story-search]");
 const storyCount = document.querySelector("[data-story-count]");
 const bahaiDate = document.querySelector("[data-bahai-date]");
 const themeToggles = document.querySelectorAll("[data-theme-toggle]");
-const installButtons = document.querySelectorAll("[data-install-app]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const MAX_SEARCH_QUERY_LENGTH = 120;
 
 const activeFilters = new Set();
-let deferredInstallPrompt = null;
 let lastScroll = 0;
 let ticking = false;
 let programmaticScroll = false;
@@ -23,15 +21,6 @@ if ("serviceWorker" in navigator && window.isSecureContext) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./service-worker.js").catch(() => {});
   });
-}
-
-function isInstalledApp() {
-  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
-}
-
-function syncInstallActions() {
-  const shouldShow = !isInstalledApp() && Boolean(deferredInstallPrompt);
-  document.documentElement.classList.toggle("show-install-action", shouldShow);
 }
 
 function normalise(value) {
@@ -288,8 +277,8 @@ function syncHeaderSurface(currentScroll = window.scrollY) {
   header.classList.toggle("is-over-content", currentScroll + headerTop > heroBottom - 16);
 }
 
-function easeInOutSine(progress) {
-  return -(Math.cos(Math.PI * progress) - 1) / 2;
+function easeInOutCubic(progress) {
+  return progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 }
 
 function scrollToStories() {
@@ -320,12 +309,12 @@ function scrollToStories() {
   programmaticScroll = true;
   header?.classList.remove("is-hidden");
 
-  const duration = Math.min(2400, Math.max(1500, Math.abs(distance) * 1.15));
+  const duration = Math.min(1700, Math.max(860, Math.abs(distance) * 0.72));
   const startedAt = performance.now();
 
   function step(now) {
     const progress = Math.min(1, (now - startedAt) / duration);
-    window.scrollTo(0, start + distance * easeInOutSine(progress));
+    window.scrollTo(0, start + distance * easeInOutCubic(progress));
 
     if (progress < 1) {
       scrollAnimationFrame = window.requestAnimationFrame(step);
@@ -480,6 +469,9 @@ function renderFilters() {
         </summary>
         <div class="filter-menu-panel">
           ${overflowThemeFilters.map(renderFilterButton).join("")}
+          <button class="filter filter-more filter-less" type="button" data-filter-collapse aria-label="Hide more filters">
+            <span class="visually-hidden">Fewer filters</span>
+          </button>
         </div>
       </details>
     `
@@ -556,6 +548,11 @@ function observeReveals() {
 filterList?.addEventListener("click", (event) => {
   const filter = event.target.closest("[data-filter]");
 
+  if (event.target.closest("[data-filter-collapse]")) {
+    event.target.closest(".filter-menu")?.removeAttribute("open");
+    return;
+  }
+
   if (filter) {
     const selectedFilter = filter.dataset.filter ?? "all";
 
@@ -587,42 +584,6 @@ themeToggles.forEach((toggle) => {
   });
 });
 
-window.addEventListener("beforeinstallprompt", (event) => {
-  event.preventDefault();
-  deferredInstallPrompt = event;
-  syncInstallActions();
-});
-
-window.addEventListener("appinstalled", () => {
-  deferredInstallPrompt = null;
-  syncInstallActions();
-});
-
-installButtons.forEach((button) => {
-  button.addEventListener("click", async () => {
-    button.closest("details")?.removeAttribute("open");
-
-    if (isInstalledApp()) {
-      return;
-    }
-
-    if (!deferredInstallPrompt) {
-      return;
-    }
-
-    const promptEvent = deferredInstallPrompt;
-    deferredInstallPrompt = null;
-    syncInstallActions();
-    try {
-      await promptEvent.prompt();
-      await promptEvent.userChoice.catch(() => {});
-    } catch {
-      deferredInstallPrompt = null;
-    }
-    syncInstallActions();
-  });
-});
-
 ["wheel", "touchstart", "keydown"].forEach((eventName) => {
   window.addEventListener(
     eventName,
@@ -646,8 +607,9 @@ document.addEventListener("click", (event) => {
 
   event.preventDefault();
   history.pushState(null, "", "#stories");
+  link.closest("details")?.removeAttribute("open");
   header?.classList.remove("is-hidden");
-  scrollToStories();
+  window.setTimeout(scrollToStories, 120);
 });
 
 window.addEventListener(
@@ -694,7 +656,6 @@ window.addEventListener(
 );
 
 initialiseTheme();
-syncInstallActions();
 renderStories();
 applyImageFallbacks();
 renderFilters();

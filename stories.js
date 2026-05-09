@@ -1,5 +1,32 @@
 window.ClaraStories = [
   {
+    id: "none-happy-unless-all-were-happy",
+    theme: "love",
+    author: "May Maxwell",
+    book: "An Early Pilgrimage",
+    chapter: "The meeting on Mount Carmel",
+    sourcePages: "pp. 5-7",
+    sourceDetail: "An Early Pilgrimage",
+    title: "None happy unless all were happy.",
+    quote: "We could none of us be happy unless all the beloved were happy.",
+    readTime: "2 minute read",
+    tags: ["Love", "Compassion", "Pilgrimage", "‘Abdu’l-Bahá", "May Maxwell"],
+    summary:
+      "May Maxwell remembers how ‘Abdu’l-Bahá set aside a cherished Mount Carmel meeting rather than leave one sick pilgrim alone.",
+    source: "https://www.datocms-assets.com/42576/1709211250-an-early-pilgrimage-may-maxwell.pdf",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://commons.wikimedia.org/wiki/Special:FilePath/AAbdul-baha_late_life.jpg",
+    featureImageAlt: "‘Abdu’l-Bahá with pilgrims on Mount Carmel in Haifa in 1919",
+    addedOn: "2026-05-09",
+    featuredOn: "2026-05-09",
+    story: [
+      "Our beloved Master returned at noon to lunch with us and again at supper-time, and whenever He arrived many of the believers followed. They always knew just where He was day and night and seemed to surround Him by their watchful love; yet wholly unobtrusive, never approaching Him in public, always humble and submissive, waiting for His least command, seeking to render the humblest service. That evening He invited us all to meet Him on Sunday morning under the cedar trees on Mount Carmel where he had been in the habit of sitting with Bahá’u’lláh. We were all most happy in this hope, and great was my disappointment next morning when I found myself quite ill. As soon as the Master arrived for breakfast He came directly to my room and walking over to my bedside took both my hands in His, passed His hands over my brow, and gazed upon me with such gentleness and mercy that I forgot everything but the love and goodness of God, and my whole soul was healed and comforted. I looked up into His face and said: ‘I am well now, Mawláná.’ But He smiled and shook His head and bade me remain there quietly, until He should return at noon. Although I had been suffering during the night, all pain and distress were gone, and I slept quietly. That night we were sitting together with some members of the Master’s family; the room was dimly lighted by candles which cast strange shadows on the walls and low ceiling; the latticed windows opened on to the narrow street flooded with moonlight, and as we sat thus in silence waiting for our Master we heard His voice in the hall, and all arose to greet Him as He appeared on the threshold, and the light of His beautiful countenance was shed upon us.",
+      "On Sunday morning we awakened with the joy and hope of the meeting on Mount Carmel. The Master arrived quite early and after looking at me, touching my head and counting my pulse, still holding my hand He said to the believers present: ‘There will be no meeting on Mount Carmel to-day. We shall meet elsewhere, Insha’alláh, in a few days, but we could not go and leave one of the beloved of God alone and sick. We could none of us be happy unless all the beloved were happy.’ We were astonished. That anything so important as this meeting in that blessed spot should be cancelled because one person was ill and could not go seemed incredible. It was so contrary to all ordinary habits of thought and action, so different from the life of the world where daily events and material circumstances are supreme in importance that it gave us a genuine shock of surprise, and in that shock the foundations of the old order began to totter and fall. The Master’s words had opened wide the door of God’s Kingdom and given us a vision of that infinite world whose only law is love. This was but one of many times that we saw ‘Abdu’l-Bahá place above every other consideration the love and kindness, the sympathy and compassion due to every soul. Indeed, as we look back upon that blessed time spent in His presence we understand that the object of our pilgrimage was to learn for the first time on earth what love is, to witness its light in every face, to feel its burning heat in every heart and to become ourselves enkindled with this divine flame from the Sun of Truth, the Essence of whose being is love. So on that Sunday morning He sat with us for a while and we thought no more of the meeting on Mount Carmel, for in the joy and infinite rest of His presence all else was swallowed up."
+    ]
+  },
+  {
     id: "queen-marie-reads-until-three",
     theme: "confirmation",
     author: "Martha Root",

@@ -31,7 +31,7 @@
     <meta name="apple-mobile-web-app-title" content="Clara's Stories" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="./manifest.json" />
-    <link rel="stylesheet" href="./styles.css?v=20260509-native" />
+    <link rel="stylesheet" href="./styles.css?v=20260509-nogrid" />
   </head>
   <body class="story-shell">
     <header class="site-header" data-header>
@@ -61,8 +61,22 @@
             <span class="menu-icon" aria-hidden="true"></span>
           </summary>
           <div class="nav-menu-panel">
-            <a href="./index.html#stories">Stories</a>
-            <button type="button" data-install-app>Install app</button>
+            <a class="nav-menu-item" href="./index.html#stories">
+              <span>Stories</span>
+              <small>Browse the library</small>
+            </a>
+            <a class="nav-menu-item" href="./about.html">
+              <span>About</span>
+              <small>How Clara's Stories is made</small>
+            </a>
+            <span class="nav-menu-item is-disabled" aria-disabled="true">
+              <span>Letters</span>
+              <small>Coming soon</small>
+            </span>
+            <button class="nav-menu-item" type="button" data-install-app>
+              <span>Install app</span>
+              <small>Keep the reader close</small>
+            </button>
           </div>
         </details>
       </nav>
@@ -75,6 +89,7 @@
 
     <script src="./stories.js"></script>
     <script src="./narration-assets.js"></script>
-    <script src="./story.js?v=20260509-native"></script>
+    <script src="./install.js?v=20260509-nogrid"></script>
+    <script src="./story.js?v=20260509-nogrid"></script>
   </body>
 </html>

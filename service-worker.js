@@ -1,12 +1,15 @@
-const CACHE_NAME = "clara-stories-v6-native";
+const CACHE_NAME = "clara-stories-v11-nogrid";
 const SHELL_ASSETS = [
   "./",
   "./index.html",
+  "./about.html",
   "./story.html",
-  "./styles.css?v=20260509-native",
+  "./styles.css?v=20260509-nogrid",
   "./stories.js",
-  "./script.js?v=20260509-native",
-  "./story.js?v=20260509-native",
+  "./install.js?v=20260509-nogrid",
+  "./script.js?v=20260509-nogrid",
+  "./story.js?v=20260509-nogrid",
+  "./about.js?v=20260509-nogrid",
   "./narration-assets.js",
   "./manifest.json",
   "./icons/icon-180.png",
