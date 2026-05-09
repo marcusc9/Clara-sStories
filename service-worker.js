@@ -1,15 +1,15 @@
-const CACHE_NAME = "clara-stories-v12-pwa-menu";
+const CACHE_NAME = "clara-stories-v14-copy-polish";
 const SHELL_ASSETS = [
   "./",
   "./index.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260509-pwa-menu",
+  "./styles.css?v=20260509-copy-polish",
   "./stories.js",
-  "./install.js?v=20260509-pwa-menu",
-  "./script.js?v=20260509-pwa-menu",
-  "./story.js?v=20260509-pwa-menu",
-  "./about.js?v=20260509-pwa-menu",
+  "./install.js?v=20260509-copy-polish",
+  "./script.js?v=20260509-copy-polish",
+  "./story.js?v=20260509-copy-polish",
+  "./about.js?v=20260509-copy-polish",
   "./narration-assets.js",
   "./manifest.json",
   "./images/marcus-clara.jpeg",

@@ -421,7 +421,8 @@ main,
     linear-gradient(currentColor, currentColor) 2px 15px / 16px 2px no-repeat;
 }
 
-body.nav-menu-is-open::before {
+body.nav-menu-is-open::before,
+body.nav-menu-is-closing::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -430,6 +431,14 @@ body.nav-menu-is-open::before {
     radial-gradient(circle at calc(100% - 74px) 64px, rgba(244, 217, 130, 0.14), transparent 180px),
     rgba(9, 19, 26, 0.48);
   backdrop-filter: blur(5px);
+}
+
+body.nav-menu-is-open::before {
+  animation: menu-backdrop-in 220ms ease both;
+}
+
+body.nav-menu-is-closing::before {
+  animation: menu-backdrop-out 220ms ease both;
 }
 
 .nav-menu {
@@ -465,8 +474,16 @@ body.nav-menu-is-open::before {
   text-shadow: none;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
   transform-origin: top right;
-  animation: menu-panel-fan 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
   overflow: hidden;
+}
+
+.nav-menu[open]:not(.is-closing) .nav-menu-panel {
+  animation: menu-panel-fan 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.nav-menu.is-closing .nav-menu-panel {
+  pointer-events: none;
+  animation: menu-panel-fold 220ms ease both;
 }
 
 :root[data-theme="dark"] .nav-menu-panel {
@@ -480,9 +497,13 @@ body.nav-menu-is-open::before {
 .nav-menu-panel a,
 .nav-menu-panel button,
 .nav-menu-panel .nav-menu-item {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   min-height: 58px;
-  place-items: center start;
+  align-self: stretch;
+  justify-content: center;
+  align-items: flex-start;
   padding: 11px 16px;
   border: 0;
   border-radius: 18px;
@@ -496,7 +517,14 @@ body.nav-menu-is-open::before {
   cursor: pointer;
   opacity: 0;
   transform: translateX(20px) translateY(-8px) rotate(-2deg);
-  animation: menu-item-fan 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.nav-menu[open]:not(.is-closing) .nav-menu-item {
+  animation: menu-item-fan 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.nav-menu.is-closing .nav-menu-item {
+  animation: menu-item-fold 180ms ease both;
 }
 
 .nav-menu-panel .nav-menu-item:nth-child(1) {
@@ -541,6 +569,7 @@ body.nav-menu-is-open::before {
 .nav-menu-panel a:focus-visible,
 .nav-menu-panel button:focus-visible {
   background: rgba(255, 250, 240, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 250, 240, 0.08);
   outline: none;
 }
 
@@ -571,10 +600,54 @@ body.nav-menu-is-open::before {
   }
 }
 
+@keyframes menu-panel-fold {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.94);
+  }
+}
+
 @keyframes menu-item-fan {
   to {
     opacity: 1;
     transform: translateX(0) translateY(0) rotate(0);
+  }
+}
+
+@keyframes menu-item-fold {
+  from {
+    opacity: 1;
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(10px) translateY(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes menu-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menu-backdrop-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }
 
@@ -723,6 +796,7 @@ body.nav-menu-is-open::before {
 
 .theme-toggle {
   position: relative;
+  z-index: 11;
   display: grid;
   width: 36px;
   min-width: 36px;
@@ -987,7 +1061,7 @@ h3 {
   position: relative;
   display: grid;
   width: 100%;
-  min-height: calc(100svh + env(safe-area-inset-top));
+  min-height: calc(88svh + env(safe-area-inset-top));
   align-items: end;
   overflow: hidden;
   padding: calc(clamp(132px, 24vh, 240px) + env(safe-area-inset-top))
@@ -1016,8 +1090,8 @@ h3 {
   position: absolute;
   inset: auto 0 0;
   z-index: 2;
-  height: 34%;
-  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--home-surface) 22%, transparent) 42%, var(--home-surface) 100%);
+  height: 24%;
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--home-surface) 10%, transparent) 48%, color-mix(in srgb, var(--home-surface) 72%, transparent) 100%);
   pointer-events: none;
 }
 
@@ -1050,8 +1124,8 @@ h3 {
   overflow: hidden;
   background: var(--home-surface);
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, rgba(0, 0, 0, 0.7) 87%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, rgba(0, 0, 0, 0.7) 87%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.82) 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.82) 92%, transparent 100%);
 }
 
 .about-hero-image img {
@@ -1131,7 +1205,7 @@ body.about-shell {
 }
 
 .about-page {
-  gap: clamp(56px, 9vw, 112px);
+  gap: clamp(36px, 7vw, 88px);
 }
 
 .about-shell main.about-page {
@@ -1169,12 +1243,15 @@ body.about-shell {
   width: clamp(84px, 11vw, 132px);
   aspect-ratio: 1;
   place-items: center;
+  padding: 10px;
   border: 1px solid rgba(255, 250, 240, 0.46);
   border-radius: 999px;
   color: rgba(255, 250, 240, 0.82);
   font-family: var(--font-technical);
   font-size: 0.72rem;
+  line-height: 1.08;
   letter-spacing: 0.08em;
+  text-align: center;
   text-transform: uppercase;
   backdrop-filter: blur(10px);
   box-shadow: inset 0 0 0 8px rgba(255, 250, 240, 0.05);
@@ -2400,7 +2477,7 @@ blockquote {
   }
 
   .about-hero {
-    min-height: calc(100svh + env(safe-area-inset-top));
+    min-height: calc(88svh + env(safe-area-inset-top));
     padding: calc(132px + env(safe-area-inset-top)) 20px 52px;
     border-radius: 0;
   }
@@ -2421,8 +2498,8 @@ blockquote {
   }
 
   .about-orbit span {
-    width: 68px;
-    font-size: 0.54rem;
+    width: 82px;
+    font-size: 0.46rem;
     opacity: 0.72;
   }
 

@@ -1,4 +1,5 @@
 const INSTALL_STORAGE_KEY = "claraAppInstalled";
+const MENU_CLOSE_MS = 220;
 let deferredInstallPrompt = null;
 let navMenuScrollY = window.scrollY;
 
@@ -48,7 +49,11 @@ function setInstallVisible(isVisible) {
 }
 
 function closeOpenMenu(button) {
-  button.closest("details")?.removeAttribute("open");
+  const menu = button.closest(".nav-menu");
+
+  if (menu) {
+    closeNavMenu(menu);
+  }
 }
 
 function navMenus() {
@@ -56,38 +61,86 @@ function navMenus() {
 }
 
 function syncMenuState() {
+  const menus = navMenus();
   document.body.classList.toggle(
     "nav-menu-is-open",
-    navMenus().some((menu) => menu.open)
+    menus.some((menu) => menu.open && !menu.classList.contains("is-closing"))
+  );
+  document.body.classList.toggle(
+    "nav-menu-is-closing",
+    menus.some((menu) => menu.classList.contains("is-closing"))
   );
 }
 
-function closeNavMenus() {
-  navMenus().forEach((menu) => {
-    menu.removeAttribute("open");
+function openNavMenu(menu) {
+  window.clearTimeout(Number(menu.dataset.closeTimer) || 0);
+  navMenuScrollY = window.scrollY;
+
+  navMenus().forEach((otherMenu) => {
+    if (otherMenu !== menu) {
+      closeNavMenu(otherMenu, { animate: false });
+    }
   });
+
+  menu.classList.remove("is-closing", "is-opening");
+  menu.open = true;
+  void menu.offsetWidth;
+  menu.classList.add("is-opening");
+  window.setTimeout(() => menu.classList.remove("is-opening"), 380);
   syncMenuState();
+}
+
+function closeNavMenu(menu, options = {}) {
+  const shouldAnimate = options.animate !== false;
+
+  window.clearTimeout(Number(menu.dataset.closeTimer) || 0);
+
+  if (!menu.open) {
+    menu.classList.remove("is-opening", "is-closing");
+    syncMenuState();
+    return;
+  }
+
+  menu.classList.remove("is-opening");
+
+  if (!shouldAnimate) {
+    menu.open = false;
+    menu.classList.remove("is-closing");
+    syncMenuState();
+    return;
+  }
+
+  menu.classList.add("is-closing");
+  syncMenuState();
+
+  menu.dataset.closeTimer = String(window.setTimeout(() => {
+    menu.open = false;
+    menu.classList.remove("is-closing");
+    syncMenuState();
+  }, MENU_CLOSE_MS));
+}
+
+function closeNavMenus(options) {
+  navMenus().forEach((menu) => closeNavMenu(menu, options));
 }
 
 function initialiseNavMenus() {
   navMenus().forEach((menu) => {
-    menu.addEventListener("toggle", () => {
-      if (menu.open) {
-        navMenuScrollY = window.scrollY;
-        navMenus().forEach((otherMenu) => {
-          if (otherMenu !== menu) {
-            otherMenu.removeAttribute("open");
-          }
-        });
-      }
+    const summary = menu.querySelector("summary");
 
-      syncMenuState();
+    summary?.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      if (menu.open && !menu.classList.contains("is-closing")) {
+        closeNavMenu(menu);
+      } else {
+        openNavMenu(menu);
+      }
     });
 
     menu.addEventListener("click", (event) => {
       if (event.target.closest("a")) {
-        menu.removeAttribute("open");
-        syncMenuState();
+        closeNavMenu(menu);
       }
     });
   });

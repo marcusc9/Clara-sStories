@@ -2,7 +2,6 @@ const header = document.querySelector("[data-header]");
 const themeToggles = document.querySelectorAll("[data-theme-toggle]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const aboutHero = document.querySelector("[data-about-hero]");
-const navMenus = document.querySelectorAll(".nav-menu");
 
 function applyTheme(theme) {
   const isDark = theme === "dark";
@@ -46,16 +45,6 @@ themeToggles.forEach((toggle) => {
     const nextTheme = isDark ? "light" : "dark";
     localStorage.setItem("claraTheme", nextTheme);
     applyTheme(nextTheme);
-    toggle.closest("details")?.removeAttribute("open");
-  });
-});
-
-navMenus.forEach((menu) => {
-  menu.addEventListener("click", (event) => {
-    const link = event.target.closest("a");
-    if (link) {
-      menu.removeAttribute("open");
-    }
   });
 });
 
