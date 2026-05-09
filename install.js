@@ -1,8 +1,21 @@
 const INSTALL_STORAGE_KEY = "claraAppInstalled";
 let deferredInstallPrompt = null;
+let navMenuScrollY = window.scrollY;
 
 function logInstall(message, detail) {
   console.debug(`[Clara install] ${message}`, detail ?? "");
+}
+
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator) || !window.isSecureContext) {
+    return;
+  }
+
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js", { scope: "./" }).catch((error) => {
+      logInstall("service worker registration failed", error);
+    });
+  });
 }
 
 function isStandaloneApp() {
@@ -36,6 +49,74 @@ function setInstallVisible(isVisible) {
 
 function closeOpenMenu(button) {
   button.closest("details")?.removeAttribute("open");
+}
+
+function navMenus() {
+  return Array.from(document.querySelectorAll(".nav-menu"));
+}
+
+function syncMenuState() {
+  document.body.classList.toggle(
+    "nav-menu-is-open",
+    navMenus().some((menu) => menu.open)
+  );
+}
+
+function closeNavMenus() {
+  navMenus().forEach((menu) => {
+    menu.removeAttribute("open");
+  });
+  syncMenuState();
+}
+
+function initialiseNavMenus() {
+  navMenus().forEach((menu) => {
+    menu.addEventListener("toggle", () => {
+      if (menu.open) {
+        navMenuScrollY = window.scrollY;
+        navMenus().forEach((otherMenu) => {
+          if (otherMenu !== menu) {
+            otherMenu.removeAttribute("open");
+          }
+        });
+      }
+
+      syncMenuState();
+    });
+
+    menu.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        menu.removeAttribute("open");
+        syncMenuState();
+      }
+    });
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!document.body.classList.contains("nav-menu-is-open")) {
+      return;
+    }
+
+    if (!event.target.closest(".nav-menu")) {
+      closeNavMenus();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeNavMenus();
+    }
+  });
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (document.body.classList.contains("nav-menu-is-open") && Math.abs(window.scrollY - navMenuScrollY) > 12) {
+        closeNavMenus();
+      }
+    },
+    { passive: true }
+  );
 }
 
 function syncInstallVisibility() {
@@ -161,6 +242,8 @@ function handleInstallClick(event) {
 }
 
 function initialiseInstallFlow() {
+  registerServiceWorker();
+  initialiseNavMenus();
   installButtons().forEach((button) => {
     button.addEventListener("click", handleInstallClick);
   });
