@@ -31,7 +31,7 @@
     <meta name="apple-mobile-web-app-title" content="Clara's Stories" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="./manifest.json" />
-    <link rel="stylesheet" href="./styles.css?v=20260506-bg" />
+    <link rel="stylesheet" href="./styles.css?v=20260509-native" />
   </head>
   <body class="story-shell">
     <header class="site-header" data-header>
@@ -43,9 +43,12 @@
         </span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a href="./index.html#stories">Stories</a>
+        <a class="nav-link" href="./index.html#stories">Stories</a>
+        <button class="nav-action install-action" type="button" data-install-app aria-label="Install app" title="Install app">
+          <span class="install-icon" aria-hidden="true"></span>
+        </button>
         <button
-          class="theme-toggle"
+          class="theme-toggle nav-theme"
           type="button"
           data-theme-toggle
           aria-label="Switch to dark mode"
@@ -53,6 +56,15 @@
         >
           <span aria-hidden="true"></span>
         </button>
+        <details class="nav-menu">
+          <summary class="nav-action" aria-label="Open menu" title="Menu">
+            <span class="menu-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="nav-menu-panel">
+            <a href="./index.html#stories">Stories</a>
+            <button type="button" data-install-app>Install app</button>
+          </div>
+        </details>
       </nav>
     </header>
 
@@ -63,6 +75,6 @@
 
     <script src="./stories.js"></script>
     <script src="./narration-assets.js"></script>
-    <script src="./story.js?v=20260506-bg"></script>
+    <script src="./story.js?v=20260509-native"></script>
   </body>
 </html>

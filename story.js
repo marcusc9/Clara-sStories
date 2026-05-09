@@ -1,16 +1,27 @@
 const stories = window.ClaraStories ?? [];
 const page = document.querySelector("[data-story-page]");
 const header = document.querySelector("[data-header]");
-const themeToggle = document.querySelector("[data-theme-toggle]");
+const themeToggles = document.querySelectorAll("[data-theme-toggle]");
+const installButtons = document.querySelectorAll("[data-install-app]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const params = new URLSearchParams(window.location.search);
 const requestedStoryId = sanitiseStoryId(params.get("id"));
 const story = stories.find((item) => item.id === requestedStoryId);
+let deferredInstallPrompt = null;
 
 if ("serviceWorker" in navigator && window.isSecureContext) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./service-worker.js").catch(() => {});
   });
+}
+
+function isInstalledApp() {
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function syncInstallActions() {
+  const shouldShow = !isInstalledApp() && Boolean(deferredInstallPrompt);
+  document.documentElement.classList.toggle("show-install-action", shouldShow);
 }
 
 function sanitiseStoryId(value) {
@@ -29,10 +40,10 @@ function applyTheme(theme) {
     themeColorMeta.setAttribute("content", isDark ? "#09131a" : "#fbf6e8");
   }
 
-  if (themeToggle) {
-    themeToggle.setAttribute("aria-pressed", String(isDark));
-    themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-  }
+  themeToggles.forEach((toggle) => {
+    toggle.setAttribute("aria-pressed", String(isDark));
+    toggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+  });
 }
 
 function initialiseTheme() {
@@ -645,17 +656,57 @@ document.addEventListener(
   true
 );
 
-themeToggle?.addEventListener("click", () => {
-  const isDark = document.documentElement.dataset.theme === "dark";
-  const nextTheme = isDark ? "light" : "dark";
-  localStorage.setItem("claraTheme", nextTheme);
-  applyTheme(nextTheme);
+themeToggles.forEach((toggle) => {
+  toggle.addEventListener("click", () => {
+    const isDark = document.documentElement.dataset.theme === "dark";
+    const nextTheme = isDark ? "light" : "dark";
+    localStorage.setItem("claraTheme", nextTheme);
+    applyTheme(nextTheme);
+    toggle.closest("details")?.removeAttribute("open");
+  });
+});
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  syncInstallActions();
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  syncInstallActions();
+});
+
+installButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    button.closest("details")?.removeAttribute("open");
+
+    if (isInstalledApp()) {
+      return;
+    }
+
+    if (!deferredInstallPrompt) {
+      return;
+    }
+
+    const promptEvent = deferredInstallPrompt;
+    deferredInstallPrompt = null;
+    syncInstallActions();
+    try {
+      await promptEvent.prompt();
+      await promptEvent.userChoice.catch(() => {});
+    } catch {
+      deferredInstallPrompt = null;
+    }
+    syncInstallActions();
+  });
 });
 
 let lastScroll = 0;
 let ticking = false;
 
 initialiseTheme();
+syncInstallActions();
 
 window.addEventListener(
   "scroll",

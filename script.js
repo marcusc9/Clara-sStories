@@ -6,11 +6,13 @@ const hero = document.querySelector(".hero");
 const searchInput = document.querySelector("[data-story-search]");
 const storyCount = document.querySelector("[data-story-count]");
 const bahaiDate = document.querySelector("[data-bahai-date]");
-const themeToggle = document.querySelector("[data-theme-toggle]");
+const themeToggles = document.querySelectorAll("[data-theme-toggle]");
+const installButtons = document.querySelectorAll("[data-install-app]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const MAX_SEARCH_QUERY_LENGTH = 120;
 
 const activeFilters = new Set();
+let deferredInstallPrompt = null;
 let lastScroll = 0;
 let ticking = false;
 let programmaticScroll = false;
@@ -21,6 +23,15 @@ if ("serviceWorker" in navigator && window.isSecureContext) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./service-worker.js").catch(() => {});
   });
+}
+
+function isInstalledApp() {
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function syncInstallActions() {
+  const shouldShow = !isInstalledApp() && Boolean(deferredInstallPrompt);
+  document.documentElement.classList.toggle("show-install-action", shouldShow);
 }
 
 function normalise(value) {
@@ -114,10 +125,10 @@ function applyTheme(theme) {
     themeColorMeta.setAttribute("content", isDark ? "#09131a" : (isHomePage ? "#09131a" : "#fbf6e8"));
   }
 
-  if (themeToggle) {
-    themeToggle.setAttribute("aria-pressed", String(isDark));
-    themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-  }
+  themeToggles.forEach((toggle) => {
+    toggle.setAttribute("aria-pressed", String(isDark));
+    toggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+  });
 }
 
 function initialiseTheme() {
@@ -258,10 +269,7 @@ function getDailyStoryOrder() {
     ];
   }
 
-  const today = Math.floor(dateFromKey(localDateKey(new Date())).getTime() / dayMs);
-  const featuredIndex = today % libraryOrder.length;
-  const featuredStory = libraryOrder[featuredIndex];
-  return [featuredStory, ...libraryOrder.filter((story) => story !== featuredStory)];
+  return libraryOrder;
 }
 
 function applyBahaiDate() {
@@ -569,11 +577,50 @@ searchInput?.addEventListener("input", () => {
   updateStories();
 });
 
-themeToggle?.addEventListener("click", () => {
-  const isDark = document.documentElement.dataset.theme === "dark";
-  const nextTheme = isDark ? "light" : "dark";
-  localStorage.setItem("claraTheme", nextTheme);
-  applyTheme(nextTheme);
+themeToggles.forEach((toggle) => {
+  toggle.addEventListener("click", () => {
+    const isDark = document.documentElement.dataset.theme === "dark";
+    const nextTheme = isDark ? "light" : "dark";
+    localStorage.setItem("claraTheme", nextTheme);
+    applyTheme(nextTheme);
+    toggle.closest("details")?.removeAttribute("open");
+  });
+});
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  syncInstallActions();
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  syncInstallActions();
+});
+
+installButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    button.closest("details")?.removeAttribute("open");
+
+    if (isInstalledApp()) {
+      return;
+    }
+
+    if (!deferredInstallPrompt) {
+      return;
+    }
+
+    const promptEvent = deferredInstallPrompt;
+    deferredInstallPrompt = null;
+    syncInstallActions();
+    try {
+      await promptEvent.prompt();
+      await promptEvent.userChoice.catch(() => {});
+    } catch {
+      deferredInstallPrompt = null;
+    }
+    syncInstallActions();
+  });
 });
 
 ["wheel", "touchstart", "keydown"].forEach((eventName) => {
@@ -647,6 +694,7 @@ window.addEventListener(
 );
 
 initialiseTheme();
+syncInstallActions();
 renderStories();
 applyImageFallbacks();
 renderFilters();

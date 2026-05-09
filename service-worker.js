@@ -1,12 +1,12 @@
-const CACHE_NAME = "clara-stories-v2-bg";
+const CACHE_NAME = "clara-stories-v6-native";
 const SHELL_ASSETS = [
   "./",
   "./index.html",
   "./story.html",
-  "./styles.css?v=20260506-bg",
+  "./styles.css?v=20260509-native",
   "./stories.js",
-  "./script.js?v=20260506-bg",
-  "./story.js?v=20260506-bg",
+  "./script.js?v=20260509-native",
+  "./story.js?v=20260509-native",
   "./narration-assets.js",
   "./manifest.json",
   "./icons/icon-180.png",

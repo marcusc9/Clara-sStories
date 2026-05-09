@@ -310,6 +310,7 @@ main,
 }
 
 .nav a,
+.nav-action,
 .button,
 .filter {
   min-height: 42px;
@@ -332,6 +333,165 @@ main,
 
 .home-page .nav a:hover {
   background: rgba(255, 250, 240, 0.12);
+}
+
+.nav-action {
+  position: relative;
+  display: grid;
+  width: 42px;
+  min-width: 42px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.nav-action:hover,
+.nav-action:focus-visible {
+  background: rgba(21, 33, 43, 0.08);
+  outline: none;
+}
+
+.home-page .nav-action:hover,
+.home-page .nav-action:focus-visible {
+  background: rgba(255, 250, 240, 0.12);
+}
+
+.install-action {
+  display: none;
+}
+
+.show-install-action .install-action {
+  display: grid;
+}
+
+.hero-install-action {
+  display: none;
+  color: #101a22;
+  cursor: pointer;
+}
+
+.show-install-action .hero-install-action {
+  display: inline-grid;
+}
+
+.install-icon,
+.menu-icon {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.install-icon::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 3px;
+  width: 2px;
+  height: 9px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.install-icon::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  width: 12px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+  border-radius: 0 0 5px 5px;
+}
+
+.install-icon {
+  background:
+    linear-gradient(135deg, transparent 46%, currentColor 48% 58%, transparent 60%) 4px 7px / 7px 7px no-repeat,
+    linear-gradient(45deg, transparent 46%, currentColor 48% 58%, transparent 60%) 9px 7px / 7px 7px no-repeat;
+}
+
+.menu-icon {
+  background:
+    linear-gradient(currentColor, currentColor) 2px 5px / 16px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) 2px 10px / 16px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) 2px 15px / 16px 2px no-repeat;
+}
+
+.nav-menu {
+  position: relative;
+}
+
+.nav-menu summary {
+  list-style: none;
+}
+
+.nav-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-menu-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  display: grid;
+  min-width: 172px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 250, 240, 0.96);
+  color: var(--ink);
+  text-shadow: none;
+  box-shadow: 0 18px 48px rgba(36, 44, 46, 0.16);
+}
+
+:root[data-theme="dark"] .nav-menu-panel {
+  background: rgba(14, 23, 30, 0.98);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+}
+
+.nav-menu-panel a,
+.nav-menu-panel button {
+  display: grid;
+  min-height: 42px;
+  place-items: center start;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-menu-panel a:hover,
+.nav-menu-panel button:hover,
+.nav-menu-panel a:focus-visible,
+.nav-menu-panel button:focus-visible {
+  background: rgba(21, 33, 43, 0.08);
+  outline: none;
+}
+
+:root[data-theme="dark"] .nav-menu-panel a:hover,
+:root[data-theme="dark"] .nav-menu-panel button:hover,
+:root[data-theme="dark"] .nav-menu-panel a:focus-visible,
+:root[data-theme="dark"] .nav-menu-panel button:focus-visible {
+  background: rgba(243, 234, 217, 0.09);
+}
+
+.nav-menu-panel [data-install-app] {
+  display: none;
+}
+
+.show-install-action .nav-menu-panel [data-install-app] {
+  display: grid;
 }
 
 .theme-toggle {
@@ -768,8 +928,26 @@ h3 {
   transform: translateY(0.08em) rotate(225deg);
 }
 
+.filter-menu[open] .filter-more {
+  display: none;
+}
+
 .filter-menu-panel {
-  display: contents;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-8px);
+  transition: max-height 360ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease,
+    transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.filter-menu[open] .filter-menu-panel {
+  max-height: 240px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .filter.is-active {
@@ -1412,6 +1590,14 @@ blockquote {
     width: min(100% - 20px, 1180px);
   }
 
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 10px;
+  }
+
   .home-page main {
     width: 100%;
   }
@@ -1486,6 +1672,16 @@ blockquote {
     font-size: 0.86rem;
   }
 
+  .nav a.nav-link {
+    display: none;
+  }
+
+  .nav-action {
+    width: 38px;
+    min-width: 38px;
+    min-height: 38px;
+  }
+
   .home-page .theme-toggle {
     width: 38px;
     min-width: 38px;
@@ -1499,6 +1695,17 @@ blockquote {
   .hero-copy {
     padding: 0;
     transform: none;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: minmax(0, max-content);
+    align-items: stretch;
+    justify-content: start;
+  }
+
+  .show-install-action .hero-actions {
+    grid-template-columns: minmax(0, max-content) minmax(0, max-content);
   }
 
   .hero {
