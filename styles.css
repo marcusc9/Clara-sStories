@@ -1743,6 +1743,10 @@ body.about-shell {
   object-position: center 18%;
 }
 
+.story-card[data-story-id="when-you-brought-her-your-darkness"].feature.image-card img {
+  object-position: center 8%;
+}
+
 .story-card.feature.image-card > :not(img) {
   margin-inline: 24px;
 }
