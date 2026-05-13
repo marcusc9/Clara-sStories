@@ -1,12 +1,12 @@
 {
   "name": "Clara's Stories",
   "short_name": "Clara",
-  "description": "Bahá'í stories to read with their source close by.",
+  "description": "A quiet offline reader for sourced Bahá'í stories.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#09131a",
   "theme_color": "#09131a",
   "orientation": "portrait",
@@ -15,6 +15,12 @@
   "icons": [
     {
       "src": "./icons/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
@@ -35,13 +41,13 @@
       "src": "./icons/maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     },
     {
       "src": "./icons/maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ]
 }

@@ -105,6 +105,54 @@ function safeResourceUrl(url) {
   return "";
 }
 
+function isLikelyOffline() {
+  return navigator.onLine === false || document.documentElement.classList.contains("is-offline");
+}
+
+function uniqueResourceUrls(urls) {
+  return Array.from(new Set(urls.map(safeResourceUrl).filter(Boolean)));
+}
+
+function storyResourceUrls(item) {
+  const narrationAsset = getNarrationAsset(item);
+  return uniqueResourceUrls([
+    "./story.html",
+    "./stories.js",
+    "./narration-assets.js",
+    "./styles.css?v=20260513-pwa",
+    item.image,
+    item.featureImage,
+    ...(narrationAsset?.chunks ?? []).map((chunk) => chunk.src),
+    ...(narrationAsset?.artwork ?? []).map((artwork) => artwork.src)
+  ]);
+}
+
+function storyIsAvailableOffline(item) {
+  return Boolean(window.ClaraPWA?.isStoryAvailableOffline?.(item?.id));
+}
+
+function rememberStoryForOffline(item) {
+  if (!item || isLikelyOffline()) {
+    return;
+  }
+
+  window.ClaraPWA?.markStoryAvailable?.(item, storyResourceUrls(item));
+}
+
+function offlineUnavailableHtml(item) {
+  const title = item?.title ? `“${escapeHtml(item.title)}”` : "This story";
+  return `
+    <a class="back-link" href="./index.html#stories">Back to stories</a>
+    <section class="reader-hero">
+      <div>
+        <p class="kicker">Offline mode</p>
+        <h1>${title} is not saved yet.</h1>
+        <p class="reader-summary">Open it once while online, and Clara's Stories will keep it ready for later offline reading.</p>
+      </div>
+    </section>
+  `;
+}
+
 function renderNarrationParagraph(paragraph, index, wordState) {
   let offset = 0;
   const words = String(paragraph)
@@ -602,10 +650,15 @@ function initialiseNarration(item) {
   }
 }
 
-if (page && story) {
+if (page && story && (!isLikelyOffline() || storyIsAvailableOffline(story))) {
   document.title = `${story.title} | Clara's Stories`;
   page.innerHTML = storyHtml(story);
   initialiseNarration(story);
+  rememberStoryForOffline(story);
+} else if (page && story) {
+  document.title = "Story not saved offline | Clara's Stories";
+  page.innerHTML = offlineUnavailableHtml(story);
+  window.ClaraPWA?.syncConnectionStatus?.();
 } else if (page) {
   document.title = "Story unavailable | Clara's Stories";
   page.innerHTML = `

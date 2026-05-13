@@ -1,11 +1,94 @@
 const INSTALL_STORAGE_KEY = "claraAppInstalled";
+const OFFLINE_STORIES_STORAGE_KEY = "claraOfflineStories";
 const MENU_CLOSE_MS = 220;
 const INSTALLED_DISPLAY_MODES = ["standalone", "fullscreen", "minimal-ui", "window-controls-overlay"];
 let deferredInstallPrompt = null;
 let navMenuScrollY = window.scrollY;
+let networkReachable = navigator.onLine !== false;
 
 function logInstall(message, detail) {
   console.debug(`[Clara install] ${message}`, detail ?? "");
+}
+
+function readOfflineStoryIds() {
+  try {
+    const value = JSON.parse(localStorage.getItem(OFFLINE_STORIES_STORAGE_KEY) ?? "[]");
+    return new Set(Array.isArray(value) ? value.filter(Boolean).map(String) : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function writeOfflineStoryIds(ids) {
+  try {
+    localStorage.setItem(OFFLINE_STORIES_STORAGE_KEY, JSON.stringify(Array.from(ids)));
+  } catch (error) {
+    logInstall("offline story storage failed", error);
+  }
+}
+
+function isStoryAvailableOffline(storyId) {
+  return readOfflineStoryIds().has(String(storyId ?? ""));
+}
+
+function createConnectionStatus() {
+  let status = document.querySelector("[data-connection-status]");
+
+  if (status) {
+    return status;
+  }
+
+  status = document.createElement("p");
+  status.className = "connection-status";
+  status.dataset.connectionStatus = "";
+  status.setAttribute("role", "status");
+  status.setAttribute("aria-live", "polite");
+  status.hidden = true;
+  document.body.append(status);
+  return status;
+}
+
+function setConnectionStatus(message, mode) {
+  const status = createConnectionStatus();
+  status.textContent = message;
+  status.dataset.statusMode = mode;
+  status.hidden = !message;
+}
+
+function syncConnectionStatus() {
+  const isOffline = navigator.onLine === false || networkReachable === false;
+  document.documentElement.classList.toggle("is-offline", isOffline);
+
+  if (isOffline) {
+    setConnectionStatus("Offline mode", "offline");
+    return;
+  }
+
+  if (document.documentElement.dataset.offlineStoryStatus === "available") {
+    setConnectionStatus("Available offline", "available");
+    return;
+  }
+
+  setConnectionStatus("", "");
+}
+
+async function refreshReachability() {
+  if (navigator.onLine === false) {
+    networkReachable = false;
+    syncConnectionStatus();
+    return;
+  }
+
+  try {
+    const response = await fetch(`./service-worker.js?online-check=${Date.now()}`, {
+      cache: "no-store"
+    });
+    networkReachable = response.ok;
+  } catch {
+    networkReachable = false;
+  }
+
+  syncConnectionStatus();
 }
 
 function registerServiceWorker() {
@@ -17,6 +100,39 @@ function registerServiceWorker() {
     navigator.serviceWorker.register("./service-worker.js", { scope: "./" }).catch((error) => {
       logInstall("service worker registration failed", error);
     });
+  });
+}
+
+function postServiceWorkerMessage(message) {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  navigator.serviceWorker.controller?.postMessage(message);
+  navigator.serviceWorker.ready
+    .then((registration) => {
+      (registration.active ?? navigator.serviceWorker.controller)?.postMessage(message);
+    })
+    .catch((error) => logInstall("service worker message failed", error));
+}
+
+function markStoryAvailable(story, resources = []) {
+  const storyId = String(story?.id ?? "").trim();
+
+  if (!storyId) {
+    return;
+  }
+
+  const ids = readOfflineStoryIds();
+  ids.add(storyId);
+  writeOfflineStoryIds(ids);
+  document.documentElement.dataset.offlineStoryStatus = "available";
+  syncConnectionStatus();
+
+  postServiceWorkerMessage({
+    type: "CACHE_STORY_RESOURCES",
+    storyId,
+    resources
   });
 }
 
@@ -309,8 +425,22 @@ function initialiseInstallFlow() {
       query.addListener(syncInstallVisibility);
     }
   });
+  window.addEventListener("online", refreshReachability);
+  window.addEventListener("offline", () => {
+    networkReachable = false;
+    syncConnectionStatus();
+  });
+  navigator.serviceWorker?.addEventListener("controllerchange", refreshReachability);
   syncInstallVisibility();
+  syncConnectionStatus();
+  refreshReachability();
 }
+
+window.ClaraPWA = {
+  isStoryAvailableOffline,
+  markStoryAvailable,
+  syncConnectionStatus
+};
 
 window.addEventListener("beforeinstallprompt", (event) => {
   event.preventDefault();

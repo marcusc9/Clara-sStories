@@ -8,7 +8,10 @@
       name="description"
       content="About Clara's Stories, a careful reader for Bahá'í stories, sources, and a growing library of letters."
     />
+    <meta name="application-name" content="Clara's Stories" />
     <meta name="theme-color" content="#fbf6e8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="format-detection" content="telephone=no" />
     <script>
       if (localStorage.getItem("claraTheme") === "dark") {
         document.documentElement.dataset.theme = "dark";
@@ -25,13 +28,15 @@
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <link rel="icon" href="./icons/clara-logo.svg" type="image/svg+xml" />
     <link rel="icon" href="./icons/icon-192.png" sizes="192x192" type="image/png" />
+    <link rel="icon" href="./icons/icon-512.png" sizes="512x512" type="image/png" />
     <link rel="apple-touch-icon" href="./icons/icon-180.png" sizes="180x180" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Clara's Stories" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <link rel="manifest" href="./manifest.json" />
-    <link rel="stylesheet" href="./styles.css?v=20260509-install-hide" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css?v=20260513-pwa" />
   </head>
   <body class="about-shell">
     <header class="site-header" data-header>
@@ -165,7 +170,7 @@
       <a href="./index.html#stories">Back to stories</a>
     </footer>
 
-    <script src="./install.js?v=20260509-install-hide"></script>
-    <script src="./about.js?v=20260509-copy-polish"></script>
+    <script src="./install.js?v=20260513-pwa"></script>
+    <script src="./about.js?v=20260513-pwa"></script>
   </body>
 </html>

@@ -366,6 +366,9 @@ function renderStories() {
       const featureClass = index === 0 ? " feature" : "";
       const filterValues = storyFilterValues(story).join(" ");
       const searchText = normalise(storySearchText(story));
+      const offlineBadge = window.ClaraPWA?.isStoryAvailableOffline?.(story.id)
+        ? '<span class="offline-badge">Available offline</span>'
+        : "";
 
       return `
         <a class="story-card${featureClass}${imageClass} reveal" href="${safeStoryHref(
@@ -378,6 +381,7 @@ function renderStories() {
             <span>${escapeHtml(story.theme)}</span>
             <span>${escapeHtml(story.readTime)}</span>
           </div>
+          ${offlineBadge}
           <h3>${escapeHtml(story.title)}</h3>
           <blockquote>“${escapeHtml(story.quote)}”</blockquote>
           <p>${escapeHtml(story.summary)}</p>
