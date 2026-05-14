@@ -18,8 +18,8 @@ window.ClaraStories = [
     image: "",
     imageAlt: "",
     featureImage:
-      "https://file.bahai.media/1/1d/The_room_where_the_B%C3%A1b_made_His_historic_declaration%2C_1844.png",
-    featureImageAlt: "The room where the Báb made His historic declaration in Shíráz",
+      "https://file.bahai.media/5/53/House_of_the_Bab%2C_1920%27s.png",
+    featureImageAlt: "The House of the Báb in Shíráz in the 1920s",
     addedOn: "2026-05-14",
     featuredOn: "2026-05-14",
     story: [

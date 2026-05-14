@@ -1,6 +1,8 @@
 # Clara's Stories Codex Handoff
 
-This is a high-level handoff for future Codex work on Clara's Stories. Read this before making design or PWA changes.
+This is the high-level handoff for future Codex work on Clara's Stories. Read this first, then inspect only the files relevant to the user’s newest comment. This file exists to reduce context burn.
+
+Last refreshed: 2026-05-14.
 
 ## Product Feel
 
@@ -19,7 +21,18 @@ Avoid language like:
 - trustworthy care is visible
 - anything that sounds like architecture, backend, or SaaS positioning
 
-The visual direction is warm, reverent, and Apple-like in restraint: generous spacing, clear hierarchy, soft material surfaces, readable controls, and no decorative clutter.
+The visual direction is warm, reverent, and Apple-like in restraint: generous spacing, clear hierarchy, soft material surfaces, readable controls, and no decorative clutter. User likes “21st.dev worthy” interactions, but this project is still static HTML/CSS/JS. Treat React/Tailwind/shadcn prompts as inspiration unless the user explicitly asks to migrate stacks.
+
+## Context-Saving Workflow
+
+To avoid burning Codex limits:
+
+- Start with this handoff.
+- Run `rg` for the exact selected text, class, or URL from the newest comment.
+- Inspect only the relevant HTML/CSS/JS section.
+- Keep cache version bumps consistent across `index.html`, `stories.html`, `about.html`, `story.html`, and `service-worker.js`.
+- Use fresh localhost query strings while reviewing, for example `?codex=home-refine-6`.
+- Summarize changes here whenever a multi-step visual/PWA sequence is still in progress.
 
 ## Current User Priorities
 
@@ -30,6 +43,7 @@ The visual direction is warm, reverent, and Apple-like in restraint: generous sp
 - Android PWA installation is important. Manifest and service worker scope must stay relative and deploy-friendly.
 - Copy should sound like Marcus, not an assistant.
 - The founder section is personal. Preserve the image and caption unless explicitly asked.
+- The local/mobile PWA view must match localhost as closely as possible. When something looks fine on localhost but wrong on phone, suspect stale service worker/cache first, then responsive CSS.
 
 ## Files To Know
 
@@ -42,6 +56,36 @@ The visual direction is warm, reverent, and Apple-like in restraint: generous sp
 - `about.js`: About-specific theme/reveal/header/hero motion behavior.
 - `service-worker.js`: offline app shell and cache versioning.
 - `manifest.json`, `manifest.webmanifest`, `site.webmanifest`: PWA metadata. Keep relative scope/start URL.
+
+## Current Home Page Shape
+
+`index.html` is now an introductory home page, not the story library.
+
+- Hero remains at the top, with `Read the stories` linking to `stories.html`.
+- Welcome section id: `#welcome`.
+- Welcome copy:
+  - Heading: "A gentler way into stories of light and courage."
+  - Paragraph: "Clara's Stories gathers true Bahá'í stories in a calm reader, with sources kept close."
+  - Pill: "About us"
+- Floating collage:
+  - Large card: ‘Abdu’l-Bahá under the Eiffel Tower. The old `Service` figcaption has been removed because it peeked out awkwardly on mobile.
+  - Tall card: Lotus Temple, with `Prayer` pill. On mobile the Prayer pill is intentionally detached and moved lower-left; keep it clear of `Sacrifice`.
+  - Small card: Kampala House of Worship, with `Community` pill.
+  - Floating quality pills: Courage, Peace, Sacrifice.
+- Home path cards:
+  - Read one story.
+  - Stay close to the source.
+  - Come back when needed.
+- Home close CTA:
+  - "Choose a quality and let a story meet you there."
+  - `Browse the library` links to `stories.html`.
+
+Current home interaction:
+
+- `script.js` has `initialiseFloatingGallery()`, `initialiseScrollBoard()`, and `initialiseHomeSectionScroll()`.
+- CSS uses `--section-progress` on `.home-intro`, `.home-path`, and `.home-close`.
+- CSS uses `--card-progress` on `[data-scroll-card]`.
+- Keep scroll effects gentle. The site should feel alive, not dizzy.
 
 ## Current About Page Shape
 
@@ -85,6 +129,9 @@ Letters/support:
 - The story library has been moved out of the home page into `stories.html`; home CTAs and story backlinks should point there.
 - Home now uses a native CSS/JS floating gallery inspired by 21st.dev-style interactions. Keep it dependency-free unless the project is intentionally migrated to a framework.
 - Offline availability is communicated by one liquid-glass bottom toast. Do not add per-card "Available offline" badges back to story cards or the reader page.
+- Nav menu letter badges (`S`, `A`, `L`) were replaced with minimal abstract marks because the letters read as "SAL".
+- The first story feature image now points to a House of the Báb image, not the declaration-room image.
+- Current cache version after latest home polish: `20260514-home-refine-6`.
 
 ## PWA Notes
 
@@ -95,6 +142,7 @@ Android install previously prompted but did not reliably show on the home screen
 - Icons must be reachable from the live GitHub deployment.
 - After deploy, uninstall any old Clara install and clear site data before retesting Android, because stale service workers and old manifests can mask fixes.
 - Android may place installed PWAs in the app drawer depending on launcher/browser behavior, but it still needs to behave like a real PWA.
+- If phone screenshots show old layout, ask Marcus to hard-refresh/reinstall only after verifying the code version was bumped. Old installed PWAs can keep an older service worker.
 
 ## Verification Checklist
 
@@ -107,6 +155,12 @@ Before saying a frontend change is done:
 - Check `file://` and `localhost` behavior when the issue involves Codex preview, reveal animations, or service worker cache.
 - Confirm no text is clipped, overlapped, or hidden under the fixed header.
 
+Useful current URLs:
+
+- Home welcome: `http://localhost:8008/index.html?codex=home-refine-6#welcome`
+- Stories: `http://localhost:8008/stories.html?codex=home-refine-6`
+- About: `http://localhost:8008/about.html?codex=home-refine-6`
+
 ## Quality Guardrails For Codex
 
 - Read the relevant code before editing. Do not guess from the screenshot alone.
@@ -116,3 +170,11 @@ Before saying a frontend change is done:
 - When copy is requested, write as a human first, then trim it.
 - Prefer one strong visual move over many decorative effects.
 - If browser automation refuses `file://`, say so and verify with safe local alternatives where possible.
+
+## Known Watchouts
+
+- There may be several old `python3 -m http.server` processes from prior sessions. Prefer the current working port if it still responds; otherwise start a new port and state it.
+- The worktree is intentionally dirty. Do not revert broad changes.
+- `stories.js` has a newly added first story: `awake-for-the-morning-light-has-broken`. Preserve it.
+- Image URLs are a mix of Wikimedia, Bahá'í World, and Bahá'í Media. If replacing images, prefer historically relevant and respectful images over generic stock.
+- Keep the service worker app shell in sync when adding/removing top-level pages.

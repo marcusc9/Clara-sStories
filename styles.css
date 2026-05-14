@@ -1736,6 +1736,7 @@ body.about-shell {
 }
 
 .home-intro {
+  --section-progress: 1;
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(360px, 1fr);
   gap: clamp(28px, 6vw, 92px);
@@ -1748,6 +1749,7 @@ body.about-shell {
 .home-intro-copy {
   display: grid;
   gap: 18px;
+  transform: translateY(calc((1 - var(--section-progress)) * 22px));
 }
 
 .home-intro-copy h2,
@@ -1795,6 +1797,8 @@ body.about-shell {
     var(--home-surface);
   box-shadow: 0 28px 90px rgba(21, 33, 43, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.56);
   isolation: isolate;
+  transform: translateY(calc((1 - var(--section-progress)) * -12px)) scale(calc(0.97 + var(--section-progress) * 0.03));
+  transition: transform 180ms linear;
 }
 
 :root[data-theme="dark"] .home-floating-stage {
@@ -1969,6 +1973,7 @@ body.about-shell {
 }
 
 .home-path {
+  --section-progress: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(12px, 2vw, 18px);
@@ -1976,6 +1981,7 @@ body.about-shell {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
   perspective: 1200px;
+  transform: translateY(calc((1 - var(--section-progress)) * 20px));
 }
 
 .home-path article {
@@ -2095,6 +2101,7 @@ body.about-shell {
 }
 
 .home-close {
+  --section-progress: 1;
   display: grid;
   gap: 20px;
   justify-items: center;
@@ -2102,6 +2109,8 @@ body.about-shell {
   margin: 0 auto;
   padding: clamp(58px, 10vw, 128px) 0;
   text-align: center;
+  opacity: calc(0.64 + var(--section-progress) * 0.36);
+  transform: translateY(calc((1 - var(--section-progress)) * 28px)) scale(calc(0.98 + var(--section-progress) * 0.02));
 }
 
 .home-close h2 {
@@ -3079,7 +3088,7 @@ blockquote {
   }
 
   .float-card-tall figcaption {
-    top: calc(100% + 14px);
+    top: calc(100% + 84px);
     right: auto;
     left: clamp(-210px, -44vw, -176px);
     bottom: auto;

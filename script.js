@@ -663,6 +663,49 @@ function initialiseScrollBoard() {
   window.addEventListener("resize", requestUpdate);
 }
 
+function initialiseHomeSectionScroll() {
+  const sections = Array.from(document.querySelectorAll(".home-intro, .home-path, .home-close"));
+
+  if (!sections.length) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (prefersReducedMotion) {
+    sections.forEach((section) => section.style.setProperty("--section-progress", "1"));
+    return;
+  }
+
+  let sectionFrame = null;
+
+  function updateSections() {
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const midpoint = rect.top + rect.height * 0.5;
+      const distance = Math.abs(midpoint - viewportHeight * 0.52);
+      const range = Math.max(viewportHeight * 0.72, rect.height * 0.72);
+      const progress = 1 - Math.min(1, Math.max(0, distance / range));
+
+      section.style.setProperty("--section-progress", progress.toFixed(3));
+    });
+
+    sectionFrame = null;
+  }
+
+  function requestUpdate() {
+    if (!sectionFrame) {
+      sectionFrame = window.requestAnimationFrame(updateSections);
+    }
+  }
+
+  updateSections();
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+}
+
 filterList?.addEventListener("click", (event) => {
   const filter = event.target.closest("[data-filter]");
 
@@ -780,6 +823,7 @@ renderFilters();
 observeReveals();
 initialiseFloatingGallery();
 initialiseScrollBoard();
+initialiseHomeSectionScroll();
 applyBahaiDate();
 syncHeaderSurface();
 updateStories();
