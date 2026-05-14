@@ -686,11 +686,29 @@ body.nav-menu-is-closing::before {
 
 .nav-menu-panel .nav-menu-item:nth-child(2)::after {
   content: "";
-  width: 15px;
-  height: 15px;
-  border: 2px solid currentColor;
-  border-radius: 999px;
-  background: radial-gradient(circle, currentColor 0 2px, transparent 2.5px);
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+  clip-path: polygon(
+    50% 0%,
+    58.6% 26.5%,
+    82.1% 11.7%,
+    71.7% 37.5%,
+    99.2% 41.3%,
+    74.6% 54.3%,
+    93.3% 75%,
+    66.1% 69.2%,
+    67.1% 97%,
+    50% 75%,
+    32.9% 97%,
+    33.9% 69.2%,
+    6.7% 75%,
+    25.4% 54.3%,
+    0.8% 41.3%,
+    28.3% 37.5%,
+    17.9% 11.7%,
+    41.4% 26.5%
+  );
 }
 
 .nav-menu-panel .nav-menu-item:nth-child(3)::after {

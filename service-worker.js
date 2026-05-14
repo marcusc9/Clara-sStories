@@ -1,4 +1,4 @@
-const VERSION = "20260514-home-refine-6";
+const VERSION = "20260514-home-refine-7";
 const STATIC_CACHE = `clara-static-${VERSION}`;
 const CONTENT_CACHE = `clara-content-${VERSION}`;
 const RUNTIME_CACHE = `clara-runtime-${VERSION}`;
@@ -12,13 +12,13 @@ const APP_SHELL = [
   "./stories.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260514-home-refine-6",
-  "./stories.js?v=20260514-home-refine-6",
+  "./styles.css?v=20260514-home-refine-7",
+  "./stories.js?v=20260514-home-refine-7",
   "./narration-assets.js",
-  "./install.js?v=20260514-home-refine-6",
-  "./script.js?v=20260514-home-refine-6",
-  "./story.js?v=20260514-home-refine-6",
-  "./about.js?v=20260514-home-refine-6",
+  "./install.js?v=20260514-home-refine-7",
+  "./script.js?v=20260514-home-refine-7",
+  "./story.js?v=20260514-home-refine-7",
+  "./about.js?v=20260514-home-refine-7",
   "./manifest.webmanifest",
   "./manifest.json",
   "./site.webmanifest",
@@ -58,7 +58,7 @@ function offlineStoryFallbackResponse() {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Story not saved offline | Clara's Stories</title>
     <meta name="theme-color" content="#fbf6e8" />
-    <link rel="stylesheet" href="./styles.css?v=20260514-home-refine-6" />
+    <link rel="stylesheet" href="./styles.css?v=20260514-home-refine-7" />
   </head>
   <body class="story-shell">
     <main class="story-page">

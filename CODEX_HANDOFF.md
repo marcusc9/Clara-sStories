@@ -31,7 +31,7 @@ To avoid burning Codex limits:
 - Run `rg` for the exact selected text, class, or URL from the newest comment.
 - Inspect only the relevant HTML/CSS/JS section.
 - Keep cache version bumps consistent across `index.html`, `stories.html`, `about.html`, `story.html`, and `service-worker.js`.
-- Use fresh localhost query strings while reviewing, for example `?codex=home-refine-6`.
+- Use fresh localhost query strings while reviewing, for example `?codex=home-refine-7`.
 - Summarize changes here whenever a multi-step visual/PWA sequence is still in progress.
 
 ## Current User Priorities
@@ -131,7 +131,7 @@ Letters/support:
 - Offline availability is communicated by one liquid-glass bottom toast. Do not add per-card "Available offline" badges back to story cards or the reader page.
 - Nav menu letter badges (`S`, `A`, `L`) were replaced with minimal abstract marks because the letters read as "SAL".
 - The first story feature image now points to a House of the Báb image, not the declaration-room image.
-- Current cache version after latest home polish: `20260514-home-refine-6`.
+- Current cache version after latest home polish: `20260514-home-refine-7`.
 
 ## PWA Notes
 
@@ -157,9 +157,9 @@ Before saying a frontend change is done:
 
 Useful current URLs:
 
-- Home welcome: `http://localhost:8008/index.html?codex=home-refine-6#welcome`
-- Stories: `http://localhost:8008/stories.html?codex=home-refine-6`
-- About: `http://localhost:8008/about.html?codex=home-refine-6`
+- Home welcome: `http://localhost:8008/index.html?codex=home-refine-7#welcome`
+- Stories: `http://localhost:8008/stories.html?codex=home-refine-7`
+- About: `http://localhost:8008/about.html?codex=home-refine-7`
 
 ## Quality Guardrails For Codex
 
