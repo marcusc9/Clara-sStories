@@ -1,10 +1,12 @@
 const INSTALL_STORAGE_KEY = "claraAppInstalled";
 const OFFLINE_STORIES_STORAGE_KEY = "claraOfflineStories";
-const MENU_CLOSE_MS = 220;
+const MENU_CLOSE_MS = 280;
 const INSTALLED_DISPLAY_MODES = ["standalone", "fullscreen", "minimal-ui", "window-controls-overlay"];
+const OFFLINE_READY_TOAST_KEY = "claraOfflineReadyToastShown";
 let deferredInstallPrompt = null;
 let navMenuScrollY = window.scrollY;
 let networkReachable = navigator.onLine !== false;
+let connectionStatusTimer = 0;
 
 function logInstall(message, detail) {
   console.debug(`[Clara install] ${message}`, detail ?? "");
@@ -50,9 +52,20 @@ function createConnectionStatus() {
 
 function setConnectionStatus(message, mode) {
   const status = createConnectionStatus();
+  window.clearTimeout(connectionStatusTimer);
+
+  if (!message) {
+    status.classList.remove("is-visible");
+    window.setTimeout(() => {
+      status.hidden = true;
+    }, 260);
+    return;
+  }
+
   status.textContent = message;
   status.dataset.statusMode = mode;
-  status.hidden = !message;
+  status.hidden = false;
+  window.requestAnimationFrame(() => status.classList.add("is-visible"));
 }
 
 function syncConnectionStatus() {
@@ -64,12 +77,30 @@ function syncConnectionStatus() {
     return;
   }
 
-  if (document.documentElement.dataset.offlineStoryStatus === "available") {
-    setConnectionStatus("Available offline", "available");
+  setConnectionStatus("", "");
+}
+
+function showConnectionToast(message, mode = "available", duration = 4200) {
+  setConnectionStatus(message, mode);
+  connectionStatusTimer = window.setTimeout(() => setConnectionStatus("", ""), duration);
+}
+
+function announceOfflineReady() {
+  if (!("serviceWorker" in navigator) || navigator.onLine === false) {
     return;
   }
 
-  setConnectionStatus("", "");
+  try {
+    if (sessionStorage.getItem(OFFLINE_READY_TOAST_KEY) === "true") {
+      return;
+    }
+
+    sessionStorage.setItem(OFFLINE_READY_TOAST_KEY, "true");
+  } catch {
+    // If storage is blocked, still show the toast once for this page.
+  }
+
+  showConnectionToast("Clara's Stories is ready offline", "available");
 }
 
 async function refreshReachability() {
@@ -96,11 +127,23 @@ function registerServiceWorker() {
     return;
   }
 
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js", { scope: "./" }).catch((error) => {
-      logInstall("service worker registration failed", error);
-    });
-  });
+  function register() {
+    navigator.serviceWorker.register("./service-worker.js", { scope: "./" })
+      .then(() => {
+        window.setTimeout(announceOfflineReady, 1200);
+        return navigator.serviceWorker.ready;
+      })
+      .then(announceOfflineReady)
+      .catch((error) => {
+        logInstall("service worker registration failed", error);
+      });
+  }
+
+  if (document.readyState === "complete") {
+    register();
+  } else {
+    window.addEventListener("load", register, { once: true });
+  }
 }
 
 function postServiceWorkerMessage(message) {
@@ -126,8 +169,6 @@ function markStoryAvailable(story, resources = []) {
   const ids = readOfflineStoryIds();
   ids.add(storyId);
   writeOfflineStoryIds(ids);
-  document.documentElement.dataset.offlineStoryStatus = "available";
-  syncConnectionStatus();
 
   postServiceWorkerMessage({
     type: "CACHE_STORY_RESOURCES",

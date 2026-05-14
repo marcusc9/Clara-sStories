@@ -13,9 +13,14 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="format-detection" content="telephone=no" />
     <script>
-      if (localStorage.getItem("claraTheme") === "dark") {
-        document.documentElement.dataset.theme = "dark";
-        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#09131a");
+      document.documentElement.classList.add("js");
+      try {
+        if (localStorage.getItem("claraTheme") === "dark") {
+          document.documentElement.dataset.theme = "dark";
+          document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#09131a");
+        }
+      } catch {
+        document.documentElement.dataset.theme = "light";
       }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -36,7 +41,7 @@
     <meta name="apple-mobile-web-app-title" content="Clara's Stories" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="stylesheet" href="./styles.css?v=20260513-pwa" />
+    <link rel="stylesheet" href="./styles.css?v=20260514-home-refine-4" />
   </head>
   <body class="about-shell">
     <header class="site-header" data-header>
@@ -48,7 +53,7 @@
         </span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a class="nav-link" href="./index.html#stories">Stories</a>
+        <a class="nav-link" href="./stories.html">Stories</a>
         <button
           class="theme-toggle nav-theme"
           type="button"
@@ -63,7 +68,7 @@
             <span class="menu-icon" aria-hidden="true"></span>
           </summary>
           <div class="nav-menu-panel">
-            <a class="nav-menu-item" href="./index.html#stories">
+            <a class="nav-menu-item" href="./stories.html">
               <span>Stories</span>
               <small>Browse the library</small>
             </a>
@@ -88,7 +93,7 @@
       <section class="about-hero" data-about-hero>
         <div class="about-hero-copy reveal is-visible">
           <p class="kicker">About</p>
-          <h1>A quiet reader for stories with roots.</h1>
+          <h1>Stories to come back to.</h1>
         </div>
         <div class="about-orbit" aria-hidden="true">
           <span>original sources</span>
@@ -117,12 +122,12 @@
           <article class="about-ledger-row reveal">
             <span>02</span>
             <h2>Let the reading stay quiet.</h2>
-            <p>Clear pages, gentle colours, and a reader that gets out of the way once the story begins.</p>
+            <p>Clear pages, gentle colours, and simpler reads.</p>
           </article>
           <article class="about-ledger-row reveal">
             <span>03</span>
             <h2>Give each kind of text a home.</h2>
-            <p>Stories, letters, people, and themes ask for different paths, so the library can grow without becoming noisy.</p>
+            <p>Stories, letters, people, and themes each have their own place, so it is easy to find your way back.</p>
           </article>
         </div>
       </section>
@@ -161,16 +166,16 @@
           Get in touch with Marcus at <a href="mailto:marcuscheong@icloud.com">marcuscheong@icloud.com</a>,
           or schedule a call. It would be lovely to meet, hear your thoughts, and share what is coming next.
         </p>
-        <a class="button primary" href="./index.html#stories">Return to stories</a>
+        <a class="button primary" href="./stories.html">Return to stories</a>
       </section>
     </main>
 
     <footer class="footer">
       <p>Clara's Stories</p>
-      <a href="./index.html#stories">Back to stories</a>
+      <a href="./stories.html">Back to stories</a>
     </footer>
 
-    <script src="./install.js?v=20260513-pwa"></script>
-    <script src="./about.js?v=20260513-pwa"></script>
+    <script src="./install.js?v=20260514-home-refine-4"></script>
+    <script src="./about.js?v=20260514-home-refine-4"></script>
   </body>
 </html>

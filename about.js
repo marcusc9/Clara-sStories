@@ -18,12 +18,25 @@ function applyTheme(theme) {
 }
 
 function initialiseTheme() {
-  const savedTheme = localStorage.getItem("claraTheme") === "dark" ? "dark" : "light";
+  let savedTheme = "light";
+
+  try {
+    savedTheme = localStorage.getItem("claraTheme") === "dark" ? "dark" : "light";
+  } catch {
+    savedTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  }
+
   applyTheme(savedTheme);
 }
 
 function observeReveals() {
   const revealTargets = Array.from(document.querySelectorAll(".reveal"));
+
+  if (!("IntersectionObserver" in window)) {
+    revealTargets.forEach((target) => target.classList.add("is-visible"));
+    return;
+  }
+
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -43,7 +56,9 @@ themeToggles.forEach((toggle) => {
   toggle.addEventListener("click", () => {
     const isDark = document.documentElement.dataset.theme === "dark";
     const nextTheme = isDark ? "light" : "dark";
-    localStorage.setItem("claraTheme", nextTheme);
+    try {
+      localStorage.setItem("claraTheme", nextTheme);
+    } catch {}
     applyTheme(nextTheme);
   });
 });

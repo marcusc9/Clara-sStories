@@ -142,7 +142,7 @@ function rememberStoryForOffline(item) {
 function offlineUnavailableHtml(item) {
   const title = item?.title ? `“${escapeHtml(item.title)}”` : "This story";
   return `
-    <a class="back-link" href="./index.html#stories">Back to stories</a>
+    <a class="back-link" href="./stories.html">Back to stories</a>
     <section class="reader-hero">
       <div>
         <p class="kicker">Offline mode</p>
@@ -198,7 +198,7 @@ function storyHtml(item) {
   const tags = (item.tags ?? [item.theme])
     .map(
       (tag) =>
-        `<a class="tag-pill" href="./index.html#stories" data-story-tag="${escapeAttribute(
+        `<a class="tag-pill" href="./stories.html" data-story-tag="${escapeAttribute(
           String(tag).toLowerCase()
         )}">${escapeHtml(tag)}</a>`
     )
@@ -230,7 +230,7 @@ function storyHtml(item) {
     : "";
 
   return `
-    <a class="back-link" href="./index.html#stories">Back to stories</a>
+    <a class="back-link" href="./stories.html">Back to stories</a>
     <section class="reader-hero">
       <div>
         <p class="kicker">${escapeHtml(item.theme)} · ${escapeHtml(item.readTime)}</p>
@@ -662,7 +662,7 @@ if (page && story && (!isLikelyOffline() || storyIsAvailableOffline(story))) {
 } else if (page) {
   document.title = "Story unavailable | Clara's Stories";
   page.innerHTML = `
-    <a class="back-link" href="./index.html#stories">Back to stories</a>
+    <a class="back-link" href="./stories.html">Back to stories</a>
     <section class="reader-hero">
       <div>
         <p class="kicker">Story unavailable</p>

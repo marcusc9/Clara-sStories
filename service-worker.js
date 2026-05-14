@@ -1,4 +1,4 @@
-const VERSION = "20260513-pwa";
+const VERSION = "20260514-home-refine-4";
 const STATIC_CACHE = `clara-static-${VERSION}`;
 const CONTENT_CACHE = `clara-content-${VERSION}`;
 const RUNTIME_CACHE = `clara-runtime-${VERSION}`;
@@ -9,15 +9,16 @@ const appUrl = (path) => new URL(path, self.registration.scope).toString();
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./stories.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260513-pwa",
+  "./styles.css?v=20260514-home-refine-4",
   "./stories.js",
   "./narration-assets.js",
-  "./install.js?v=20260513-pwa",
-  "./script.js?v=20260513-pwa",
-  "./story.js?v=20260513-pwa",
-  "./about.js?v=20260513-pwa",
+  "./install.js?v=20260514-home-refine-4",
+  "./script.js?v=20260514-home-refine-4",
+  "./story.js?v=20260514-home-refine-4",
+  "./about.js?v=20260514-home-refine-4",
   "./manifest.webmanifest",
   "./manifest.json",
   "./site.webmanifest",
@@ -57,11 +58,11 @@ function offlineStoryFallbackResponse() {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Story not saved offline | Clara's Stories</title>
     <meta name="theme-color" content="#fbf6e8" />
-    <link rel="stylesheet" href="./styles.css?v=20260513-pwa" />
+    <link rel="stylesheet" href="./styles.css?v=20260514-home-refine-4" />
   </head>
   <body class="story-shell">
     <main class="story-page">
-      <a class="back-link" href="./index.html#stories">Back to stories</a>
+      <a class="back-link" href="./stories.html">Back to stories</a>
       <section class="reader-hero">
         <div>
           <p class="kicker">Offline mode</p>
@@ -69,7 +70,7 @@ function offlineStoryFallbackResponse() {
           <p class="reader-summary">Open it once while online, and Clara's Stories will keep it ready for later offline reading.</p>
         </div>
       </section>
-      <p class="connection-status" data-connection-status data-status-mode="offline">Offline mode</p>
+      <p class="connection-status is-visible" data-connection-status data-status-mode="offline">Offline mode</p>
     </main>
   </body>
 </html>`,
@@ -92,7 +93,7 @@ async function putIfCacheable(cacheName, request, response) {
 }
 
 async function cacheFirst(request) {
-  const cached = await caches.match(request, { ignoreSearch: isSameOrigin(request) });
+  const cached = await caches.match(request);
 
   if (cached) {
     return cached;
@@ -122,8 +123,13 @@ async function staleWhileRevalidate(request) {
 async function navigationResponse(request) {
   const url = new URL(request.url);
   const isStoryNavigation = url.pathname.endsWith("/story.html");
+  const isStoriesNavigation = url.pathname.endsWith("/stories.html");
   const cached = await caches.match(request);
-  const fallbackPage = isStoryNavigation ? "./story.html" : "./index.html";
+  const fallbackPage = isStoryNavigation
+    ? "./story.html"
+    : isStoriesNavigation
+      ? "./stories.html"
+      : "./index.html";
   const fallback = await caches.match(appUrl(fallbackPage));
   const refresh = fetch(request)
     .then(async (response) => {

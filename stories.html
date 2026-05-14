@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="home-shell" lang="en-GB">
+<html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Clara's Stories | Bahá'í Stories</title>
+    <title>Stories | Clara's Stories</title>
     <meta
       name="description"
       content="A quiet place to read Bahá'í stories, with each passage held close to its author and source."
@@ -43,7 +43,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="stylesheet" href="./styles.css?v=20260514-home-refine-4" />
   </head>
-  <body class="home-page">
+  <body class="stories-page">
     <header class="site-header" data-header>
       <a class="brand" href="./index.html" aria-label="Clara's Stories home">
         <span class="brand-mark">C</span>
@@ -53,7 +53,7 @@
         </span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a class="nav-link" href="./stories.html">Stories</a>
+        <a class="nav-link" href="./stories.html" aria-current="page">Stories</a>
         <button
           class="theme-toggle nav-theme"
           type="button"
@@ -68,7 +68,7 @@
             <span class="menu-icon" aria-hidden="true"></span>
           </summary>
           <div class="nav-menu-panel">
-            <a class="nav-menu-item" href="./stories.html">
+            <a class="nav-menu-item" href="./stories.html" aria-current="page">
               <span>Stories</span>
               <small>Browse the library</small>
             </a>
@@ -90,94 +90,36 @@
     </header>
 
     <main>
-      <section class="hero reveal is-visible" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="kicker" data-bahai-date>Bahá'í day</p>
-          <h1 id="hero-title">Stories kept close to the heart.</h1>
-          <p>
-            Come in for a story of faith, sacrifice, or courage.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="./stories.html">Read the stories</a>
-            <button class="button secondary hero-install-action" type="button" data-install-app>
-              Install app
-            </button>
-          </div>
+      <section class="story-stage" id="stories">
+        <div class="section-heading">
+          <p class="kicker" id="stories-anchor">Stories</p>
+          <h2>Choose any, sit back and <span>settle in.</span></h2>
         </div>
 
-        <figure class="hero-image" aria-label="The Shrine of the Báb and gardens in Haifa">
-          <img
-            src="https://commons.wikimedia.org/wiki/Special:FilePath/Shrine%20of%20The%20Bab.jpg"
-            alt="The Shrine of the Báb and gardens in Haifa"
-          />
-        </figure>
-      </section>
-
-      <section class="home-intro reveal" id="welcome" aria-labelledby="home-intro-title" data-floating-gallery>
-        <div class="home-intro-copy">
-          <p class="kicker">Welcome</p>
-          <h2 id="home-intro-title">A gentler way into stories of light and courage.</h2>
-          <p>
-            Clara's Stories gathers true Bahá'í stories in a calm reader, with sources kept close.
-          </p>
-          <div class="home-intro-actions">
-            <a class="button quiet" href="./about.html">About us</a>
-          </div>
+        <div class="library-tools">
+          <label class="search-field">
+            <span>Search</span>
+            <input
+              type="search"
+              placeholder="Martha-Root, Peace, Táhirih..."
+              data-story-search
+              maxlength="120"
+              autocapitalize="none"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <div class="filters" aria-label="Story filters" data-story-filters></div>
+          <p class="library-count" data-story-count>Showing stories</p>
         </div>
 
-        <div class="home-floating-stage" aria-label="Story themes and images">
-          <figure class="float-card float-card-large" data-float-depth="-0.6">
-            <img
-              src="https://bahaiworld.bahai.org/wp-content/uploads/1936/04/2371743-master.jpg"
-              alt="‘Abdu’l-Bahá with a group of Bahá’ís beneath the Eiffel Tower in Paris"
-            />
-            <figcaption>Service</figcaption>
-          </figure>
-          <figure class="float-card float-card-tall" data-float-depth="0.9">
-            <img
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/Lotus_Temple_in_New_Delhi_03-2016.jpg"
-              alt="The Bahá'í House of Worship known as the Lotus Temple in New Delhi"
-            />
-            <figcaption>Prayer</figcaption>
-          </figure>
-          <figure class="float-card float-card-small" data-float-depth="1.4">
-            <img
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/Baha%27i_House_of_Worship,_Kampala,_Uganda.jpg"
-              alt="The Bahá'í House of Worship in Kampala, Uganda"
-            />
-            <figcaption>Community</figcaption>
-          </figure>
-          <div class="float-quality quality-one" data-float-depth="-1.2">Courage</div>
-          <div class="float-quality quality-two" data-float-depth="0.7">Peace</div>
-          <div class="float-quality quality-three" data-float-depth="1.1">Sacrifice</div>
-        </div>
-      </section>
-
-      <section class="home-path reveal" aria-label="What Clara's Stories offers" data-scroll-board>
-        <article data-scroll-card>
-          <h3>Read one story.</h3>
-          <p>Begin with something short enough for a quiet pause.</p>
-        </article>
-        <article data-scroll-card>
-          <h3>Stay close to the source.</h3>
-          <p>Each story links back to where it came from.</p>
-        </article>
-        <article data-scroll-card>
-          <h3>Come back when needed.</h3>
-          <p>Use the library as a place to return, not another feed to clear.</p>
-        </article>
-      </section>
-
-      <section class="home-close reveal">
-        <p class="kicker">Begin</p>
-        <h2>Choose a quality and let a story meet you there.</h2>
-        <a class="button primary" href="./stories.html">Browse the library</a>
+        <div class="story-grid" data-story-grid></div>
       </section>
     </main>
 
     <footer class="footer">
       <p>Clara's Stories</p>
-      <a href="./about.html">About</a>
+      <a href="./index.html">Back home</a>
     </footer>
 
     <script src="./stories.js"></script>

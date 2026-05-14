@@ -366,10 +366,6 @@ function renderStories() {
       const featureClass = index === 0 ? " feature" : "";
       const filterValues = storyFilterValues(story).join(" ");
       const searchText = normalise(storySearchText(story));
-      const offlineBadge = window.ClaraPWA?.isStoryAvailableOffline?.(story.id)
-        ? '<span class="offline-badge">Available offline</span>'
-        : "";
-
       return `
         <a class="story-card${featureClass}${imageClass} reveal" href="${safeStoryHref(
           story.id
@@ -381,7 +377,6 @@ function renderStories() {
             <span>${escapeHtml(story.theme)}</span>
             <span>${escapeHtml(story.readTime)}</span>
           </div>
-          ${offlineBadge}
           <h3>${escapeHtml(story.title)}</h3>
           <blockquote>“${escapeHtml(story.quote)}”</blockquote>
           <p>${escapeHtml(story.summary)}</p>
@@ -528,6 +523,12 @@ function syncFilterControls() {
 
 function observeReveals() {
   const revealTargets = Array.from(document.querySelectorAll(".reveal"));
+
+  if (!("IntersectionObserver" in window)) {
+    revealTargets.forEach((target) => target.classList.add("is-visible"));
+    return;
+  }
+
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -541,6 +542,125 @@ function observeReveals() {
   );
 
   revealTargets.forEach((target) => revealObserver.observe(target));
+}
+
+function initialiseFloatingGallery() {
+  const gallery = document.querySelector("[data-floating-gallery]");
+
+  if (!gallery) {
+    return;
+  }
+
+  const floatingItems = Array.from(gallery.querySelectorAll("[data-float-depth]")).map((item) => ({
+    item,
+    depth: Number(item.dataset.floatDepth) || 0,
+    currentX: 0,
+    currentY: 0,
+    targetX: 0,
+    targetY: 0
+  }));
+
+  if (!floatingItems.length) {
+    return;
+  }
+
+  let frame = null;
+
+  function animate() {
+    let needsNextFrame = false;
+
+    floatingItems.forEach((float) => {
+      float.currentX += (float.targetX - float.currentX) * 0.08;
+      float.currentY += (float.targetY - float.currentY) * 0.08;
+
+      if (Math.abs(float.currentX - float.targetX) > 0.1 || Math.abs(float.currentY - float.targetY) > 0.1) {
+        needsNextFrame = true;
+      }
+
+      float.item.style.setProperty("--float-x", `${float.currentX.toFixed(2)}px`);
+      float.item.style.setProperty("--float-y", `${float.currentY.toFixed(2)}px`);
+    });
+
+    frame = needsNextFrame ? window.requestAnimationFrame(animate) : null;
+  }
+
+  function setTargets(clientX, clientY) {
+    const rect = gallery.getBoundingClientRect();
+    const relativeX = (clientX - rect.left) / rect.width - 0.5;
+    const relativeY = (clientY - rect.top) / rect.height - 0.5;
+
+    floatingItems.forEach((float) => {
+      const strength = float.depth * 26;
+      float.targetX = relativeX * strength;
+      float.targetY = relativeY * strength;
+    });
+
+    if (!frame) {
+      frame = window.requestAnimationFrame(animate);
+    }
+  }
+
+  function resetTargets() {
+    floatingItems.forEach((float) => {
+      float.targetX = 0;
+      float.targetY = 0;
+    });
+
+    if (!frame) {
+      frame = window.requestAnimationFrame(animate);
+    }
+  }
+
+  gallery.addEventListener("pointermove", (event) => setTargets(event.clientX, event.clientY));
+  gallery.addEventListener("pointerleave", resetTargets);
+  gallery.addEventListener(
+    "touchmove",
+    (event) => {
+      const touch = event.touches[0];
+
+      if (touch) {
+        setTargets(touch.clientX, touch.clientY);
+      }
+    },
+    { passive: true }
+  );
+  gallery.addEventListener("touchend", resetTargets, { passive: true });
+}
+
+function initialiseScrollBoard() {
+  const board = document.querySelector("[data-scroll-board]");
+  const cards = Array.from(document.querySelectorAll("[data-scroll-card]"));
+
+  if (!board || !cards.length) {
+    return;
+  }
+
+  let boardFrame = null;
+
+  function updateCards() {
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+
+    cards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect();
+      const midpoint = rect.top + rect.height * 0.52;
+      const progress = 1 - Math.min(1, Math.max(0, Math.abs(midpoint - viewportHeight * 0.52) / (viewportHeight * 0.62)));
+      const stagger = Math.min(1, Math.max(0, progress + index * 0.04));
+
+      card.style.setProperty("--card-progress", stagger.toFixed(3));
+    });
+
+    boardFrame = null;
+  }
+
+  function requestUpdate() {
+    if (!boardFrame) {
+      boardFrame = window.requestAnimationFrame(updateCards);
+    }
+  }
+
+  updateCards();
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
 }
 
 filterList?.addEventListener("click", (event) => {
@@ -658,6 +778,8 @@ renderStories();
 applyImageFallbacks();
 renderFilters();
 observeReveals();
+initialiseFloatingGallery();
+initialiseScrollBoard();
 applyBahaiDate();
 syncHeaderSurface();
 updateStories();

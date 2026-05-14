@@ -13,9 +13,14 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="format-detection" content="telephone=no" />
     <script>
-      if (localStorage.getItem("claraTheme") === "dark") {
-        document.documentElement.dataset.theme = "dark";
-        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#09131a");
+      document.documentElement.classList.add("js");
+      try {
+        if (localStorage.getItem("claraTheme") === "dark") {
+          document.documentElement.dataset.theme = "dark";
+          document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#09131a");
+        }
+      } catch {
+        document.documentElement.dataset.theme = "light";
       }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -36,7 +41,7 @@
     <meta name="apple-mobile-web-app-title" content="Clara's Stories" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="stylesheet" href="./styles.css?v=20260513-pwa" />
+    <link rel="stylesheet" href="./styles.css?v=20260514-home-refine-4" />
   </head>
   <body class="story-shell">
     <header class="site-header" data-header>
@@ -48,7 +53,7 @@
         </span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a class="nav-link" href="./index.html#stories">Stories</a>
+        <a class="nav-link" href="./stories.html">Stories</a>
         <button
           class="theme-toggle nav-theme"
           type="button"
@@ -63,7 +68,7 @@
             <span class="menu-icon" aria-hidden="true"></span>
           </summary>
           <div class="nav-menu-panel">
-            <a class="nav-menu-item" href="./index.html#stories">
+            <a class="nav-menu-item" href="./stories.html">
               <span>Stories</span>
               <small>Browse the library</small>
             </a>
@@ -91,7 +96,7 @@
 
     <script src="./stories.js"></script>
     <script src="./narration-assets.js"></script>
-    <script src="./install.js?v=20260513-pwa"></script>
-    <script src="./story.js?v=20260513-pwa"></script>
+    <script src="./install.js?v=20260514-home-refine-4"></script>
+    <script src="./story.js?v=20260514-home-refine-4"></script>
   </body>
 </html>
