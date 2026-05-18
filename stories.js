@@ -14,7 +14,7 @@ window.ClaraStories = [
     tags: ["Dr. Muhájir", "Mentawai Islands", "Service", "Pioneering", "Healing"],
     summary:
       "Írán Muhájir recalls how Dr. Rahmatu’lláh Muhájir answered the Guardian’s call, became the first government doctor in the Mentawai Islands, and served whole villages with love.",
-    source: "https://bahai.works/Bah%C3%A1%E2%80%99%C3%AD_World/Volume_18/Dr._Rahmatu%E2%80%99ll%C3%A1h_Muh%C3%A1jir",
+    source: "https://file.bahai.media/3/3c/BW_Volume18.pdf",
     image: "",
     imageAlt: "",
     featureImage:
