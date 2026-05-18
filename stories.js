@@ -1,5 +1,86 @@
 window.ClaraStories = [
   {
+    id: "we-are-what-the-doctor-is",
+    theme: "service",
+    author: "Írán Muhájir",
+    book: "Bahá’í World",
+    chapter: "Dr. Rahmatu’lláh Muhájir",
+    sourcePages: "Vol. 18, pp. 653-655",
+    sourceDetail: "Bahá’í World",
+    title: "We are what the doctor is.",
+    quote:
+      "He had come to bring them a spiritual message and their appearance made no difference to him.",
+    readTime: "6 minute read",
+    tags: ["Dr. Muhájir", "Mentawai Islands", "Service", "Pioneering", "Healing"],
+    summary:
+      "Írán Muhájir recalls how Dr. Rahmatu’lláh Muhájir answered the Guardian’s call, became the first government doctor in the Mentawai Islands, and served whole villages with love.",
+    source: "https://bahai.works/Bah%C3%A1%E2%80%99%C3%AD_World/Volume_18/Dr._Rahmatu%E2%80%99ll%C3%A1h_Muh%C3%A1jir",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://file.bahai.media/9/97/Rahmatu%27llah_Muhajir%2C_portrait_from_BW_Vol_18.png",
+    featureImageAlt: "Portrait of Hand of the Cause of God Dr. Rahmatu’lláh Muhájir",
+    addedOn: "2026-05-18",
+    featuredOn: "2026-05-18",
+    story: [
+      "In 1952 when the Ten Year World Crusade of the Guardian had been announced, it was our privilege to go on pilgrimage. Raḥmat had the blessing on several occasions of being alone with the Guardian who spoke to him about the Pacific Islands, the Malaysian Peninsula and the great potential of that part of the world. Pilgrimage to the Holy Shrines and meeting the Guardian of the Cause of God increased the desire for sacrifice and service in Raḥmat’s heart. On his return he was impatient and disinterested in his well-salaried job as a physician in the American Point Four hospital in Iṣfahán. He wanted to leave everything, forget the material world and carry out the wishes of his beloved Guardian. The Guardian had asked the Bahá’ís to undertake the spiritual conquest of the world. Raḥmat wanted to respond to this call immediately. He felt there was no time to lose. This attitude of absolute obedience to the Guardian and being guided by his words continued throughout his life; he devoured the writings of Shoghi Effendi and tried to follow and implement all the instructions. This was the motivating force of his life.",
+      "At the Asian Conference in New Delhi in October 1953 the National Spiritual Assembly of Australia and New Zealand announced that a physician was needed to fill their goal in the Mentawai Islands as doctors were the only ones who stood a remote chance of obtaining a visa. Raḥmat volunteered without hesitation.",
+      "He resigned from his job and we sold all our worldly belongings. He had no idea what sort of place Mentawai was, whether or not he could get a job and, most important of all, whether a permit to stay in Indonesia would be granted us. Raḥmat was confident that by arising to carry out the behest of the Guardian all obstacles would be removed. In December 1953 we set out as pioneers to the Mentawai Islands. We arrived in the Island of Muara Siberut in February 1954 and were declared Knights of Bahá’u’lláh by the beloved Guardian. Raḥmat was employed by the Indonesian Ministry of Health, given a permanent residence visa and—miraculously—was assigned to Mentawai Islands.",
+      "Pioneering to Mentawai Islands—four small dots on the map in southern Sumatra in the Indonesian Archipelago—opened a vast and exciting field of service to Raḥmat. Although coming from a very different background and culture he felt very much at home in this new environment. He was joyful and constantly gave thanks to the beloved Guardian for this great opportunity and prayed to Bahá’u’lláh, day and night, not to take it away from him.",
+      "Muara Siberut is a former Dutch penal colony. Distant from the mainland, with no kind of development or comfort, and a constant climate of forty degrees Celsius, it was not a priority in the minds of the government officials. The native inhabitants were left to themselves, had no medical care, and practically all suffered from malaria and severe tropical skin diseases. Raḥmat, whose field of work was preventive medicine, began a systematic method of eradication of malaria and other diseases. He not only taught the people the Faith but also helped them to better their physical life. He respected the people of Mentawai and did not try to change their customs or their manner of dress. He had come to bring them a spiritual message and their appearance made no difference to him. He loved the tattooed natives as though they were his nearest and dearest kin. He never interfered with any of their traditional practices, especially if they did not affect their health. He very often participated in the native healer’s dances and ceremonies, and allowed them to apply ritual paint to his face before examining a patient. He taught them how to use soap when they bathed in the river, how to clean their hair, and how to take care of their babies. This genuine affection was reciprocated by the natives; they sought his advice and guidance in every matter.",
+      "As the number of Bahá’ís increased Raḥmat helped them to move their villages to new sites and gave them plans which included a Bahá’í Centre and a Bahá’í Cemetery. Separate shelters were built for their livestock which up to that time had shared their dwellings. The natives supplied the wood and roof thatching and Raḥmat gave them nails and assisted the many Bahá’í villages in the actual building of their houses. Perhaps the most important indication of the complete acceptance of Bahá’u’lláh by the natives of Mentawai was their willingness to depart from their ancestral burial ritual. It involved leaving the unburied corpse exposed until it decomposed and hanging the bare bones in their homes. After becoming Bahá’ís they buried their dead according to Bahá’í laws.",
+      "In all the years of his work in Mentawai, Raḥmat had very cordial relations with the Christian missionaries. Although very often they opposed him and disrupted his work, he was always kind to them, attended to their needs when they were sick, showed them every courtesy and did nothing to undermine the faith of those they had converted to Christianity. The natives, whether Christian, Bahá’í or pagan, adored him. Once when the Governor of Sumatra visited the islands to inspect Raḥmat’s work many of the natives greeted him with shouts of Alláh-u-Abhá. When asked what this meant they referred him to Raḥmat saying, ‘We are what the doctor is.’ This resulted in a lengthy fireside with the Governor and other officials. The Governor was very impressed and for the duration of his term in office stayed on friendly terms with Raḥmat.",
+      "Although Raḥmat did not consider it so, all this was achieved with a great deal of physical hardship. Often when returning from his frequent trips to the remote interior, trips involving many days of walking through jungles and in waist-deep water, he would enter the wooden hut with tree bark walls that served as our home, covered in mud and blood from the leeches that had attached themselves to him while he walked in the rivers, happy and elated because a few people in the village he had visited had accepted the Faith of Bahá’u’lláh. He dismissed the leeches and the blood, saying God was helping him not to have high blood pressure. We were both afflicted with the severest kind of tropical malaria a few weeks after our arrival in the islands. In Raḥmat’s case it was much more difficult as the shivers and very high fever came to him while he was walking in mud and torrential tropical rains and sleeping on a mat on the damp ground in the jungles.",
+      "The only means of communication with the outside world was a government mail-boat which visited Mentawai every six to eight months. When the mail included a message from the Guardian Raḥmat’s spirit soared and his soul became aflame. These letters and messages sustained him for the next eight months. Illness, lack of food and exhaustion did not matter, as long as the Guardian was pleased.",
+      "The numerous letters and cables addressed by Shoghi Effendi to Raḥmat were left in Mentawai. The following extracts are quoted from the many letters of Dr. Ḥakím, the Persian secretary to the Guardian, which convey the Guardian’s happiness with Raḥmat’s efforts in the Mentawai Islands:",
+      "18 July 1955: ‘Assure Dr. Muhájir and his wife that he prays for them and the success of their services to the Faith. The outstanding services that he and his wife have rendered have brought much happiness to his heart.’",
+      "18 May 1956: ‘He said to convey his profound appreciation to Dr. Muhájir, who is a true pioneer and also to his wife . . . He is very happy with Dr. Muhájir and his wife.’",
+      "Raḥmat was appointed to the rank of Hand of the Cause of God amongst the last contingent, in October 1957. The telegram of the beloved Guardian arrived when he was away in the villages of Java on a teaching trip. We had undertaken this rare trip to Djakarta on the instruction of the beloved Guardian to Raḥmat to assist in the purchase of the National Ḥaẓíratu’l-Quds.",
+      "Raḥmat’s great desire had been to remain in his pioneering post for the rest of his life. The sudden passing of the beloved Guardian a few weeks after the appointment of the last contingent of the Hands of the Cause made this resolve even stronger. However, it was necessary for him to leave the islands. The affairs of the Faith were at a crucial point. The Ten Year Crusade was at its midway point and all the Hands of the Cause had to be involved in the world-wide development of the Faith. It was not possible for one of them to be incommunicado in a place that had no telegram or telephone service and was cut off from the rest of the world except by means of a boat which most of the time was out of service. It took months of persuasion by the Hands of the Cause in the Holy Land, and lengthy nights and days of prayer, before Raḥmat, sadly and reluctantly, left the people he had loved so much and served so well.",
+      "We left Mentawai in 1958. In the four years of his work in the islands the number of Bahá’ís had increased to more than four thousand, three of the thirty-three Local Spiritual Assemblies had been incorporated, Bahá’í schools had been established, a Bahá’í endowment land had been purchased which was one of eight in the Bahá’í world, and a Bahá’í pamphlet had been translated and printed in the Mentawai language. This was a historic achievement as Mentawai was a spoken language that had never been recorded. Raḥmat always believed that entire villages should be brought to the Faith as this prevented disunity and friction amongst the people and allowed them to progress much more in following the principles of the Faith. He put this idea into practice in Mentawai. He worked for the village as a whole and directed all aspects of the villagers’ lives according to the teachings. Many of the children who sat at his feet on the damp ground learning Bahá’í prayers and the alphabet by the light of a small candle and sometimes the glow of the moon went on to live at the Bahá’í dormitory in Sumatra which Raḥmat had initiated and some became doctors and engineers. They remember him with love and affection and say they owe all to this gentle and kind man who sat them on his knees and chanted prayers and songs in his melodious voice.",
+      "A WHO Committee which visited Mentawai in 1960, in its report, after giving details of the beliefs of the Bahá’í Faith, devotes two long pages to Raḥmat’s medical work in the islands and adds that he was the only representative among those of different religions who was concerned with the development of the islands, establishing schools, eradicating disease and bringing cleanliness and order to the villages."
+    ]
+  },
+  {
+    id: "outside-the-door-at-akka",
+    theme: "unity",
+    author: "Louis G. Gregory",
+    book: "Bahá’í News",
+    chapter: "Robert Turner, First Black Believer of the United States",
+    sourcePages: "Issue 505, pp. 7-8",
+    sourceDetail: "Bahá’í News",
+    title: "Outside the door at ‘Akká.",
+    quote:
+      "He would be a door through which a whole race would enter the Kingdom.",
+    readTime: "3 minute read",
+    tags: ["Robert Turner", "Race Unity", "Steadfastness", "Humility", "Service"],
+    summary:
+      "Louis G. Gregory remembers Robert Turner, whose humility before ‘Abdu’l-Bahá became a luminous sign of steadfastness and race unity.",
+    source: "https://bahai.works/Bah%C3%A1%E2%80%99%C3%AD_News/Issue_505/Text",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://upload.wikimedia.org/wikipedia/commons/2/25/First_Western_Baha%27i_Pilgrims.jpg",
+    featureImageAlt: "The first Western Bahá’í pilgrims in 1898, with Robert Turner standing at the back left",
+    addedOn: "2026-05-15",
+    featuredOn: "2026-05-15",
+    story: [
+      "Robert Turner, First Black Believer of the United States",
+      "By Louis G. Gregory",
+      "Bare outlines of the story of Robert Turner, the first American Negro to become a Bahá’í, have been related to the writer, over a long period of years. Those who mentioned him have been Mrs. Lua M. Getsinger, probably the first American woman to embrace the Faith; and one of the most active and effective early teachers; Dr. Edward C. Getsinger; Mrs. May Maxwell; Mírzá ‘Ali-Kuli Khan; and Madame Khan.",
+      "There is agreement in the statements coming from such well known sources and, although few, they establish essentials of a strong and abiding faith and are worthy of being recorded as a fitting memorial of a truly great soul.",
+      "Robert Turner was the butler of Mrs. Phoebe Hearst, early Bahá’í and mother of the well known publisher of that name. Robert Turner’s post was one of unusual responsibility, carrying with it largely the stewardship of his wealthy and socially prominent employer. He was faithful, dependable and wise.",
+      "When Mrs. Hearst was given the Bahá’í message by Mrs. Getsinger in Paris, Robert Turner, from the vantage ground of his service station, listened with eager interest to words not addressed to himself. He sought opportunities to know more about so wonderful a Faith, was taught and became a firm believer. In the year 1900 he accompanied the Hearst-Getsinger party to ‘Akká, Palestine, to see ‘Abdu’l-Bahá, still a prisoner under despotic and corrupt government rule.",
+      "When the party entered the room of the Master, they assumed that Robert Turner who was with them would of course follow. After greeting them with His welcome, ‘Abdu’l-Bahá waited with His face turned toward the door, in evident expectation. The ladies looked around, and to their surprise they found that Robert was not in the room. The Master then went to the door on the outside of which Robert stood in an attitude of deepest humility.",
+      "At sight of the Master he dropped upon his knees and exclaimed: “My Lord! My Lord! I am not worthy to be here!” ‘Abdu’l-Bahá raised him to his feet, giving him a most affectionate, fatherly embrace. The exceedingly great kindness of the Master to Robert Turner was most impressive.",
+      "On one occasion the honor was bestowed upon him of sharing the Master’s servitude. He was also assured that if he remained firm and steadfast until the end, he would be a door through which a whole race would enter the Kingdom.",
+      "During those early days the confirmations were mighty, but the tests and trials were also great. Many trees were uprooted by the storms of trials. But those that were firm took deeper roots. Robert Turner, with what our Persian brothers call “Iron Sight”, had his clear vision of reality. Henceforth he refused—to use his own expression—to “let the world throw dust in his eyes.”",
+      "After a few years there came to him an illness which proved fatal. It came at a time and place that surrounded him with non-Bahá’ís. His attendants heard him often repeat, even when delirious, an expression strange and unknown. After his passing inquiry revealed that his last word was the Greatest Name. Thus he measured up to the divine standard of faith and loyalty, and constantly increasing are those who owe so noble a character gratitude and reverence.",
+      "Following his death, which was really the portal to a richer and more exalted life, a Bahá’í burial ring-stone was placed upon his finger by Mírzá ‘Ali-Kuli Khan.",
+      "An incident closely connected with this sketch is that Mrs. Phoebe Hearst, prompted no doubt by her experiences at ‘Akká and her esteem for Robert Turner, upon returning to her Washington, D. C. home, invited there a number of the most prominent educators of the colored race to meet her. They were entertained in her sumptuous home not only by material attractions, but with heavenly food, the glad tidings and the Great Message. Radiantly she announced to them that the Deliverer of mankind had indeed come!"
+    ]
+  },
+  {
     id: "awake-for-the-morning-light-has-broken",
     theme: "awakening",
     author: "Nabíl-i-A‘ẓam",

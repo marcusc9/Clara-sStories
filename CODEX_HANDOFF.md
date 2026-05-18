@@ -34,6 +34,8 @@ To avoid burning Codex limits:
 - Use fresh localhost query strings while reviewing, for example `?codex=home-refine-7`.
 - Summarize changes here whenever a multi-step visual/PWA sequence is still in progress.
 
+For daily story curation, do not load all of `stories.js` into model context for discovery or repeat checks. Use `node scripts/clara-story-index.mjs --recent=12` to get compact recent-story metadata, duplicate hashes, source usage, theme usage, and recent image data. Load only the relevant `clara-racks/*.md` files for the current automation phase.
+
 ## Current User Priorities
 
 - About page matters. Do not let content disappear because of reveal animations, file previews, service-worker cache, or unsupported APIs.
