@@ -1,6 +1,22 @@
 {
   "notes": [
     {
+      "date": "2026-05-24",
+      "sourceFamilyUsed": "A Traveler’s Narrative",
+      "sourceDetail": "part 2, Siyyid Yaḥyá of Daráb and Mullá Muḥammad-‘Alí of Zanján recognizing the Báb’s claim",
+      "recentPressure": "A Traveler’s Narrative corrected the recent Bahá’í World/service pressure and avoided another ‘Abdu’l-Bahá/Shoghi Effendi reminiscence. The theme is transformation, but early Bábí recognition and Báb-centered material should now rest.",
+      "underusedNext": ["The Covenant of Bahá’u’lláh if rights-safe", "Promulgation of Universal Peace action scenes", "women/equality sources outside Ṭáhirih", "book-length memoirs with authorized online text"],
+      "searchCorrection": "The Dawn-Breakers Mákú scene was the closest runner-up and has direct image fit, but recent Dawn-Breakers/Báb usage made A Traveler’s Narrative the better rotation today."
+    },
+    {
+      "date": "2026-05-22",
+      "sourceFamilyUsed": "The Priceless Pearl",
+      "sourceDetail": "p. 33, Egypt memories of ‘Abdu’l-Bahá and Shoghi Effendi",
+      "recentPressure": "The Priceless Pearl was underused and corrected the recent Bahá’í World/service pressure. The new integrity theme is fresh, but ‘Abdu’l-Bahá scenes remain common enough to vary the next protagonist or setting.",
+      "underusedNext": ["The Covenant of Bahá’u’lláh", "A Traveler’s Narrative", "Promulgation of Universal Peace action scenes", "book-length memoirs with authorized online text"],
+      "searchCorrection": "The Dawn-Breakers vision account nearly won on depth; keep dramatic book passages in the comparison set, but prefer complete scenes whose source family and image do not echo the last few additions."
+    },
+    {
       "date": "2026-05-18",
       "sourceFamilyUsed": "Bahá’í World",
       "sourceDetail": "Volume 18, Dr. Rahmatu’lláh Muhájir, pp. 653-655",
@@ -9,5 +25,5 @@
       "searchCorrection": "Avoid reflexively prioritizing Star of the West single accounts merely because they are easy to search. Compare book sources and biographies earlier in candidate discovery."
     }
   ],
-  "lastUpdated": "2026-05-18T11:23:00Z"
+  "lastUpdated": "2026-05-24T07:27:14Z"
 }

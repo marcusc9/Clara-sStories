@@ -1,4 +1,4 @@
-const VERSION = "20260514-home-refine-7";
+const VERSION = "20260524-story-library-1";
 const STATIC_CACHE = `clara-static-${VERSION}`;
 const CONTENT_CACHE = `clara-content-${VERSION}`;
 const RUNTIME_CACHE = `clara-runtime-${VERSION}`;
@@ -12,13 +12,13 @@ const APP_SHELL = [
   "./stories.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260514-home-refine-7",
-  "./stories.js?v=20260514-home-refine-7",
+  "./styles.css?v=20260524-story-library-1",
+  "./stories.js?v=20260524-story-library-1",
   "./narration-assets.js",
-  "./install.js?v=20260514-home-refine-7",
-  "./script.js?v=20260514-home-refine-7",
-  "./story.js?v=20260514-home-refine-7",
-  "./about.js?v=20260514-home-refine-7",
+  "./install.js?v=20260524-story-library-1",
+  "./script.js?v=20260524-story-library-1",
+  "./story.js?v=20260524-story-library-1",
+  "./about.js?v=20260524-story-library-1",
   "./manifest.webmanifest",
   "./manifest.json",
   "./site.webmanifest",
@@ -58,7 +58,7 @@ function offlineStoryFallbackResponse() {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Story not saved offline | Clara's Stories</title>
     <meta name="theme-color" content="#fbf6e8" />
-    <link rel="stylesheet" href="./styles.css?v=20260514-home-refine-7" />
+    <link rel="stylesheet" href="./styles.css?v=20260524-story-library-1" />
   </head>
   <body class="story-shell">
     <main class="story-page">
@@ -184,6 +184,29 @@ async function cacheStoryResources(data = {}) {
   );
 }
 
+async function activateUpdatedServiceWorker() {
+  const keys = await caches.keys();
+  const oldCacheKeys = keys.filter((key) => key.startsWith("clara-") && !CURRENT_CACHES.has(key));
+
+  await Promise.all(oldCacheKeys.map((key) => caches.delete(key)));
+  await self.clients.claim();
+
+  if (!oldCacheKeys.length) {
+    return;
+  }
+
+  const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+  await Promise.all(
+    clients.map((client) => {
+      if (!("navigate" in client) || new URL(client.url).origin !== self.location.origin) {
+        return null;
+      }
+
+      return client.navigate(client.url).catch(() => null);
+    })
+  );
+}
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
@@ -194,18 +217,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches
-      .keys()
-      .then((keys) =>
-        Promise.all(
-          keys
-            .filter((key) => key.startsWith("clara-") && !CURRENT_CACHES.has(key))
-            .map((key) => caches.delete(key))
-        )
-      )
-      .then(() => self.clients.claim())
-  );
+  event.waitUntil(activateUpdatedServiceWorker());
 });
 
 self.addEventListener("message", (event) => {

@@ -133,13 +133,15 @@ Letters/support:
 - Offline availability is communicated by one liquid-glass bottom toast. Do not add per-card "Available offline" badges back to story cards or the reader page.
 - Nav menu letter badges (`S`, `A`, `L`) were replaced with minimal abstract marks because the letters read as "SAL".
 - The first story feature image now points to a House of the Báb image, not the declaration-room image.
-- Current cache version after latest home polish: `20260514-home-refine-7`.
+- Current cache version after latest story library update: `20260524-story-library-1`.
 
 ## PWA Notes
 
 Android install previously prompted but did not reliably show on the home screen. Keep these rules:
 
 - Service worker registration should use `./service-worker.js` with `scope: "./"`.
+- The installed PWA checks for service-worker updates on launch. The service worker also refreshes same-origin windows once when a new cache version replaces an old Clara cache.
+- Run `node scripts/check-pwa-sync.mjs` after changing cached HTML, CSS, or JS asset versions.
 - Manifest `id`, `start_url`, and `scope` should stay relative.
 - Icons must be reachable from the live GitHub deployment.
 - After deploy, uninstall any old Clara install and clear site data before retesting Android, because stale service workers and old manifests can mask fixes.

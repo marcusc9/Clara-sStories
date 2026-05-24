@@ -122,6 +122,48 @@ async function refreshReachability() {
   syncConnectionStatus();
 }
 
+function activateWaitingServiceWorker(registration) {
+  registration?.waiting?.postMessage({ type: "SKIP_WAITING" });
+}
+
+function watchServiceWorkerUpdate(registration) {
+  activateWaitingServiceWorker(registration);
+
+  registration.addEventListener("updatefound", () => {
+    const worker = registration.installing;
+
+    if (!worker) {
+      return;
+    }
+
+    worker.addEventListener("statechange", () => {
+      if (worker.state === "installed" && navigator.serviceWorker.controller) {
+        worker.postMessage({ type: "SKIP_WAITING" });
+      }
+    });
+  });
+}
+
+function requestServiceWorkerUpdate(registration) {
+  if (navigator.onLine === false) {
+    return;
+  }
+
+  registration.update()
+    .then((updatedRegistration) => activateWaitingServiceWorker(updatedRegistration ?? registration))
+    .catch((error) => logInstall("service worker update check failed", error));
+}
+
+function requestReadyServiceWorkerUpdate() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  navigator.serviceWorker.ready
+    .then(requestServiceWorkerUpdate)
+    .catch((error) => logInstall("ready service worker update check failed", error));
+}
+
 function registerServiceWorker() {
   if (!("serviceWorker" in navigator) || !window.isSecureContext) {
     return;
@@ -129,11 +171,16 @@ function registerServiceWorker() {
 
   function register() {
     navigator.serviceWorker.register("./service-worker.js", { scope: "./" })
-      .then(() => {
+      .then((registration) => {
+        watchServiceWorkerUpdate(registration);
+        requestServiceWorkerUpdate(registration);
         window.setTimeout(announceOfflineReady, 1200);
         return navigator.serviceWorker.ready;
       })
-      .then(announceOfflineReady)
+      .then((registration) => {
+        activateWaitingServiceWorker(registration);
+        announceOfflineReady();
+      })
       .catch((error) => {
         logInstall("service worker registration failed", error);
       });
@@ -466,7 +513,10 @@ function initialiseInstallFlow() {
       query.addListener(syncInstallVisibility);
     }
   });
-  window.addEventListener("online", refreshReachability);
+  window.addEventListener("online", () => {
+    refreshReachability();
+    requestReadyServiceWorkerUpdate();
+  });
   window.addEventListener("offline", () => {
     networkReachable = false;
     syncConnectionStatus();

@@ -1,5 +1,64 @@
 window.ClaraStories = [
   {
+    id: "the-season-of-spring-and-wine",
+    theme: "transformation",
+    author: "‘Abdu’l-Bahá",
+    book: "A Traveler’s Narrative",
+    chapter: "The Báb’s Mission",
+    sourcePages: "part 2",
+    sourceDetail: "A Traveler’s Narrative",
+    title: "The season of spring and wine has arrived.",
+    quote:
+      "The season of spring and wine has arrived.",
+    readTime: "2 minute read",
+    tags: ["Vaḥíd", "The Báb", "Spiritual Search", "Transformation", "Teaching"],
+    summary:
+      "‘Abdu’l-Bahá recounts how two renowned investigators, sent or moved to examine the Báb’s claim, were overtaken by recognition and began summoning others from the pulpit.",
+    source: "https://www.bahai.org/library/authoritative-texts/abdul-baha/travelers-narrative/2",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://bahai.media/Special:FilePath/The_house_of_Siyyid_Ya%E1%B8%A5y%C3%A1_Dar%C3%A1bi%2C_surnamed_Va%E1%B8%A5id.png",
+    featureImageAlt: "The house of Siyyid Yaḥyá Darábi, surnamed Vaḥíd",
+    addedOn: "2026-05-24",
+    featuredOn: "2026-05-24",
+    story: [
+      "For by reason of these occurrences men’s interest increased, and in all parts of Persia some [of God’s] servants inclined toward Him, until the matter acquired such importance that the late king Muḥammad Sháh delegated a certain person named Siyyid Yaḥyá of Daráb, who was one of the best known of doctors and Siyyids as well as an object of veneration and confidence, giving him a horse and money for the journey so that he might proceed to Shíráz and personally investigate this matter.",
+      "When the above-mentioned Siyyid arrived at Shíráz he interviewed the Báb three times. In the first and second conferences questioning and answering took place; in the third conference he requested a commentary on the Súrih called Kawthar, and when the Báb, without thought or reflection, wrote an elaborate commentary on the Kawthar in his presence, the above-mentioned Siyyid was charmed and enraptured with Him, and straightway, without consideration for the future or anxiety about the results of this affection, hastened to Burújird to his father Siyyid Ja’far, known as Kashfí, and acquainted him with the matter.",
+      "And, although he was wise and prudent and was wont to have regard to the requirements of the time, he wrote without fear or care a detailed account of his observations to Mírzá Lutf-‘Alí the chamberlain in order that the latter might submit it to the notice of the late king, while he himself journeyed to all parts of Persia, and in every town and station summoned the people from the pulpit-tops in such wise that other learned doctors decided that he must be mad, accounting it a sure case of bewitchment.",
+      "Now when the news of the decisions of the doctors and the outcry and clamor of the lawyers reached Zanján, Mullá Muḥammad-‘Alí the divine, who was a man of mark possessed of penetrating speech, sent one of those on whom he could rely to Shíráz to investigate this matter. This person, having acquainted himself with the details of these occurrences in such wise as was necessary and proper, returned with some [of the Báb’s] writings.",
+      "When the divine heard how matters were and had made himself acquainted with the writings, notwithstanding that he was a man expert in knowledge and noted for profound research, he went mad and became crazed as was predestined: he gathered up his books in the lecture-room saying, “The season of spring and wine has arrived,” and uttered this sentence: “Search for knowledge after reaching the known is culpable.” Then from the summit of the pulpit he summoned and directed all his disciples [to embrace the doctrine], and wrote to the Báb his own declaration and confession.",
+      "The Báb in His reply signified to him the obligation of congregational prayer."
+    ]
+  },
+  {
+    id: "exactly-what-he-owed-him",
+    theme: "integrity",
+    author: "Amatu’l-Bahá Rúḥíyyih Khánum",
+    book: "The Priceless Pearl",
+    chapter: "The Childhood and Youth of Shoghi Effendi",
+    sourcePages: "p. 33",
+    sourceDetail: "The Priceless Pearl",
+    title: "Exactly what He owed him.",
+    quote:
+      "When the man finally released his hold, the Master paid him exactly what He owed him.",
+    readTime: "2 minute read",
+    tags: ["‘Abdu’l-Bahá", "Shoghi Effendi", "Integrity", "Steadfastness", "Egypt"],
+    summary:
+      "Rúḥíyyih Khánum records two memories Shoghi Effendi kept from Egypt: the Master’s taste for Baghdad’s dry bread and dates, and His calm firmness before an abusive coachman.",
+    source: "https://www.datocms-assets.com/42576/1683479784-the-priceless-pearl.pdf",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://upload.wikimedia.org/wikipedia/commons/d/df/Abdul_Baha_with_grandsons_and_other_Baha%27is.png",
+    featureImageAlt: "‘Abdu’l-Bahá with grandsons and other Bahá’ís at His house in Haifa",
+    addedOn: "2026-05-22",
+    featuredOn: "2026-05-22",
+    story: [
+      "I remember two stories associated with the days Shoghi Effendi spent in Egypt with the Master, which he himself recounted to me. He said that one day, after partaking of a particularly rich repast, the Master had recalled the days in Baghdad when His Father had returned from His self-imposed exile in the mountains of Sulaimaniya, when they had all been so poor—the days, however, when from Bahá’u’lláh’s pen had streamed such a torrent of exalted writings which night after night until dawn the believers gathered to hear chanted, in ecstasy at this wonderful Revelation—and the Master said that the taste of the dry bread and dates of those days had been sweeter than all the other food in the world. The other story surprised me—and enlightened me–very much; I heard it more than once: Shoghi Effendi said that one day he was driving back from Alexandria to Ramleh with the Master in a rented carriage, accompanied by a Pasha who was going to the Master’s house as His guest; when they arrived and got out and the Master asked the strapping big coachman how much He owed him, the man asked an exorbitant price; ‘Abdu’l-Bahá refused to pay it; the man insisted and became abusive to such an extent that he grasped the Master by the sash around His waist and pulled Him roughly back and forth, insisting on this price. Shoghi Effendi said this scene in front of the distinguished guest embarrassed him terribly. He was too small to do anything himself to help the Master and felt horrified and humiliated. Not so ‘Abdu’l-Bahá, Who remained perfectly calm and refused to give in. When the man finally released his hold, the Master paid him exactly what He owed him, told him his conduct had forfeited the good tip He had planned to give him, and walked off followed by Shoghi Effendi and the Pasha! There is no doubt that such things left a lifelong imprint on the Guardian’s character, who never allowed himself to be browbeaten or cheated, no matter whether or not this embarrassed or inconvenienced him, and those who were working for him."
+    ]
+  },
+  {
     id: "we-are-what-the-doctor-is",
     theme: "service",
     author: "Írán Muhájir",
