@@ -248,8 +248,27 @@ function installButtons() {
   return Array.from(document.querySelectorAll("[data-install-app]"));
 }
 
+function hasInstalledMarker() {
+  try {
+    return localStorage.getItem(INSTALL_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function markAppInstalled() {
+  try {
+    localStorage.setItem(INSTALL_STORAGE_KEY, "true");
+  } catch (error) {
+    logInstall("installed marker storage failed", error);
+  }
+}
+
 function setInstallVisible(isVisible) {
   document.documentElement.classList.toggle("show-install-action", isVisible);
+  installButtons().forEach((button) => {
+    button.hidden = !isVisible;
+  });
 }
 
 function closeOpenMenu(button) {
@@ -378,12 +397,12 @@ function initialiseNavMenus() {
 
 function syncInstallVisibility() {
   const isStandalone = isStandaloneApp();
-  const isMarkedInstalled = localStorage.getItem(INSTALL_STORAGE_KEY) === "true";
+  const isMarkedInstalled = hasInstalledMarker();
   const canShowIOSInstructions = isIosSafari() && !isStandalone && !isMarkedInstalled;
   const canShowNativePrompt = Boolean(deferredInstallPrompt) && !isStandalone && !isMarkedInstalled;
 
   if (isStandalone) {
-    localStorage.setItem(INSTALL_STORAGE_KEY, "true");
+    markAppInstalled();
   }
 
   logInstall("standalone detection result", {
@@ -483,7 +502,7 @@ function handleInstallClick(event) {
   const button = event.currentTarget;
   closeOpenMenu(button);
 
-  if (isStandaloneApp() || localStorage.getItem(INSTALL_STORAGE_KEY) === "true") {
+  if (isStandaloneApp() || hasInstalledMarker()) {
     syncInstallVisibility();
     return;
   }
@@ -549,7 +568,7 @@ window.addEventListener("beforeinstallprompt", (event) => {
 
 window.addEventListener("appinstalled", () => {
   deferredInstallPrompt = null;
-  localStorage.setItem(INSTALL_STORAGE_KEY, "true");
+  markAppInstalled();
   logInstall("appinstalled fired");
   syncInstallVisibility();
 });

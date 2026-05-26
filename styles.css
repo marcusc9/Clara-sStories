@@ -456,6 +456,10 @@ main,
   }
 }
 
+[data-install-app][hidden] {
+  display: none !important;
+}
+
 .install-icon,
 .menu-icon {
   position: relative;
