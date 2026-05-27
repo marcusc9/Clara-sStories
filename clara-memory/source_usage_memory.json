@@ -1,6 +1,14 @@
 {
   "notes": [
     {
+      "date": "2026-05-27",
+      "sourceFamilyUsed": "The Chosen Highway",
+      "sourceDetail": "‘Abdu’l-Bahá in War-time, Haji Ramadan, pp. 206-208",
+      "recentPressure": "The Chosen Highway refreshed the source mix after A Traveler’s Narrative and The Priceless Pearl, but it still centers ‘Abdu’l-Bahá, wartime Palestine, and heroic message-bearing. Steadfastness has now appeared recently, so avoid another danger-and-letter-carrying arc next.",
+      "underusedNext": ["women/equality sources outside Ṭáhirih", "Covenant materials if rights-safe and self-contained", "Promulgation of Universal Peace only with concrete action", "non-Western teaching or community transformation outside Bahá’í World"],
+      "searchCorrection": "The Star of the West Garden of Healing and Chicago healing reminiscence were useful comparisons but weaker: one leaned service-heavy and diffuse, the other repeated ‘Abdu’l-Bahá healing/pilgrimage patterns. Haji Ramadan won because the episode is complete, vivid, and imageable."
+    },
+    {
       "date": "2026-05-24",
       "sourceFamilyUsed": "A Traveler’s Narrative",
       "sourceDetail": "part 2, Siyyid Yaḥyá of Daráb and Mullá Muḥammad-‘Alí of Zanján recognizing the Báb’s claim",
@@ -15,15 +23,7 @@
       "recentPressure": "The Priceless Pearl was underused and corrected the recent Bahá’í World/service pressure. The new integrity theme is fresh, but ‘Abdu’l-Bahá scenes remain common enough to vary the next protagonist or setting.",
       "underusedNext": ["The Covenant of Bahá’u’lláh", "A Traveler’s Narrative", "Promulgation of Universal Peace action scenes", "book-length memoirs with authorized online text"],
       "searchCorrection": "The Dawn-Breakers vision account nearly won on depth; keep dramatic book passages in the comparison set, but prefer complete scenes whose source family and image do not echo the last few additions."
-    },
-    {
-      "date": "2026-05-18",
-      "sourceFamilyUsed": "Bahá’í World",
-      "sourceDetail": "Volume 18, Dr. Rahmatu’lláh Muhájir, pp. 653-655",
-      "recentPressure": "Bahá’í World is now overrepresented in recent additions, but this selection was accepted because the user-requested Dr. Muhájir lead produced an unusually strong, complete Mentawai account.",
-      "underusedNext": ["The Priceless Pearl", "The Covenant of Bahá’u’lláh", "A Traveler’s Narrative", "Bahá’í Reference Library talks with concrete action scenes", "book-length memoirs with authorized online text"],
-      "searchCorrection": "Avoid reflexively prioritizing Star of the West single accounts merely because they are easy to search. Compare book sources and biographies earlier in candidate discovery."
     }
   ],
-  "lastUpdated": "2026-05-24T07:27:14Z"
+  "lastUpdated": "2026-05-27T08:50:27Z"
 }
