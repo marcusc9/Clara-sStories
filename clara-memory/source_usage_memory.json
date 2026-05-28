@@ -1,6 +1,14 @@
 {
   "notes": [
     {
+      "date": "2026-05-28",
+      "sourceFamilyUsed": "Star of the West",
+      "sourceDetail": "Vol. 15, Issue 11, Martha Root on Hyde and Clara Dunn in Australia and New Zealand",
+      "recentPressure": "Star of the West now has two recent strong uses, and today's selection is another early Western pioneer/teaching report. It successfully avoided Bahá’í World and wartime Haifa, but it should not become the next default fallback.",
+      "underusedNext": ["women/equality sources outside Ṭáhirih and outside early Western pioneer profiles", "Covenant materials if rights-safe and self-contained", "Promulgation of Universal Peace only with concrete action", "non-Western teaching or community transformation from a non-Star source"],
+      "searchCorrection": "Dunn won because it was a complete founding-community story with a direct archival image. Agnes Alexander's Tokyo earthquake, Keith Ransom-Kehler material, and Promulgation race-unity talks were useful comparisons but lost for disaster-service adjacency, biography/eulogy shape, or discourse-heavy structure."
+    },
+    {
       "date": "2026-05-27",
       "sourceFamilyUsed": "The Chosen Highway",
       "sourceDetail": "‘Abdu’l-Bahá in War-time, Haji Ramadan, pp. 206-208",
@@ -25,5 +33,5 @@
       "searchCorrection": "The Dawn-Breakers vision account nearly won on depth; keep dramatic book passages in the comparison set, but prefer complete scenes whose source family and image do not echo the last few additions."
     }
   ],
-  "lastUpdated": "2026-05-27T08:50:27Z"
+  "lastUpdated": "2026-05-28T21:33:19Z"
 }
