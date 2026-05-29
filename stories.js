@@ -1,5 +1,53 @@
 window.ClaraStories = [
   {
+    id: "that-fearless-maid-alone",
+    theme: "courage",
+    author: "Nabíl-i-A‘ẓam",
+    book: "The Dawn-Breakers",
+    chapter: "The Zanján Upheaval",
+    sourcePages: "chapter XXIV, pp. 775-784",
+    sourceDetail: "The Dawn-Breakers",
+    title: "That fearless maid alone.",
+    quote:
+      "That fearless maid alone was free to move in whatever direction she pleased.",
+    readTime: "5 minute read",
+    tags: ["Zaynab", "Zanján", "Courage", "Women", "Steadfastness"],
+    summary:
+      "Nabíl recounts how Zaynab of Zanján joined the defenders of the fort, moved wherever courage was most needed, and left a memory that awakened others.",
+    source: "https://bahai.works/The_Dawn-Breakers/Chapter_XXIV",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://bahai.media/Special:FilePath/View_of_Zanj%C3%A1n.jpg",
+    featureImageAlt: "View of Zanján, Persia, from The Dawn-Breakers illustrations",
+    addedOn: "2026-05-29",
+    featuredOn: "2026-05-29",
+    story: [
+      "While the inhabitants of the town, and particularly the merchant class among them, profited greatly by the sudden influx of such a large number of forces, the companions of Ḥujjat suffered want and privation within the walls of the fort.",
+      "Their supplies dwindled rapidly; their only hope of receiving any food from outside lay in the efforts, often unsuccessful, of a few women who could manage, under various pretexts, to approach the fort and sell them at an exorbitant price the provisions they so sadly needed.",
+      "Though oppressed with hunger and harassed by fierce and sudden onsets, they maintained with unflinching determination the defence of the fort. Sustained by a hope that no amount of adversity could dim, they succeeded in erecting no less than twenty-eight barricades, each of which was entrusted to the care of a group of nineteen of their fellow-disciples.",
+      "At each barricade, nineteen additional companions were stationed as sentinels, whose function it was to watch and report the movements of the enemy.",
+      "They were frequently surprised by the voice of the crier whom the enemy sent to the neighbourhood of the fort to induce its occupants to desert Ḥujjat and his Cause. “The governor of the province,” he would proclaim, “and the commander-in-chief too, are willing to forgive and extend a safe passage to whoever among you will decide to leave the fort and renounce his faith.",
+      "Such a man will be amply rewarded by his sovereign, who, in addition to lavishing gifts upon him, will invest him with the dignity of noble rank. Both the Sháh and his representatives have pledged their honour not to depart from the promise they have given.” To this call the besieged would, with one voice, return contemptuous and decisive replies.",
+      "Further evidence of the spirit of sublime renunciation animating those valiant companions was afforded by the behaviour of a village maiden, who, of her own accord, threw in her lot with the band of women and children who had joined the defenders of the fort. Her name was Zaynab, her home a tiny hamlet in the near neighbourhood of Zanján. She was comely and fair of face, was fired with a lofty faith, and endowed with intrepid courage.",
+      "The sight of the trials and hardships which her men companions were made to endure stirred in her an irrepressible yearning to disguise herself in male attire and share in repulsing the repeated attacks of the enemy. Donning a tunic and wearing a head-dress like those of her men companions, she cut off her locks, girt on a sword, and, seizing a musket and a shield, introduced herself into their ranks. No one suspected her of being a maid when she leaped forward to take her place behind the barricade.",
+      "As soon as the enemy charged, she bared her sword and, raising the cry of “Yá Ṣáḥibu’z-Zamán!” flung herself with incredible audacity upon the forces arrayed against her. Friend and foe marvelled that day at a courage and resourcefulness the equal of which their eyes had scarcely ever beheld. Her enemies pronounced her the curse which an angry Providence had hurled upon them. Overwhelmed with despair and abandoning their barricades, they fled in disgraceful rout before her.",
+      "Ḥujjat, who was watching the movements of the enemy from one of the turrets, recognised her and marvelled at the prowess which that maiden was displaying. She had set out in pursuit of her assailants, when he ordered his men to bid her return to the fort and give up the attempt.",
+      "“No man,” he was heard to say, as he saw her plunge into the fire directed upon her by the enemy, “has shown himself capable of such vitality and courage.” When questioned by him as to the motive of her behaviour, she burst into tears and said: “My heart ached with pity and sorrow when I beheld the toil and sufferings of my fellow-disciples. I advanced by an inner urge I could not resist.",
+      "I was afraid lest you would deny me the privilege of throwing in my lot with my men companions.” “You are surely the same Zaynab,” Ḥujjat asked her, “who volunteered to join the occupants of the fort?” “I am,” she replied. “I can confidently assure you that no one has hitherto discovered my sex. You alone have recognised me. I adjure you by the Báb not to withhold from me that inestimable privilege, the crown of martyrdom, the one desire of my life.”",
+      "Ḥujjat was profoundly impressed by the tone and manner of her appeal. He sought to calm the tumult of her soul, assured her of his prayers in her behalf, and gave her the name Rustam-‘Alí as a mark of her noble courage. “This is the Day of Resurrection,” he told her, “the day when ‘all secrets shall be searched out.’ Not by their outward appearance, but by the character of their beliefs and the manner of their lives, does God judge His creatures, be they men or women.",
+      "Though a maiden of tender age and immature experience, you have displayed such vitality and resource as few men could hope to surpass.” He granted her request, and warned her not to exceed the bounds their Faith had imposed upon them. “We are called upon to defend our lives,” he reminded her, “against a treacherous assailant, and not to wage holy war against him.”",
+      "For a period of no less than five months, that maiden continued to withstand with unrivalled heroism the forces of the enemy. Disdainful of food and sleep, she toiled with fevered earnestness for the Cause she most loved. She quickened, by the example of her splendid daring, the courage of the few who wavered, and reminded them of the duty each was expected to fulfil. The sword she wielded remained, throughout that period, by her side.",
+      "In the brief intervals of sleep she was able to obtain, she was seen with her head resting upon her sword and her shield serving as a covering for her body. Every one of her companions was assigned to a particular post which he was expected to guard and defend, while that fearless maid alone was free to move in whatever direction she pleased.",
+      "Always in the thick and forefront of the turmoil that raged round her, Zaynab was ever ready to rush to the rescue of whatever post the assailant was threatening, and to lend her assistance to any one of those who needed either her encouragement or support. As the end of her life approached, her enemies discovered her secret, and continued, despite their knowledge that she was a maid, to dread her influence and to tremble at her approach.",
+      "The shrill sound of her voice was sufficient to strike consternation into their hearts and to fill them with despair.",
+      "One day, seeing that her companions were being suddenly enveloped by the forces of the enemy, Zaynab ran in distress to Ḥujjat and, flinging herself at his feet, implored him, with tearful eyes, to allow her to rush forth to their aid. “My life, I feel, is nearing its end,” she added. “I may myself fall beneath the sword of the assailant. Forgive, I entreat you, my trespasses, and intercede for me with my Master, for whose sake I yearn to lay down my life.”",
+      "Ḥujjat was too much overcome with emotion to reply. Encouraged by his silence, which she interpreted to mean that he consented to grant her appeal, she leaped out of the gate and, raising seven times the cry “Yá Ṣáḥibu’z-Zamán!” rushed to stay the hand that had already slain a number of her companions. “Why befoul by your deeds the fair name of Islám?” she shouted, as she flung herself upon them.",
+      "“Why flee abjectly from before our face, if you be speakers of truth?” She ran to the barricades which the enemy had erected, routed those who guarded the first three of the defences, and was engaging in overcoming the fourth, when, beneath a shower of bullets, she dropped dead upon the ground. Not a single voice among her opponents dared question her chastity or ignore the sublimity of her faith and the enduring traits of her character.",
+      "Such was her devotion that after her death no less than twenty women of her acquaintance embraced the Cause of the Báb. To them she had ceased to be the peasant girl they had known; she was the very incarnation of the noblest principles of human conduct, a living embodiment of the spirit which only a Faith such as hers could manifest."
+    ]
+  },
+  {
     id: "barely-fifteen-dollars-in-australia",
     theme: "pioneering",
     author: "Martha Root",
