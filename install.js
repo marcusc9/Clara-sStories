@@ -398,8 +398,7 @@ function initialiseNavMenus() {
 function syncInstallVisibility() {
   const isStandalone = isStandaloneApp();
   const isMarkedInstalled = hasInstalledMarker();
-  const canShowIOSInstructions = isIosSafari() && !isStandalone && !isMarkedInstalled;
-  const canShowNativePrompt = Boolean(deferredInstallPrompt) && !isStandalone && !isMarkedInstalled;
+  const canShowInstallAction = !isStandalone && !isMarkedInstalled;
 
   if (isStandalone) {
     markAppInstalled();
@@ -412,7 +411,7 @@ function syncInstallVisibility() {
     hasNativePrompt: Boolean(deferredInstallPrompt)
   });
 
-  setInstallVisible(canShowNativePrompt || canShowIOSInstructions);
+  setInstallVisible(canShowInstallAction);
 }
 
 function createInstallModal() {
@@ -514,7 +513,10 @@ function handleInstallClick(event) {
 
   if (deferredInstallPrompt) {
     promptNativeInstall();
+    return;
   }
+
+  showConnectionToast("Use your browser menu to install Clara's Stories", "available");
 }
 
 function initialiseInstallFlow() {

@@ -381,16 +381,6 @@ main,
   display: grid;
 }
 
-.hero-install-action {
-  display: none;
-  color: #101a22;
-  cursor: pointer;
-}
-
-.show-install-action .hero-install-action {
-  display: inline-grid;
-}
-
 .connection-status {
   position: fixed;
   left: 50%;
@@ -3377,10 +3367,6 @@ blockquote {
     grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     justify-content: start;
-  }
-
-  .show-install-action .hero-actions {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-actions .button {
