@@ -2438,6 +2438,10 @@ body.about-shell {
   overflow: hidden;
 }
 
+.story-card.feature.image-card.is-hidden {
+  display: none;
+}
+
 .story-card.feature.image-card img {
   grid-row: 1 / span 6;
   width: 100%;

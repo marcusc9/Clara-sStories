@@ -117,9 +117,9 @@ function storyResourceUrls(item) {
   const narrationAsset = getNarrationAsset(item);
   return uniqueResourceUrls([
     "./story.html",
-    "./stories.js?v=20260601-grace-audio-1",
-    "./narration-assets.js?v=20260601-grace-audio-1",
-    "./styles.css?v=20260601-grace-audio-1",
+    "./stories.js?v=20260602-listen-filter-1",
+    "./narration-assets.js?v=20260602-listen-filter-1",
+    "./styles.css?v=20260602-listen-filter-1",
     item.image,
     item.featureImage,
     ...(narrationAsset?.chunks ?? []).map((chunk) => chunk.src),
