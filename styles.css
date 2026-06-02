@@ -2160,6 +2160,7 @@ body.about-shell {
 .stories-page .story-stage {
   padding-top: clamp(54px, 7vw, 92px);
   padding-bottom: 60px;
+  background: transparent;
 }
 
 .home-page .story-stage > .section-heading,
@@ -2241,6 +2242,12 @@ body.about-shell {
   justify-content: flex-start;
 }
 
+.filters.is-resizing {
+  overflow: hidden;
+  transition: height 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: height;
+}
+
 .filter {
   display: inline-flex;
   align-items: center;
@@ -2254,16 +2261,12 @@ body.about-shell {
   font-weight: 400;
 }
 
-.filter-menu {
-  display: contents;
-}
-
-.filter-menu summary {
-  list-style: none;
-}
-
-.filter-menu summary::-webkit-details-marker {
+.filters.has-expanded-filters > .filter-anecdotes-primary {
   display: none;
+}
+
+.filters.is-restoring-anecdotes > .filter-anecdotes-primary {
+  animation: filter-pill-in 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .filter-more {
@@ -2281,45 +2284,81 @@ body.about-shell {
   transition: transform 180ms ease;
 }
 
-.filter-menu[open] .filter-more::after {
+.filter-less::after {
   transform: translateY(0.08em) rotate(225deg);
 }
 
-.filter-menu[open] > .filter-more {
+.filters.has-expanded-filters > .filter-toggle {
   display: none;
 }
 
-.filter-less {
+.filters.is-closing > .filter-toggle {
   display: none;
 }
 
-.filter-menu[open] .filter-less {
-  display: inline-flex;
-}
-
-.filter-menu-panel {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  max-height: 0;
+.filter-overflow {
+  display: none;
   opacity: 0;
-  overflow: hidden;
   transform: translateY(-8px);
-  transition: max-height 360ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease,
-    transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.filter-menu[open] .filter-menu-panel {
-  max-height: 240px;
-  opacity: 1;
-  transform: translateY(0);
+.filters.has-expanded-filters > .filter-overflow,
+.filters.is-closing > .filter-overflow {
+  display: inline-flex;
+}
+
+.filters.has-expanded-filters:not(.is-closing) > .filter-overflow {
+  animation: filter-pill-in 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--filter-index, 0) * 42ms);
+}
+
+.filters.is-closing > .filter-overflow {
+  pointer-events: none;
+  animation: filter-pill-out 320ms ease both;
+  animation-delay: calc((var(--filter-count, 1) - var(--filter-index, 0)) * 22ms);
+}
+
+@keyframes filter-pill-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes filter-pill-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
 }
 
 .filter.is-active {
   background: var(--mint);
 }
 
-.filter-menu.has-active .filter-more {
+.filter.filter-listen {
+  border-color: rgba(90, 154, 196, 0.3);
+  background: rgba(198, 229, 246, 0.72);
+  color: #12364c;
+}
+
+.filter.filter-listen.is-active {
+  border-color: rgba(54, 127, 174, 0.46);
+  background: #b8def2;
+  color: #0c2f44;
+}
+
+.filter-more.has-active {
   background: var(--mint);
 }
 
@@ -2328,13 +2367,20 @@ body.about-shell {
   color: #09131a;
 }
 
-:root[data-theme="dark"] .filter-menu.has-active .filter-more {
+:root[data-theme="dark"] .filter-more.has-active {
   background: #d5ead5;
   color: #09131a;
 }
 
-:root[data-theme="dark"] .filter-menu-panel {
-  background: transparent;
+:root[data-theme="dark"] .filter.filter-listen {
+  border-color: rgba(142, 201, 232, 0.28);
+  background: rgba(58, 107, 132, 0.56);
+  color: #ddf3ff;
+}
+
+:root[data-theme="dark"] .filter.filter-listen.is-active {
+  background: #9ccde7;
+  color: #082638;
 }
 
 .story-grid {
@@ -2898,6 +2944,17 @@ blockquote {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .filters.is-resizing {
+    transition: none;
+  }
+
+  .filter-overflow,
+  .filters.is-restoring-anecdotes > .filter-anecdotes-primary {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
   .hero-image img {
     opacity: 1;
     animation: none;
@@ -3332,21 +3389,6 @@ blockquote {
 
   .hero-image {
     border-radius: 0;
-  }
-
-  .filter-menu {
-    display: contents;
-  }
-
-  .filter-menu summary {
-    width: 56px;
-  }
-
-  .filter-menu-panel {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
   }
 
   .hero-copy p:not(.kicker) {

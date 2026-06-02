@@ -1,5 +1,33 @@
 window.ClaraStories = [
   {
+    id: "go-back-and-sow-the-seeds",
+    theme: "teaching",
+    author: "Reginald Grant Barrow",
+    book: "Mother's Stories: Stories of ‘Abdu’l-Bahá and Early Believers",
+    chapter: "Sow the seeds",
+    sourcePages: "p. 39",
+    sourceDetail: "Mother's Stories",
+    title: "Go back and sow the seeds.",
+    quote:
+      "I did not tell you to gain believers. I told you to sow the seeds.",
+    readTime: "1 minute read",
+    tags: ["Teaching", "India", "Obedience", "Detachment", "Faithfulness"],
+    collectionTags: ["Anecdotes"],
+    summary:
+      "Muriel Ives Barrow Newhall recalls ‘Abdu’l-Bahá’s stern counsel to a discouraged teacher: the task was to sow the seed, not count the harvest.",
+    source: "https://bahai-library.com/pdf/i/ives_mothers_stories_abdul-baha_2022.pdf",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://file.bahai.media/b/b7/Portrait_of_Abdul-Baha%2C_1911.jpg",
+    featureImageAlt: "Portrait of ‘Abdu’l-Bahá taken in Paris, France, October 1911",
+    addedOn: "2026-06-02",
+    featuredOn: "2026-06-02",
+    story: [
+      "Once, in the early days, ‘Abdu’l-Bahá sent an eager believer there to ‘sow the seed, deliver the Message’. The man went, and two years later returned very discouraged. “I have sown the seed. I have delivered the Message through the length and breadth of India and they will not listen. Not one single soul has declared his belief in Bahá’u’lláh! What shall I do now?” And ‘Abdu’l-Bahá said rather sternly, “Go back and sow the seeds. I did not tell you to gain believers. I told you to sow the seeds.”"
+    ]
+  },
+  {
     id: "that-fearless-maid-alone",
     theme: "courage",
     author: "Nabíl-i-A‘ẓam",
@@ -55,7 +83,7 @@ window.ClaraStories = [
     chapter: "How the Bahá’í Message Came to Australia and New Zealand",
     sourcePages: "Vol. 15, Issue 11, pp. 334-336",
     sourceDetail: "Star of the West",
-    title: "Barely fifteen dollars in Australia.",
+    title: "The Dunns arrive with fifteen dollars.",
     quote:
       "The writer has never seen two Bahá’í souls give more, trust more, pray more.",
     readTime: "5 minute read",
@@ -1314,6 +1342,12 @@ window.ClaraStories = [
     title: "Grace learns what service means.",
     quote: "Are you as happy scrubbing the garbage pails as you are arranging the roses?",
     readTime: "8 minute read",
+    narration: {
+      provider: "elevenlabs",
+      assetKey: "grace-obers-first-small-step",
+      voice: "uploaded",
+      status: "ready"
+    },
     tags: ["Service", "Humility", "Detachment", "Household", "New York"],
     summary:
       "Grace Robarts Ober asks to serve ‘Abdu'l-Bahá and learns, through a difficult hidden test, what selfless joy in service really means.",

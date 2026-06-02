@@ -1,6 +1,14 @@
 {
   "notes": [
     {
+      "date": "2026-06-02",
+      "sourceFamilyUsed": "Mother's Stories",
+      "sourceDetail": "Reginald Grant Barrow, Mother's Stories, p. 39, Sow the seeds",
+      "recentPressure": "Mother's Stories and Bahá'í Stories-style anecdotal material are warm again because this user-directed addition follows several older Barrow entries already in the archive. Teaching is now today's explicit theme.",
+      "underusedNext": ["Covenant materials if rights-safe and self-contained", "concrete Promulgation action scenes outside teaching-method anecdotes", "authorized memoirs with fuller arcs", "non-Western community material from a non-Barrow source"],
+      "searchCorrection": "The story was selected by user request, not comparative ranking. Future runs should not treat short Mother’s Stories anecdotes as the default fallback; seek broader source variety after this compact teaching piece."
+    },
+    {
       "date": "2026-05-29",
       "sourceFamilyUsed": "The Dawn-Breakers",
       "sourceDetail": "chapter XXIV, Zaynab of Zanján, pp. 775-784",
@@ -41,5 +49,5 @@
       "searchCorrection": "The Dawn-Breakers vision account nearly won on depth; keep dramatic book passages in the comparison set, but prefer complete scenes whose source family and image do not echo the last few additions."
     }
   ],
-  "lastUpdated": "2026-05-29T08:00:49Z"
+  "lastUpdated": "2026-06-02T10:26:20Z"
 }

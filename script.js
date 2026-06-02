@@ -9,8 +9,13 @@ const bahaiDate = document.querySelector("[data-bahai-date]");
 const themeToggles = document.querySelectorAll("[data-theme-toggle]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const MAX_SEARCH_QUERY_LENGTH = 120;
+const FILTER_MENU_CLOSE_MS = 620;
+const FILTER_HEIGHT_BUFFER_MS = 80;
 
 const activeFilters = new Set();
+let filtersExpanded = false;
+let filterCollapseTimer = null;
+let filterResizeTimer = null;
 let lastScroll = 0;
 let ticking = false;
 let programmaticScroll = false;
@@ -73,6 +78,7 @@ function filterKey(value) {
 function storyFilterValues(story) {
   return [
     story.theme,
+    hasNarration(story) ? "Listen" : "",
     ...(story.collectionTags ?? [])
   ]
     .map(filterKey)
@@ -81,6 +87,10 @@ function storyFilterValues(story) {
 
 function isAnecdote(story) {
   return (story.collectionTags ?? []).some((tag) => filterKey(tag) === "anecdotes");
+}
+
+function hasNarration(story) {
+  return Boolean(story.narration?.status === "ready");
 }
 
 function storySearchText(story) {
@@ -437,6 +447,7 @@ function renderFilters() {
 
   const allFilter = filterMap.get("all");
   const anecdotesFilter = filterMap.get("anecdotes");
+  const listenFilter = stories.some(hasNarration) ? "Listen" : null;
   const themeFilters = Array.from(filterMap.entries()).filter(
     ([filter]) => filter !== "all" && filter !== "anecdotes"
   );
@@ -444,34 +455,158 @@ function renderFilters() {
   const overflowThemeFilters = themeFilters.slice(6);
   const visibleFilters = [
     ["all", allFilter],
+    ...(listenFilter ? [["listen", listenFilter]] : []),
     ...visibleThemeFilters,
     ...(anecdotesFilter ? [["anecdotes", anecdotesFilter]] : [])
   ];
 
-  function renderFilterButton([filter, label]) {
+  function renderFilterButton([filter, label], options = {}) {
     const isActive = filter === "all" ? activeFilters.size === 0 : activeFilters.has(filter);
     const activeClass = isActive ? " is-active" : "";
-    return `<button class="filter${activeClass}" type="button" data-filter="${filter}" aria-pressed="${isActive}">${label}</button>`;
+    const extraClass = options.className ? ` ${options.className}` : "";
+    const style = options.style ? ` style="${options.style}"` : "";
+    return `<button class="filter${activeClass}${extraClass}" type="button" data-filter="${filter}" aria-pressed="${isActive}"${style}>${label}</button>`;
   }
 
+  const panelFilters = [
+    ...overflowThemeFilters,
+    ...(anecdotesFilter ? [["anecdotes", anecdotesFilter]] : [])
+  ];
+
+  const overflowHasActiveFilter = panelFilters.some(([filter]) => activeFilters.has(filter));
   const moreFilters = overflowThemeFilters.length
     ? `
-      <details class="filter-menu">
-        <summary class="filter filter-more" aria-label="Show more filters">
-          <span class="visually-hidden">More filters</span>
-        </summary>
-        <div class="filter-menu-panel">
-          ${overflowThemeFilters.map(renderFilterButton).join("")}
-          <button class="filter filter-more filter-less" type="button" data-filter-collapse aria-label="Hide more filters">
-            <span class="visually-hidden">Fewer filters</span>
-          </button>
-        </div>
-      </details>
+      <button class="filter filter-more filter-toggle${overflowHasActiveFilter ? " has-active" : ""}" type="button" data-filter-toggle aria-expanded="${filtersExpanded}" aria-label="Show more filters">
+        <span class="visually-hidden">More filters</span>
+      </button>
+      ${panelFilters
+        .map((entry, index) =>
+          renderFilterButton(entry, {
+            className: `filter-overflow${entry[0] === "anecdotes" ? " filter-anecdotes-overflow" : ""}`,
+            style: `--filter-index: ${index}; --filter-count: ${panelFilters.length + 1};`
+          })
+        )
+        .join("")}
+      <button class="filter filter-more filter-less filter-overflow" type="button" data-filter-collapse aria-label="Hide more filters" style="--filter-index: ${panelFilters.length}; --filter-count: ${panelFilters.length + 1};">
+        <span class="visually-hidden">Fewer filters</span>
+      </button>
     `
     : "";
 
-  filterList.innerHTML = `${visibleFilters.map(renderFilterButton).join("")}${moreFilters}`;
+  filterList.innerHTML = `${visibleFilters
+    .map((entry) =>
+      renderFilterButton(entry, {
+        className: [
+          entry[0] === "listen" ? "filter-listen" : "",
+          entry[0] === "anecdotes" ? "filter-anecdotes-primary" : ""
+        ]
+          .filter(Boolean)
+          .join(" ")
+      })
+    )
+    .join("")}${moreFilters}`;
+  filterList.classList.toggle("has-expanded-filters", filtersExpanded);
   syncFilterControls();
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function measureFilterHeight(nextClasses = []) {
+  if (!filterList) {
+    return 0;
+  }
+
+  const clone = filterList.cloneNode(true);
+  const width = filterList.getBoundingClientRect().width;
+  const transientClasses = [
+    "has-expanded-filters",
+    "is-closing",
+    "is-restoring-anecdotes",
+    "is-resizing"
+  ];
+
+  transientClasses.forEach((className) => clone.classList.remove(className));
+  nextClasses.forEach((className) => clone.classList.add(className));
+  clone.style.cssText = [
+    "position: absolute",
+    "visibility: hidden",
+    "pointer-events: none",
+    "inset: 0 auto auto -9999px",
+    `width: ${width}px`,
+    "height: auto",
+    "overflow: visible"
+  ].join(";");
+  document.body.append(clone);
+  const height = clone.getBoundingClientRect().height;
+  clone.remove();
+  return height;
+}
+
+function prepareFilterResize() {
+  if (!filterList || prefersReducedMotion()) {
+    return false;
+  }
+
+  window.clearTimeout(filterResizeTimer);
+  filterList.classList.add("is-resizing");
+  filterList.style.height = `${filterList.getBoundingClientRect().height}px`;
+  filterList.getBoundingClientRect();
+  return true;
+}
+
+function finishFilterResize(targetHeight, shouldAnimate) {
+  if (!filterList || !shouldAnimate) {
+    return;
+  }
+
+  window.requestAnimationFrame(() => {
+    filterList.style.height = `${targetHeight}px`;
+  });
+
+  filterResizeTimer = window.setTimeout(() => {
+    filterList.classList.remove("is-resizing");
+    filterList.style.height = "";
+  }, FILTER_MENU_CLOSE_MS + FILTER_HEIGHT_BUFFER_MS);
+}
+
+function expandFilterMenu() {
+  if (!filterList) {
+    return;
+  }
+
+  window.clearTimeout(filterCollapseTimer);
+  const shouldAnimate = prepareFilterResize();
+  filtersExpanded = true;
+  filterList.classList.add("has-expanded-filters");
+  filterList.classList.remove("is-closing", "is-restoring-anecdotes");
+  filterList.querySelector("[data-filter-toggle]")?.setAttribute("aria-expanded", "true");
+  finishFilterResize(measureFilterHeight(["has-expanded-filters"]), shouldAnimate);
+}
+
+function collapseFilterMenu() {
+  if (!filterList || filterList.classList.contains("is-closing")) {
+    return;
+  }
+
+  if (!filtersExpanded) {
+    return;
+  }
+
+  window.clearTimeout(filterCollapseTimer);
+  const reduceMotion = prefersReducedMotion();
+  const shouldAnimate = prepareFilterResize();
+  const collapsedHeight = measureFilterHeight();
+  filtersExpanded = false;
+  filterList.classList.remove("has-expanded-filters");
+  filterList.classList.add("is-closing", "is-restoring-anecdotes");
+  filterList.querySelector("[data-filter-toggle]")?.setAttribute("aria-expanded", "false");
+  finishFilterResize(collapsedHeight, shouldAnimate);
+
+  filterCollapseTimer = window.setTimeout(() => {
+    filterList.classList.remove("is-closing", "is-restoring-anecdotes");
+  }, reduceMotion ? 0 : FILTER_MENU_CLOSE_MS);
 }
 
 function updateStories() {
@@ -513,12 +648,12 @@ function syncFilterControls() {
     item.setAttribute("aria-pressed", String(isActive));
   });
 
-  Array.from(document.querySelectorAll(".filter-menu")).forEach((menu) => {
-    const hasActiveMenuFilter = Array.from(menu.querySelectorAll("[data-filter]")).some((item) =>
-      activeFilters.has(item.dataset.filter ?? "")
-    );
-    menu.classList.toggle("has-active", hasActiveMenuFilter);
-  });
+  const overflowHasActiveFilter = Array.from(document.querySelectorAll(".filter-overflow[data-filter]")).some(
+    (item) => activeFilters.has(item.dataset.filter ?? "")
+  );
+  const filterToggle = document.querySelector("[data-filter-toggle]");
+  filterToggle?.classList.toggle("has-active", overflowHasActiveFilter);
+  filterToggle?.setAttribute("aria-expanded", String(filtersExpanded));
 }
 
 function observeReveals() {
@@ -708,9 +843,21 @@ function initialiseHomeSectionScroll() {
 
 filterList?.addEventListener("click", (event) => {
   const filter = event.target.closest("[data-filter]");
+  const toggleControl = event.target.closest("[data-filter-toggle]");
 
   if (event.target.closest("[data-filter-collapse]")) {
-    event.target.closest(".filter-menu")?.removeAttribute("open");
+    event.preventDefault();
+    collapseFilterMenu();
+    return;
+  }
+
+  if (toggleControl) {
+    event.preventDefault();
+    if (filtersExpanded) {
+      collapseFilterMenu();
+    } else {
+      expandFilterMenu();
+    }
     return;
   }
 
