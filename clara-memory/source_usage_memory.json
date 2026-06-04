@@ -1,6 +1,22 @@
 {
   "notes": [
     {
+      "date": "2026-06-04",
+      "sourceFamilyUsed": "Bahá’í World",
+      "sourceDetail": "Vol. 12, \"Black Sunlight,\" Kampala young Buganda incident, pp. 926-927",
+      "recentPressure": "Bahá’í World is now overused/warm again after the new Black Sunlight selection and earlier Bahá’í World service/profile/remembrance pieces. Uganda/Kampala imagery is also warm because the new featured image is a 1961 Kampala House of Worship gathering.",
+      "underusedNext": ["non-Bahá’í World source families", "women/community transformation outside modern report shape", "authorized memoirs with direct image fit", "concrete Promulgation action scenes only if story-shaped"],
+      "searchCorrection": "DRC A Vision of Peace had strong freshness and image fit but read more like a modern development report; Barli Institute was more institutional than narrative. Black Sunlight won on literary voice, compact completeness, and memorability despite the Bahá’í World penalty."
+    },
+    {
+      "date": "2026-06-03",
+      "sourceFamilyUsed": "God Passes By",
+      "sourceDetail": "chapter XVII, second commission and the ship that turned toward Constantinople",
+      "recentPressure": "God Passes By is now warm again after this Covenant-crisis/providence passage and the earlier Ridván declaration item. ‘Abdu’l-Bahá-centered danger in ‘Akká and prison imagery should rest for at least the next run.",
+      "underusedNext": ["non-‘Abdu’l-Bahá protagonists", "women/community transformation outside Ṭáhirih or overlapping Memorials material", "authorized memoirs with direct image fit", "non-Western community material outside Star of the West and Bahá’í World"],
+      "searchCorrection": "Shamsu’d-Duhá from Memorials was the strongest runner-up but overlapped too much with the existing Ṭáhirih story on the same Memorials page. Bowery Mission remained too discourse-heavy and too close to charity/giving patterns."
+    },
+    {
       "date": "2026-06-02",
       "sourceFamilyUsed": "Mother's Stories",
       "sourceDetail": "Reginald Grant Barrow, Mother's Stories, p. 39, Sow the seeds",
@@ -49,5 +65,5 @@
       "searchCorrection": "The Dawn-Breakers vision account nearly won on depth; keep dramatic book passages in the comparison set, but prefer complete scenes whose source family and image do not echo the last few additions."
     }
   ],
-  "lastUpdated": "2026-06-02T10:26:20Z"
+  "lastUpdated": "2026-06-04T12:18:00Z"
 }

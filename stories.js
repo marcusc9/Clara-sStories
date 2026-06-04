@@ -1,5 +1,83 @@
 window.ClaraStories = [
   {
+    id: "the-scar-of-friendship",
+    theme: "understanding",
+    author: "William and Marguerite Sears",
+    book: "Bahá’í World",
+    chapter: "Black Sunlight",
+    sourcePages: "Vol. 12, pp. 926-927",
+    sourceDetail: "Bahá’í World",
+    title: "The scar of friendship will never be healed.",
+    quote:
+      "The scar of friendship which the Bahá’ís have cut into my heart will never be healed.",
+    readTime: "2 minute read",
+    tags: ["Uganda", "Kampala", "Spiritual Search", "Understanding", "Friendship"],
+    summary:
+      "William and Marguerite Sears remember a young Buganda in Kampala whose search moved from bewilderment to a friendship of the heart.",
+    source: "https://bahai.works/Bah%C3%A1%E2%80%99%C3%AD_World/Volume_12/Articles_and_Reviews",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://bahai.media/Special:FilePath/Over_900_Bah%C3%A1%E2%80%99%C3%ADs_gathered_at_the_Kampala_House_of_Worship%2C_1961.png",
+    featureImageAlt: "Over 900 Bahá’ís gathered at the Kampala House of Worship in 1961",
+    addedOn: "2026-06-04",
+    featuredOn: "2026-06-04",
+    story: [
+      "One evening in Kampala, we spoke to a charming young Buganda. We had been talking about the history of his people and the great war which had been so fiercely fought by the Catholics and Protestants to gain supremacy. He told us how the Kabaka (King) had refused to embrace either belief since they broke the very commandment which Jesus had given them, his followers, “to love one another.”",
+      "“What is your own background in religion?” we asked him.",
+      "“Many things I have been,” he said, “but never happy inside. I was born a Pagan, but I became a Catholic because they owned the primary school and I wished to learn. Then I became a Protestant because they owned the high school. Then,” he chuckled, “since the college was owned by the government, I became an agnostic.”",
+      "“What are you now?”",
+      "He smiled. “Bewildered. I have heard much about the Bahá’í Faith, but I lack the courage to believe that it can really be as my ears tell me. I am no longer a child or boy. Now I must believe, not because I desire to gain something, but because my heart tells me it is true and will fill my emptiness.”",
+      "We agreed. He told us that he knew it would not be easy, nor popular, but what did it matter if only it were true. Again we agreed, and quoting the words of Bahá’u’lláh, said, “adversity is the oil that feedeth the flame of this Lamp” of God.",
+      "When we parted months later, he said, “I thought my soul had been lost when I was born. Now I know that Baha’u’llah was just keeping it for me. Now He has returned it to me.” As we said our goodbyes, his parting words were, “The scar of friendship which the Bahá’ís have cut into my heart will never be healed.”"
+    ]
+  },
+  {
+    id: "please-god-this-dynamite-will-not-explode",
+    theme: "providence",
+    author: "Shoghi Effendi",
+    book: "God Passes By",
+    chapter: "Renewal of ‘Abdu’l-Bahá’s Incarceration",
+    sourcePages: "chapter XVII",
+    sourceDetail: "God Passes By",
+    title: "Please God this dynamite will not explode.",
+    quote:
+      "Please God this dynamite will not explode.",
+    readTime: "5 minute read",
+    tags: ["‘Abdu’l-Bahá", "Covenant", "Akká", "Providence", "Serenity"],
+    summary:
+      "Shoghi Effendi recounts how, as a commission prepared to carry ‘Abdu’l-Bahá away from ‘Akká, the waiting ship suddenly turned toward Constantinople.",
+    source: "https://www.bahai.org/library/authoritative-texts/shoghi-effendi/god-passes-by/19",
+    image: "",
+    imageAlt: "",
+    featureImage:
+      "https://bahai.media/Special:FilePath/Prison_in_akka.jpg",
+    featureImageAlt: "Prison in ‘Akká",
+    addedOn: "2026-06-03",
+    featuredOn: "2026-06-03",
+    story: [
+      "In the early part of the winter of 1907 another Commission of four officers, headed by ‘Árif Bey, and invested with plenary powers, was suddenly dispatched to ‘Akká by order of the Sulṭán.",
+      "A few days before its arrival ‘Abdu’l‑Bahá had a dream, which He recounted to the believers, in which He saw a ship cast anchor off ‘Akká, from which flew a few birds, resembling sticks of dynamite, and which, circling about His head, as He stood in the midst of a multitude of the frightened inhabitants of the city, returned without exploding to the ship.",
+      "No sooner had the members of the Commission landed than they placed under their direct and exclusive control both the Telegraph and Postal services in ‘Akká; arbitrarily dismissed officials suspected of being friendly to ‘Abdu’l‑Bahá, including the governor of the city; established direct and secret contact with the government in Constantinople; took up their residence in the home of the neighbors and intimate associates of the Covenant-breakers; set guards over the house of ‘Abdu’l‑Bahá to prevent any one from seeing Him; and started the strange procedure of calling up as witnesses the very people, among whom were Christians and Moslems, orientals and westerners, who had previously signed the documents forwarded to Constantinople, and which they had brought with them for the purpose of their investigations.",
+      "The activities of the Covenant-breakers, and particularly of Mírzá Muḥammad-‘Alí, now jubilant and full of hope, rose in this hour of extreme crisis, to the highest pitch. Visits, interviews and entertainments multiplied, in an atmosphere of fervid expectation, now that the victory was seen to be at hand. Not a few among the lower elements of the population were led to believe that their acquisition of the property which would be left behind by the deported exiles was imminent.",
+      "Insults and calumnies markedly increased. Even some of the poor, so long and so bountifully succored by ‘Abdu’l‑Bahá, forsook Him for fear of reprisals.",
+      "‘Abdu’l‑Bahá, while the members of the Commission were carrying on their so-called investigations, and throughout their stay of about one month in ‘Akká, consistently refused to meet or have any dealings with any of them, in spite of the veiled threats and warnings conveyed by them to Him through a messenger, an attitude which greatly surprised them and served to inflame their animosity and reinforce their determination to execute their evil designs.",
+      "Though the perils and tribulations which had encompassed Him were now at their thickest, though the ship on which He was supposed to embark with the members of the Commission was waiting in readiness, at times in ‘Akká, at times in Haifa, and the wildest rumors were being spread about Him, the serenity He had invariably maintained, ever since His incarceration had been reimposed, remained unclouded, and His confidence unshaken.",
+      "“The meaning of the dream I dreamt,” He, at that time, told the believers who still remained in ‘Akká, “is now clear and evident. Please God this dynamite will not explode.”",
+      "Meanwhile the members of the Commission had, on a certain Friday, gone to Haifa and inspected the Báb’s sepulcher, the construction of which had been proceeding without any interruption on Mt. Carmel. Impressed by its solidity and dimensions, they had inquired of one of the attendants as to the number of vaults that had been built beneath that massive structure.",
+      "Shortly after the inspection had been made it was suddenly observed, one day at about sunset, that the ship, which had been lying off Haifa, had weighed anchor, and was heading towards ‘Akká. The news spread rapidly among an excited population that the members of the Commission had embarked upon it. It was anticipated that it would stop long enough at ‘Akká to take ‘Abdu’l‑Bahá on board, and then proceed to its destination.",
+      "Consternation and anguish seized the members of His family when informed of the approach of the ship. The few believers who were left wept with grief at their impending separation from their Master. ‘Abdu’l‑Bahá could be seen, at that tragic hour, pacing, alone and silent, the courtyard of His house.",
+      "As dusk fell, however, it was suddenly noticed that the lights of the ship had swung round, and the vessel had changed her course. It now became evident that she was sailing direct for Constantinople. The intelligence was instantly communicated to ‘Abdu’l‑Bahá, Who, in the gathering darkness, was still pacing His courtyard. Some of the believers who had posted themselves at different points to watch the progress of the ship hurried to confirm the joyful tidings.",
+      "One of the direst perils that had ever threatened ‘Abdu’l‑Bahá’s precious life was, on that historic day, suddenly, providentially and definitely averted.",
+      "Soon after the precipitate and wholly unexpected sailing of that ship news was received that a bomb had exploded in the path of the Sulṭán while he was returning to his palace from the mosque where he had been offering his Friday prayers.",
+      "A few days after this attempt on his life the Commission submitted its report to him; but he and his government were too preoccupied to consider the matter. The case was laid aside, and when, some months later, it was again brought forward it was abruptly closed forever by an event which, once and for all, placed the Prisoner of ‘Akká beyond the power of His royal enemy.",
+      "The “Young Turk” Revolution, breaking out swiftly and decisively in 1908, forced a reluctant despot to promulgate the constitution which he had suspended, and to release all religious and political prisoners held under the old régime. Even then a telegram had to be sent to Constantinople to inquire specifically whether ‘Abdu’l‑Bahá was included in the category of these prisoners, to which an affirmative reply was promptly received.",
+      "Within a few months, in 1909, the Young Turks obtained from the Shaykhu’l-Islám the condemnation of the Sulṭán himself who, as a result of further attempts to overthrow the constitution, was finally and ignominiously deposed, deported and made a prisoner of state. On one single day of that same year there were executed no less than thirty-one leading ministers, páshás and officials, among whom were numbered notorious enemies of the Faith.",
+      "Tripolitania itself, the scene of ‘Abdu’l‑Bahá’s intended exile was subsequently wrested from the Turks by Italy.",
+      "Thus ended the reign of the “Great Assassin,” “the most mean, cunning, untrustworthy and cruel intriguer of the long dynasty of ‘Uthmán,” a reign “more disastrous in its immediate losses of territory and in the certainty of others to follow, and more conspicuous for the deterioration of the condition of his subjects, than that of any other of his twenty-three degenerate predecessors since the death of Sulaymán the Magnificent.”"
+    ]
+  },
+  {
     id: "go-back-and-sow-the-seeds",
     theme: "teaching",
     author: "Reginald Grant Barrow",
