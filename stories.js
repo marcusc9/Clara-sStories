@@ -9,7 +9,7 @@ window.ClaraStories = [
     sourceDetail: "Bahá’í World",
     title: "The scar of friendship will never be healed.",
     quote:
-      "The scar of friendship which the Bahá’ís have cut into my heart will never be healed.",
+      "I thought my soul had been lost when I was born. Now I know that Baha’u’llah was just keeping it for me. Now He has returned it to me.",
     readTime: "2 minute read",
     tags: ["Uganda", "Kampala", "Spiritual Search", "Understanding", "Friendship"],
     summary:
@@ -18,7 +18,7 @@ window.ClaraStories = [
     image: "",
     imageAlt: "",
     featureImage:
-      "https://bahai.media/Special:FilePath/Over_900_Bah%C3%A1%E2%80%99%C3%ADs_gathered_at_the_Kampala_House_of_Worship%2C_1961.png",
+      "https://file.bahai.media/9/97/Over_900_Bah%C3%A1%E2%80%99%C3%ADs_gathered_at_the_Kampala_House_of_Worship%2C_1961.png",
     featureImageAlt: "Over 900 Bahá’ís gathered at the Kampala House of Worship in 1961",
     addedOn: "2026-06-04",
     featuredOn: "2026-06-04",
