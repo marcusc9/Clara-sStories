@@ -1,6 +1,22 @@
 {
   "notes": [
     {
+      "date": "2026-06-11",
+      "sourceFamilyUsed": "The Chosen Highway",
+      "sourceDetail": "Part II, Chapter I, Bahíyyih Khánum's spoken chronicle of Ásíyih Khánum, Bahá’u’lláh's imprisonment, and the family exile to Baghdad",
+      "recentPressure": "The Chosen Highway and bahai-library.com are warm again, and holy-family exile/imprisonment material now needs rest after Munirih, God Passes By, Haji Ramadan, and this Ásíyih Khánum selection. Fortitude, sacrifice, persecution, Baghdad, Bahíyyih narration, and monument-garden imagery should not become the next fallback.",
+      "underusedNext": ["non-bahai-library source if Clara-level", "non-Persian or non-Holy-Land local community story with literary shape", "women/local protagonists outside holy-family memoirs", "fresh image lane not based on portraits or monument gardens"],
+      "searchCorrection": "The Bahíyyih Khánum-focused version of the Chosen Highway passage was rejected as too close to the existing Greatest Holy Leaf story and portrait. Martha Root, Lidia/Vasyl, May Maxwell, and modern community candidates were interesting but either source-warm, report-like, fragmentary, or weaker on full verbatim source shape. Use Chosen Highway next only if the passage is extraordinary and clearly different."
+    },
+    {
+      "date": "2026-06-09",
+      "sourceFamilyUsed": "Bahá’í News",
+      "sourceDetail": "Issue 527, Travelling institute fosters consolidation, Quilhuay, Peru, pp. 2-3",
+      "recentPressure": "Bahá’í News is now warm again, and community-consolidation/development-report material should not become the next fallback. The selection refreshed the immediate source mix after Memorials, Munirih memoir, Japan/Agnes Alexander, Portals, and Bahá’í World, but it adds Peru/Quechua, children/mothers classes, and local institute imagery to the recent pressure.",
+      "underusedNext": ["more literary memoir or book-length recollection outside report style", "women or local protagonists with a complete personal arc", "non-Bahá’í News source families", "non-Peru/non-Quechua community material only if strongly story-shaped"],
+      "searchCorrection": "Maharashtra/Vasantkutti from the same Bahá’í News issue was memorable and non-duplicate but had weaker image fit and a thinner source frame. Central African Republic women/manioc and India vocational-training passages met the underused-women target but read more like reports than Clara-level stories. Use modern/community-development material only when there is a concrete scene, human turn, and direct or very close image fit."
+    },
+    {
       "date": "2026-06-08",
       "sourceFamilyUsed": "Memorials of the Faithful",
       "sourceDetail": "section 1, Nabíl-i-Akbar, scholar and teacher",
@@ -47,23 +63,7 @@
       "recentPressure": "God Passes By is now warm again after this Covenant-crisis/providence passage and the earlier Ridván declaration item. ‘Abdu’l-Bahá-centered danger in ‘Akká and prison imagery should rest for at least the next run.",
       "underusedNext": ["non-‘Abdu’l-Bahá protagonists", "women/community transformation outside Ṭáhirih or overlapping Memorials material", "authorized memoirs with direct image fit", "non-Western community material outside Star of the West and Bahá’í World"],
       "searchCorrection": "Shamsu’d-Duhá from Memorials was the strongest runner-up but overlapped too much with the existing Ṭáhirih story on the same Memorials page. Bowery Mission remained too discourse-heavy and too close to charity/giving patterns."
-    },
-    {
-      "date": "2026-06-02",
-      "sourceFamilyUsed": "Mother's Stories",
-      "sourceDetail": "Reginald Grant Barrow, Mother's Stories, p. 39, Sow the seeds",
-      "recentPressure": "Mother's Stories and Bahá'í Stories-style anecdotal material are warm again because this user-directed addition follows several older Barrow entries already in the archive. Teaching is now today's explicit theme.",
-      "underusedNext": ["Covenant materials if rights-safe and self-contained", "concrete Promulgation action scenes outside teaching-method anecdotes", "authorized memoirs with fuller arcs", "non-Western community material from a non-Barrow source"],
-      "searchCorrection": "The story was selected by user request, not comparative ranking. Future runs should not treat short Mother’s Stories anecdotes as the default fallback; seek broader source variety after this compact teaching piece."
-    },
-    {
-      "date": "2026-05-29",
-      "sourceFamilyUsed": "The Dawn-Breakers",
-      "sourceDetail": "chapter XXIV, Zaynab of Zanján, pp. 775-784",
-      "recentPressure": "The Dawn-Breakers is now warm again after recent chapter III and chapter XXIV use, and early Bábí martyrdom/courage material needs a rest. This run intentionally accepted the repetition cost because Zaynab answered the underused women/equality target with unusually high narrative force.",
-      "underusedNext": ["Covenant materials if rights-safe and self-contained", "non-Western teaching or community transformation from a non-Star source", "authorized memoirs or book-length recollections outside Bahá’í World", "Promulgation only if the scene is concrete rather than talk-forward"],
-      "searchCorrection": "Zaynab beat Bowery Mission/Promulgation and Mona-related periodical material on completeness, source prestige, image fit, and memorability. Tomorrow should not lean on another siege, martyrdom, or Dawn-Breakers rescue unless it is extraordinary and clearly different."
     }
   ],
-  "lastUpdated": "2026-06-08T10:34:30Z"
+  "lastUpdated": "2026-06-11T14:29:00Z"
 }
