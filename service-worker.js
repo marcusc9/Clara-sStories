@@ -1,4 +1,4 @@
-const VERSION = "20260604-story-refresh-2";
+const VERSION = "20260701-nabil-narration";
 const STATIC_CACHE = `clara-static-${VERSION}`;
 const CONTENT_CACHE = `clara-content-${VERSION}`;
 const RUNTIME_CACHE = `clara-runtime-${VERSION}`;
@@ -12,13 +12,13 @@ const APP_SHELL = [
   "./stories.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260604-story-refresh-2",
-  "./stories.js?v=20260604-story-refresh-2",
-  "./narration-assets.js?v=20260604-story-refresh-2",
-  "./install.js?v=20260604-story-refresh-2",
-  "./script.js?v=20260604-story-refresh-2",
-  "./story.js?v=20260604-story-refresh-2",
-  "./about.js?v=20260604-story-refresh-2",
+  "./styles.css?v=20260701-nabil-narration",
+  "./stories.js?v=20260701-nabil-narration",
+  "./narration-assets.js?v=20260701-nabil-narration",
+  "./install.js?v=20260701-nabil-narration",
+  "./script.js?v=20260701-nabil-narration",
+  "./story.js?v=20260701-nabil-narration",
+  "./about.js?v=20260701-nabil-narration",
   "./manifest.webmanifest",
   "./manifest.json",
   "./site.webmanifest",
@@ -58,7 +58,7 @@ function offlineStoryFallbackResponse() {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Story not saved offline | Clara's Stories</title>
     <meta name="theme-color" content="#fbf6e8" />
-    <link rel="stylesheet" href="./styles.css?v=20260604-story-refresh-2" />
+    <link rel="stylesheet" href="./styles.css?v=20260701-nabil-narration" />
   </head>
   <body class="story-shell">
     <main class="story-page">

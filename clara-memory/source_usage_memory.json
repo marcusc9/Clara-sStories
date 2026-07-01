@@ -1,6 +1,22 @@
 {
   "notes": [
     {
+      "date": "2026-06-16",
+      "sourceFamilyUsed": "Star of the West",
+      "sourceDetail": "Vol. 2, Issue 7 and 8, Ghodsia Ashraf Khanum's 1911 Washington address and Sohrab introduction",
+      "recentPressure": "Star of the West is warm again after the Ghodsia Ashraf selection and the May Dunn/Martha Root addition. The new story also adds Persian women's education, early American reception/conference setting, first-woman-abroad testimony, and direct portrait/newspaper imagery to the recent pressure.",
+      "underusedNext": ["scene-driven memoir outside speeches and conference reports", "non-Persian or non-Western local community protagonist", "authorized book/Reference Library source with a complete arc", "fresh image lane outside portraits and page/newspaper scans"],
+      "searchCorrection": "Ghodsia won because the source text was compact, historically consequential, non-duplicate, directly imageable, and centered a woman's own stated purpose. Priceless Pearl/Shoghi Effendi material was rejected as too close to holy-family crisis and mourning pressure; modern community-development candidates remained report-like; Ghodsia's weakness is that it is testimony/address rather than a dramatic scene, so do not let speeches become the next fallback."
+    },
+    {
+      "date": "2026-06-15",
+      "sourceFamilyUsed": "Bahá’í News",
+      "sourceDetail": "Issue 538, \"Mother of the Temple,\" Corinne True's 1907 petition visit to ‘Akká and ‘Abdu’l-Bahá's Temple instruction",
+      "recentPressure": "Bahá’í News is warm again after Issue 527 and Issue 538, though today's selection avoided the report style by using a biographical pilgrimage scene. Early Chicago, Temple-origin material, Western pilgrim-to-‘Akká scenes, ‘Abdu’l-Bahá direct-instruction arcs, dedication/service, and Corinne True imagery should rest next.",
+      "underusedNext": ["non-periodical memoir or authoritative book source", "non-Western local protagonist with literary shape", "women/community transformation outside Western pilgrim settings", "fresh image lane outside portraits, early Chicago groups, and monument gardens"],
+      "searchCorrection": "Queen Marie/Martha Root had historical force but repeated Western travel-report and Star/Martha patterns. Livingston, Malaysian jungle teaching, and Mongolian community candidates refreshed geography but remained report-like or image-thin. Corinne True won because the source passage was full, concrete, emotionally complete, directly imageable, and non-duplicate despite Bahá’í News pressure."
+    },
+    {
       "date": "2026-06-11",
       "sourceFamilyUsed": "The Chosen Highway",
       "sourceDetail": "Part II, Chapter I, Bahíyyih Khánum's spoken chronicle of Ásíyih Khánum, Bahá’u’lláh's imprisonment, and the family exile to Baghdad",
@@ -47,23 +63,7 @@
       "recentPressure": "Portals to Freedom is no longer untouched and should rest for the next run. Unity and race-unity material are warmer after this New York child-centered scene, and ‘Abdu’l-Bahá remains a heavily recurring protagonist even though the source family was fresh.",
       "underusedNext": ["non-‘Abdu’l-Bahá protagonists", "women/community transformation outside Western pilgrimage or New York settings", "non-Western community material from non-Bahá’í World sources", "authorized memoirs with a different emotional register"],
       "searchCorrection": "The Bowery boys episode beat modern community-report candidates and merely talk-forward Promulgation material because it had concrete action, a complete emotional turn, exact source text, and a verified archival child/New York image. Avoid using Portals immediately as the new easy fallback."
-    },
-    {
-      "date": "2026-06-04",
-      "sourceFamilyUsed": "Bahá’í World",
-      "sourceDetail": "Vol. 12, \"Black Sunlight,\" Kampala young Buganda incident, pp. 926-927",
-      "recentPressure": "Bahá’í World is now overused/warm again after the new Black Sunlight selection and earlier Bahá’í World service/profile/remembrance pieces. Uganda/Kampala imagery is also warm because the new featured image is a 1961 Kampala House of Worship gathering.",
-      "underusedNext": ["non-Bahá’í World source families", "women/community transformation outside modern report shape", "authorized memoirs with direct image fit", "concrete Promulgation action scenes only if story-shaped"],
-      "searchCorrection": "DRC A Vision of Peace had strong freshness and image fit but read more like a modern development report; Barli Institute was more institutional than narrative. Black Sunlight won on literary voice, compact completeness, and memorability despite the Bahá’í World penalty."
-    },
-    {
-      "date": "2026-06-03",
-      "sourceFamilyUsed": "God Passes By",
-      "sourceDetail": "chapter XVII, second commission and the ship that turned toward Constantinople",
-      "recentPressure": "God Passes By is now warm again after this Covenant-crisis/providence passage and the earlier Ridván declaration item. ‘Abdu’l-Bahá-centered danger in ‘Akká and prison imagery should rest for at least the next run.",
-      "underusedNext": ["non-‘Abdu’l-Bahá protagonists", "women/community transformation outside Ṭáhirih or overlapping Memorials material", "authorized memoirs with direct image fit", "non-Western community material outside Star of the West and Bahá’í World"],
-      "searchCorrection": "Shamsu’d-Duhá from Memorials was the strongest runner-up but overlapped too much with the existing Ṭáhirih story on the same Memorials page. Bowery Mission remained too discourse-heavy and too close to charity/giving patterns."
     }
   ],
-  "lastUpdated": "2026-06-11T14:29:00Z"
+  "lastUpdated": "2026-06-16T13:05:00Z"
 }

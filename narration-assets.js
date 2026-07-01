@@ -59,3 +59,33 @@ window.ClaraNarrationAssets["grace-obers-first-small-step"] = {
   ],
   cues: []
 };
+
+window.ClaraNarrationAssets["that-star-nabil-will-shine-forever"] = {
+  title: "That star, Nabíl, will shine forever.",
+  artist: "Clara's Stories",
+  album: "Memorials of the Faithful",
+  artwork: [
+    {
+      src: "./icons/icon-512.png",
+      sizes: "512x512",
+      type: "image/png"
+    },
+    {
+      src: "./icons/icon-192.png",
+      sizes: "192x192",
+      type: "image/png"
+    },
+    {
+      src: "./icons/apple-touch-icon.png",
+      sizes: "180x180",
+      type: "image/png"
+    }
+  ],
+  chunks: [
+    {
+      src: "./audio/that-star-nabil-will-shine-forever/that-star-nabil-will-shine-forever.mp3",
+      start: 0
+    }
+  ],
+  cues: []
+};
