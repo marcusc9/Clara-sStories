@@ -1,12 +1,12 @@
 {
   "notes": [
     {
-      "date": "2026-06-16",
-      "sourceFamilyUsed": "Star of the West",
-      "sourceDetail": "Vol. 2, Issue 7 and 8, Ghodsia Ashraf Khanum's 1911 Washington address and Sohrab introduction",
-      "recentPressure": "Star of the West is warm again after the Ghodsia Ashraf selection and the May Dunn/Martha Root addition. The new story also adds Persian women's education, early American reception/conference setting, first-woman-abroad testimony, and direct portrait/newspaper imagery to the recent pressure.",
-      "underusedNext": ["scene-driven memoir outside speeches and conference reports", "non-Persian or non-Western local community protagonist", "authorized book/Reference Library source with a complete arc", "fresh image lane outside portraits and page/newspaper scans"],
-      "searchCorrection": "Ghodsia won because the source text was compact, historically consequential, non-duplicate, directly imageable, and centered a woman's own stated purpose. Priceless Pearl/Shoghi Effendi material was rejected as too close to holy-family crisis and mourning pressure; modern community-development candidates remained report-like; Ghodsia's weakness is that it is testimony/address rather than a dramatic scene, so do not let speeches become the next fallback."
+      "date": "2026-07-10",
+      "sourceFamilyUsed": "Bahá’í World",
+      "sourceDetail": "Vol. 7, May Maxwell, \"A Brief Account of Thomas Breakwell,\" pp. 707-711",
+      "recentPressure": "Bahá’í World and bahai.works are warm again after Breakwell, Kampala, Dawn-Breakers, Bahá’í News, and Star lanes. The selection also adds Western first-believer/conversion, Paris/May Maxwell, ‘Akká pilgrimage, ‘Abdu’l-Bahá direct-command, detachment/resignation, and direct portrait imagery to recent pressure.",
+      "underusedNext": ["non-Western local protagonist from a non-report source", "women/community transformation outside Western pilgrimage settings", "non-bahai.works or official bahai.org source if story-shaped", "fresh image lane outside portraits and early Western groups"],
+      "searchCorrection": "Breakwell passed despite source-family pressure because the passage is literary, complete, concrete, and exact, with a direct image and clean duplicate hashes. Marion Jack/Bahá’í World and modern community-development candidates were rejected as more biographical, OCR/report-like, or image-thin. Do not use Bahá’í World next unless the story is extraordinary and clearly unlike Breakwell."
     },
     {
       "date": "2026-06-15",
@@ -55,15 +55,15 @@
       "recentPressure": "Agnes Alexander/Japan is now newly used and should not become the next fallback. Awakening/first-believer material is warmer because this follows several recent recognition or transformation arcs, though it avoided the overused Bahá’í World, Portals, Memorials, and ‘Abdu’l-Bahá child/service lanes.",
       "underusedNext": ["non-Japan Asian or Pacific community stories", "women/community transformation outside first-convert framing", "Covenant materials if rights-safe and self-contained", "authorized memoir passages with fuller arcs and direct image fit"],
       "searchCorrection": "Keith Ransom-Kehler's Tihrán welcome had a strong image but repeated Star/Western visitor patterns; Bahiyyih Khanum exile material was powerful but echoed prison/persecution pressure. Fukuta's letter won because the source family was fresh, the passage was complete, and the image matched the named early Japanese believers."
-    },
-    {
-      "date": "2026-06-05",
-      "sourceFamilyUsed": "Portals to Freedom",
-      "sourceDetail": "chapter 4, Bowery boys / Black rose and Black sweet episode, pp. 60-68",
-      "recentPressure": "Portals to Freedom is no longer untouched and should rest for the next run. Unity and race-unity material are warmer after this New York child-centered scene, and ‘Abdu’l-Bahá remains a heavily recurring protagonist even though the source family was fresh.",
-      "underusedNext": ["non-‘Abdu’l-Bahá protagonists", "women/community transformation outside Western pilgrimage or New York settings", "non-Western community material from non-Bahá’í World sources", "authorized memoirs with a different emotional register"],
-      "searchCorrection": "The Bowery boys episode beat modern community-report candidates and merely talk-forward Promulgation material because it had concrete action, a complete emotional turn, exact source text, and a verified archival child/New York image. Avoid using Portals immediately as the new easy fallback."
     }
   ],
-  "lastUpdated": "2026-06-16T13:05:00Z"
+  "corrections": [
+    {
+      "date": "2026-07-01",
+      "sourceFamily": "Star of the West",
+      "rejectedDetail": "Vol. 2, Issue 7 and 8, Ghodsia Ashraf Khanum's 1911 Washington address and Sohrab introduction",
+      "searchCorrection": "Removed the Ghodsia story after review. Treat speech/address passages with visible editorial fragments, fragmented formatting, and mostly expository social commentary as high-risk unless they can be shaped into a clean, scene-driven story with strong meaning. Do not count this as a successful recent Star of the West selection."
+    }
+  ],
+  "lastUpdated": "2026-07-10T08:03:32Z"
 }
