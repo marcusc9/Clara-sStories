@@ -1,0 +1,4 @@
+interface:
+  display_name: "Clara Live Preview"
+  short_description: "Mirror Clara’s live site for annotation"
+  default_prompt: "Use $clara-live-preview to open the deployed-equivalent Clara’s Stories site for annotation."

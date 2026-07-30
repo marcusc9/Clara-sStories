@@ -1,4 +1,4 @@
-const VERSION = "20260701-corinne-quote-format";
+const VERSION = "20260730-mother-consolation-audio";
 const STATIC_CACHE = `clara-static-${VERSION}`;
 const CONTENT_CACHE = `clara-content-${VERSION}`;
 const RUNTIME_CACHE = `clara-runtime-${VERSION}`;
@@ -12,13 +12,13 @@ const APP_SHELL = [
   "./stories.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260701-corinne-quote-format",
-  "./stories.js?v=20260701-corinne-quote-format",
-  "./narration-assets.js?v=20260701-corinne-quote-format",
-  "./install.js?v=20260701-corinne-quote-format",
-  "./script.js?v=20260701-corinne-quote-format",
-  "./story.js?v=20260701-corinne-quote-format",
-  "./about.js?v=20260701-corinne-quote-format",
+  "./styles.css?v=20260730-mother-consolation-audio",
+  "./stories.js?v=20260730-mother-consolation-audio",
+  "./narration-assets.js?v=20260730-mother-consolation-audio",
+  "./install.js?v=20260730-mother-consolation-audio",
+  "./script.js?v=20260730-mother-consolation-audio",
+  "./story.js?v=20260730-mother-consolation-audio",
+  "./about.js?v=20260730-mother-consolation-audio",
   "./manifest.webmanifest",
   "./manifest.json",
   "./site.webmanifest",
@@ -58,7 +58,7 @@ function offlineStoryFallbackResponse() {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Story not saved offline | Clara's Stories</title>
     <meta name="theme-color" content="#fbf6e8" />
-    <link rel="stylesheet" href="./styles.css?v=20260701-corinne-quote-format" />
+    <link rel="stylesheet" href="./styles.css?v=20260730-mother-consolation-audio" />
   </head>
   <body class="story-shell">
     <main class="story-page">

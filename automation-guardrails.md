@@ -37,7 +37,7 @@ Use this before staging. A story batch should not ship with any high-severity pe
 - High: source link does not open the stated source.
 - High: the same website or same collection is reused on consecutive days without a clear quality reason.
 - Medium: featured read is under 5 minutes without a clear reason.
-- Medium: title and quote repeat the same line.
+- Medium: title and quote repeat or closely paraphrase the same line. Run `node scripts/check-story-copy.mjs --recent=1`; do not stage the story until it passes.
 - Medium: source/reference copy mentions scraping, anchors, backend pages, stable URLs, or automation.
 - Medium: featured image is missing, broken, repeated, or only loosely related.
 - Low: missing read time, tags, or added date.

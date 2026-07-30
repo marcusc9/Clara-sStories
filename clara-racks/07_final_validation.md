@@ -11,6 +11,7 @@ Before saving or reporting success:
 7. Confirm every featured image URL works and is Bahá'í-relevant where possible.
 8. Confirm no repeated recent image or weak repeated source pattern.
 9. Confirm newest-first ordering by `addedOn`.
-10. Run local JS syntax checks.
-11. Spot-check that the first and last paragraphs match the source.
-12. Scan for likely editorial paraphrase contamination in the `story` array.
+10. Run `node scripts/check-story-copy.mjs --recent=1` and resolve any title/quote similarity failure.
+11. Run local JS syntax checks.
+12. Spot-check that the first and last paragraphs match the source.
+13. Scan for likely editorial paraphrase contamination in the `story` array.

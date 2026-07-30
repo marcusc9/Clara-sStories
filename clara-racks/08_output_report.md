@@ -10,6 +10,7 @@ Report:
 - penalty factors rejected in others
 - whether full verbatim text was confirmed
 - duplicate-check result
+- title/quote separation result
 - reference label used
 - link check result
 - image selected and why

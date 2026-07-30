@@ -7,9 +7,15 @@ window.ClaraStories = [
     chapter: "A Brief Account of Thomas Breakwell",
     sourcePages: "Vol. 7, pp. 707-711",
     sourceDetail: "Bahá’í World",
-    title: "The Cable to Resign.",
+    title: "A White Light in Paris.",
     quote: "Cable your resignation.",
     readTime: "10 minute read",
+    narration: {
+      provider: "elevenlabs",
+      assetKey: "cable-your-resignation",
+      voice: "uploaded",
+      status: "ready"
+    },
     tags: ["Thomas Breakwell", "May Maxwell", "Paris", "‘Akká", "Detachment"],
     summary:
       "Thomas Breakwell hears the Bahá’í message in Paris, meets ‘Abdu’l-Bahá in ‘Akká, and leaves the cotton mills for a life of radiant service.",
@@ -82,6 +88,12 @@ window.ClaraStories = [
     quote:
       "Go back, ... go back and work for the Temple; it is a great work.",
     readTime: "9 minute read",
+    narration: {
+      provider: "elevenlabs",
+      assetKey: "this-is-what-gives-me-great-joy",
+      voice: "uploaded",
+      status: "ready"
+    },
     tags: ["Corinne True", "House of Worship", "Chicago", "‘Akká", "Dedication"],
     summary:
       "Corinne True carries nearly 1,000 signatures to ‘Abdu’l-Bahá in ‘Akká and receives the command that shapes the Mother Temple of the West.",
@@ -142,6 +154,12 @@ window.ClaraStories = [
     quote:
       "Never did she utter one word of complaint. She was always thinking of some kindness for somebody.",
     readTime: "12 minute read",
+    narration: {
+      provider: "elevenlabs",
+      assetKey: "never-did-she-utter-one-word-of-complaint",
+      voice: "uploaded",
+      status: "ready"
+    },
     tags: ["Ásíyih Khánum", "Bahá’u’lláh", "Bahíyyih Khánum", "Tihrán", "Exile"],
     summary:
       "Bahíyyih Khánum remembers Ásíyih Khánum, the Mother of Consolation, through Bahá’u’lláh’s imprisonment and the family’s winter exile to Baghdad.",
@@ -860,7 +878,7 @@ window.ClaraStories = [
     chapter: "Chapter III: The Declaration of the Báb’s Mission",
     sourcePages: "chapter III",
     sourceDetail: "The Dawn-Breakers",
-    title: "Awake, for the morning Light has broken.",
+    title: "The Night in Shíráz.",
     quote:
       "Awake, for lo! the morning Light has broken. Arise, for His Cause is made manifest.",
     readTime: "10 minute read",
@@ -1141,7 +1159,7 @@ window.ClaraStories = [
     chapter: "Bahíyyih Khánum",
     sourcePages: "Vol. V, pp. 181-185",
     sourceDetail: "Bahá’í World",
-    title: "A Taper in the Darkness.",
+    title: "The Heart of the House.",
     quote: "When you brought her your darkness she lit a taper.",
     readTime: "9 minute read",
     tags: ["Bahíyyih Khánum", "Greatest Holy Leaf", "Love", "Forgiveness", "Steadfastness"],
@@ -1224,7 +1242,7 @@ window.ClaraStories = [
     chapter: "The meeting on Mount Carmel",
     sourcePages: "pp. 5-7",
     sourceDetail: "An Early Pilgrimage",
-    title: "None happy unless all were happy.",
+    title: "The Mountain Meeting Could Wait.",
     quote: "We could none of us be happy unless all the beloved were happy.",
     readTime: "2 minute read",
     tags: ["Love", "Compassion", "Pilgrimage", "‘Abdu’l-Bahá", "May Maxwell"],
