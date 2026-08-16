@@ -59,11 +59,23 @@
   ],
   "corrections": [
     {
+      "date": "2026-08-16",
+      "sourceFamily": "Bahá’í News",
+      "rejectedDetail": "Issue 527, \"Travelling institute fosters consolidation,\" previously titled \"The Village That Asked Them Back.\"",
+      "searchCorrection": "Removed after owner review. Do not count the Quilhuay, Peru travelling-institute report, repeated return-question framing, or its Ecuadorian/Peruvian/Bolivian Quechua group image as a successful selection pattern."
+    },
+    {
+      "date": "2026-08-10",
+      "sourceFamily": "Bahá’í News",
+      "rejectedDetail": "Issue 428, \"A New Way of Life for Australian Aborigines,\" previously titled \"The Gum Leaf Music.\"",
+      "searchCorrection": "Removed after owner review as not approved. Do not count Bahá’í News Issue 428, Australia/Aboriginal first-believer material, white-pioneer-to-Indigenous-community framing, deeds-not-words teaching, or the Australian Aboriginal Bahá’í couple image as a successful recent selection pattern."
+    },
+    {
       "date": "2026-07-01",
       "sourceFamily": "Star of the West",
       "rejectedDetail": "Vol. 2, Issue 7 and 8, Ghodsia Ashraf Khanum's 1911 Washington address and Sohrab introduction",
       "searchCorrection": "Removed the Ghodsia story after review. Treat speech/address passages with visible editorial fragments, fragmented formatting, and mostly expository social commentary as high-risk unless they can be shaped into a clean, scene-driven story with strong meaning. Do not count this as a successful recent Star of the West selection."
     }
   ],
-  "lastUpdated": "2026-07-10T08:03:32Z"
+  "lastUpdated": "2026-08-16T11:04:54Z"
 }

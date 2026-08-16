@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const STORIES_PATH = path.join(ROOT, "stories.js");
+const TAXONOMY_PATH = path.join(ROOT, "taxonomy.js");
 
 function argValue(name, fallback = null) {
   const prefix = `--${name}=`;
@@ -42,11 +43,18 @@ function sourceHost(source) {
   }
 }
 
-async function loadStories() {
-  const source = await fs.readFile(STORIES_PATH, "utf8");
+async function loadLibrary() {
+  const [taxonomySource, storiesSource] = await Promise.all([
+    fs.readFile(TAXONOMY_PATH, "utf8"),
+    fs.readFile(STORIES_PATH, "utf8")
+  ]);
   const context = { window: {} };
-  vm.runInNewContext(source, context, { filename: STORIES_PATH });
-  return Array.isArray(context.window.ClaraStories) ? context.window.ClaraStories : [];
+  vm.runInNewContext(taxonomySource, context, { filename: TAXONOMY_PATH });
+  vm.runInNewContext(storiesSource, context, { filename: STORIES_PATH });
+  return {
+    taxonomy: context.window.ClaraTaxonomy ?? {},
+    stories: Array.isArray(context.window.ClaraStories) ? context.window.ClaraStories : []
+  };
 }
 
 function storyText(story) {
@@ -65,7 +73,7 @@ function lastStoryParagraph(story) {
   return [...story.story].reverse().find((paragraph) => String(paragraph).trim()) ?? "";
 }
 
-function storyIndexEntry(story) {
+function storyIndexEntry(story, taxonomy) {
   const body = storyText(story);
   const firstParagraph = firstStoryParagraph(story);
   const lastParagraph = lastStoryParagraph(story);
@@ -82,6 +90,7 @@ function storyIndexEntry(story) {
     sourcePages: story.sourcePages ?? "",
     author: story.author ?? "",
     theme: story.theme ?? "",
+    shelf: taxonomy.themeShelves?.[story.theme] ?? "",
     tags: story.tags ?? [],
     collectionTags: story.collectionTags ?? [],
     quoteHash: hashText(story.quote),
@@ -91,7 +100,8 @@ function storyIndexEntry(story) {
     bodyHash: hashText(body),
     paragraphCount: Array.isArray(story.story) ? story.story.length : 0,
     wordCount: normaliseText(body).split(/\s+/).filter(Boolean).length,
-    image: story.featureImage || story.image || ""
+    image: story.featureImage || story.image || "",
+    imagePosition: story.featureImagePosition || ""
   };
 }
 
@@ -112,6 +122,7 @@ function buildDuplicateSignals(entries) {
 function sourceUsage(entries) {
   const sourceFamilies = new Map();
   const themes = new Map();
+  const shelves = new Map();
   const recent = entries.slice(0, 12);
 
   for (const entry of entries) {
@@ -120,6 +131,10 @@ function sourceUsage(entries) {
 
     if (entry.theme) {
       themes.set(entry.theme, (themes.get(entry.theme) ?? 0) + 1);
+    }
+
+    if (entry.shelf) {
+      shelves.set(entry.shelf, (shelves.get(entry.shelf) ?? 0) + 1);
     }
   }
 
@@ -130,15 +145,17 @@ function sourceUsage(entries) {
       sourceHost: entry.sourceHost,
       sourceDetail: entry.sourceDetail,
       theme: entry.theme,
+      shelf: entry.shelf,
       image: entry.image
     })),
     sourceFamilies: Object.fromEntries([...sourceFamilies.entries()].sort((a, b) => b[1] - a[1])),
-    themes: Object.fromEntries([...themes.entries()].sort((a, b) => b[1] - a[1]))
+    themes: Object.fromEntries([...themes.entries()].sort((a, b) => b[1] - a[1])),
+    shelves: Object.fromEntries([...shelves.entries()].sort((a, b) => b[1] - a[1]))
   };
 }
 
-const stories = await loadStories();
-const entries = stories.map(storyIndexEntry);
+const { stories, taxonomy } = await loadLibrary();
+const entries = stories.map((story) => storyIndexEntry(story, taxonomy));
 const recentLimit = Number.parseInt(argValue("recent", "12"), 10);
 const recentEntries = entries.slice(0, Number.isFinite(recentLimit) ? recentLimit : 12);
 

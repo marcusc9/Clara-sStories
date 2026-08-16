@@ -38,8 +38,12 @@ For daily story curation, do not load all of `stories.js` into model context for
 
 ## Current User Priorities
 
+- `CLARA_EDITORIAL_ARCHIVE.md` is the permanent design foundation: near-solid paper backgrounds, Newsreader for editorial text, Inter for interface text, restrained rules, small radii, and minimal elevation.
+- On mobile, the home page is a full-viewport Shrine cover that keeps the Bahá'í date and title, removes the supporting sentence/button, and scrolls directly into the working story library. Do not add a forced scroll cue unless the user asks for one.
 - About page matters. Do not let content disappear because of reveal animations, file previews, service-worker cache, or unsupported APIs.
 - Mobile polish matters as much as desktop.
+- The story library uses eight permanent shelves from `taxonomy.js`. Keep precise themes on cards, keep tags descriptive, and do not let daily automation create new menu chips.
+- Featured-image framing is part of story quality. Preview the featured card on mobile and desktop, and store non-default crops in the story's `featureImagePosition` rather than adding one-off CSS selectors.
 - The nav menu should feel alive every time: fan/fade in, fade out on close, close on outside interaction, close on scroll, and keep background dimming intuitive.
 - Remove install UI from the top bar, but keep PWA behavior working.
 - Android PWA installation is important. Manifest and service worker scope must stay relative and deploy-friendly.
@@ -51,6 +55,8 @@ For daily story curation, do not load all of `stories.js` into model context for
 
 - `index.html`: home page with the hero plus an interactive floating-image introduction.
 - `stories.html`: dedicated story library page with search, filters, and story cards.
+- `taxonomy.js`: controlled eight-shelf library taxonomy, theme-to-shelf mappings, and canonical tag spellings.
+- `CLARA_EDITORIAL_ARCHIVE.md`: visual and typography rules for the shared website/PWA design system.
 - `about.html`: About page content and copy.
 - `story.html`: individual reader page.
 - `styles.css`: most layout, nav, About, reader, and PWA install styling.
@@ -61,9 +67,11 @@ For daily story curation, do not load all of `stories.js` into model context for
 
 ## Current Home Page Shape
 
-`index.html` is now an introductory home page, not the story library.
+`index.html` remains an introductory home page on desktop. On mobile it becomes a cover-to-library experience.
 
 - Hero remains at the top, with `Read the stories` linking to `stories.html`.
+- At 620px and below, the Bahá'í date and title remain on the full-screen Shrine cover; the supporting sentence and button are hidden.
+- At 620px and below, the welcome collage, home path cards, and closing CTA are hidden and the complete searchable/filterable library follows the hero directly.
 - Welcome section id: `#welcome`.
 - Welcome copy:
   - Heading: "A gentler way into stories of light and courage."
@@ -85,6 +93,7 @@ For daily story curation, do not load all of `stories.js` into model context for
 Current home interaction:
 
 - `script.js` has `initialiseFloatingGallery()`, `initialiseScrollBoard()`, and `initialiseHomeSectionScroll()`.
+- On mobile, `assets/hero/shrine-scroll.mp4` is scroll-scrubbed through the opening Shrine cover; `assets/hero/shrine-poster.jpg` is the fallback for reduced motion, data saving, and video failure.
 - CSS uses `--section-progress` on `.home-intro`, `.home-path`, and `.home-close`.
 - CSS uses `--card-progress` on `[data-scroll-card]`.
 - Keep scroll effects gentle. The site should feel alive, not dizzy.
@@ -133,7 +142,7 @@ Letters/support:
 - Offline availability is communicated by one liquid-glass bottom toast. Do not add per-card "Available offline" badges back to story cards or the reader page.
 - Nav menu letter badges (`S`, `A`, `L`) were replaced with minimal abstract marks because the letters read as "SAL".
 - The first story feature image now points to a House of the Báb image, not the declaration-room image.
-- Current cache version after latest story library update: `20260524-story-library-1`.
+- Current cache version after the refined cinematic mobile home pass: `20260816-cinematic-scroll-v6`.
 
 ## PWA Notes
 
@@ -154,6 +163,7 @@ Before saying a frontend change is done:
 
 - Run `git diff --check`.
 - Run `node --check` on changed JS files.
+- Run `node scripts/check-library-taxonomy.mjs` after changing themes, tags, collections, or shelves.
 - Inspect mobile width around 320-390px and a wider desktop/tablet width.
 - Check both light and dark themes if the changed area uses color.
 - Check `file://` and `localhost` behavior when the issue involves Codex preview, reveal animations, or service worker cache.

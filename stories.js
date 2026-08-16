@@ -26,6 +26,7 @@ window.ClaraStories = [
     featureImage:
       "https://file.bahai.media/a/ab/Thomas_Breakwell%2C_the_first_English_Baha%27i.jpg",
     featureImageAlt: "Portrait of Thomas Breakwell, the first English Bahá’í",
+    featureImagePosition: "center 8%",
     addedOn: "2026-07-10",
     featuredOn: "2026-07-10",
     story: [
@@ -259,47 +260,6 @@ window.ClaraStories = [
     ]
   },
   {
-    id: "when-are-you-coming-back",
-    theme: "community",
-    author: "Bahá’í News",
-    book: "Bahá’í News",
-    chapter: "Travelling institute fosters consolidation",
-    sourcePages: "Issue 527, pp. 2-3",
-    sourceDetail: "Bahá’í News",
-    title: "The Village That Asked Them Back.",
-    quote:
-      "Everywhere the question was asked again and again, “When are you coming back?”",
-    readTime: "3 minute read",
-    tags: ["Peru", "Quilhuay", "Quechua", "Children", "Community Life"],
-    summary:
-      "A travelling institute reaches the mountain village of Quilhuay, where children, mothers, and a small Assembly begin to build community life together.",
-    source: "https://bahai.works/Bah%C3%A1%E2%80%99%C3%AD_News/Issue_527/Text",
-    image: "",
-    imageAlt: "",
-    featureImage:
-      "https://bahai.media/Special:FilePath/Ecuadorian%2C_Peruvian_and_Bolivian_Quechua_friends_together.png",
-    featureImageAlt: "Ecuadorian, Peruvian and Bolivian Quechua Bahá’í friends together",
-    addedOn: "2026-06-09",
-    featuredOn: "2026-06-09",
-    story: [
-      "The National Spiritual Assembly of Peru has undertaken to consolidate believers in remote areas of the country through deepening institutes held in their own communities. Teams of four or five people, which include seasoned teachers and one or two believers from the nearest active community, are sent for periods of up to one week to infrequently visited localities to provide instruction in the basic teachings of the Faith and discuss the elementary requirements of Bahá’í community life.",
-      "The first site for one of these deepening sessions, called a Travelling Institute by the National Assembly, was Quilhuay, a village of 25 families, almost invisible in the vastness of the Andes south of Huancayo, Peru. There have been Bahá’ís in Quilhuay for 25 years, and in recent years a Spiritual Assembly has been elected each Riḍván with the assistance of the friends in Huancayo. But there has been little other organized Bahá’í activity in Quilhuay to speak of.",
-      "The first team, led by Continental Counsellor Raul Pavon, travelled over rough, single-lane roads, and arrived in Quilhuay with sleeping bags, camp stove, dishes, food, projector, tape recorder, lanterns, books, charts, and other teaching materials. Arrangements had been made a week earlier for the group to stay in one of the three public buildings in town — an unoccupied jail. It was, like all the other buildings, windowless and constructed of adobe, with a hard-packed dirt floor.",
-      "As is the custom in the area, the walls at their base and extending about two feet upwards, were of double thickness, forming a natural bench around the building’s interior perimeter. This bench was the only place for visitors to sit; there was no furniture whatever in the room. An abandoned wheelbarrow served as the group’s pantry and storage cabinet. A small mountain stream about 100 feet from the jail — not always very clear — was their only source of water.",
-      "The program called for a general session each night lasting about one-half hour, followed by separate classes for the members of the Local Spiritual Assembly, for women, children, and youth. The youth discussed ways of teaching interested adults in the community how to read.",
-      "“Because the community was small and the homes widely separated in the surrounding mountains, the friends gathered in the local school for only four of the nights,” a report from the consolidation team said. “Great interest was exhibited in the general meetings where slides and film strips about Bahá’í history, principles of the Faith, Bahá’í communities around the world, and the role of Bahá’í women, were shown with battery-powered projectors.",
-      "The friends were especially pleased to see pictures of other Peruvian Bahá’ís and their Quechua brothers and sisters of Bolivia and Ecuador.”",
-      "Separate classes were held for the Local Spiritual Assembly where officers were elected and plans were made to raise a Ḥaẓíratu’l-Quds on one of the sites offered by two of the members.",
-      "“Children and their mothers met in another group so that the mothers might observe the teaching of prayers, songs, and stories illustrating Bahá’í principles and spiritual qualities. Many of the boys and girls translated to Quechua as some of the women spoke no Spanish. The children particularly enjoyed the paper craft projects related to the lessons on the Messengers of God and the unity of mankind.",
-      "An effort was made to use as many native materials as possible, such as long thorns to fasten paper lanterns and pinwheels and twigs for the hanging mobiles.",
-      "“Very quickly, outstanding personalities emerged, such as ten-year-old Máximo, who was the first one to arrive, on the dot, for every class and trip and also accompanied the group to other villages; the chairman of the Local Spiritual Assembly, whose father was the first chairman, many years ago; Teodora, the only woman on the Assembly, who carried a heavy suitcase on her back and loaded more of the gear on her horse when we left, so we would have to make only one trip up the mountain.",
-      "“We climbed over the mountain ridges to reach three neighboring villages where slides were shown and the Message of Baha’u’llah was given to groups of from 40 to 100 people. During the day, team members were welcomed most graciously by the teachers in the one or two-room schools and were allowed to teach songs and prayers to the children. (Also, the other villages each had a store where rolls and soft drinks could be purchased!)",
-      "Everywhere the question was asked again and again, “When are you coming back?” Plans are being made to return on teaching trips and then with an institute as the new areas gain Assembly status. Benefitting from this initial experience, detailed plans are being written to aid other teams. Little items like forgotten salt, or the discovery that the Primus type stove and the two lanterns require three different kinds of fuel, can be major distractions.",
-      "More important are precise lesson plans and carefully selected and prepared audio-visual materials, however.",
-      "Are we going back? We certainly hope so."
-    ]
-  },
-  {
     id: "that-star-nabil-will-shine-forever",
     theme: "devotion",
     author: "‘Abdu’l-Bahá",
@@ -521,7 +481,7 @@ window.ClaraStories = [
     quote:
       "Please God this dynamite will not explode.",
     readTime: "5 minute read",
-    tags: ["‘Abdu’l-Bahá", "Covenant", "Akká", "Providence", "Serenity"],
+    tags: ["‘Abdu’l-Bahá", "Covenant", "‘Akká", "Providence", "Serenity"],
     summary:
       "Shoghi Effendi recounts how, as a commission prepared to carry ‘Abdu’l-Bahá away from ‘Akká, the waiting ship suddenly turned toward Constantinople.",
     source: "https://www.bahai.org/library/authoritative-texts/shoghi-effendi/god-passes-by/19",
@@ -1172,6 +1132,7 @@ window.ClaraStories = [
     featureImage:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Bahiyyih_khanum_1895.jpg",
     featureImageAlt: "Bahíyyih Khánum, the Greatest Holy Leaf, in ‘Akká around 1895",
+    featureImagePosition: "center 8%",
     addedOn: "2026-05-10",
     featuredOn: "2026-05-10",
     story: [
@@ -1377,6 +1338,7 @@ window.ClaraStories = [
     featureImage:
       "https://file.bahai.media/0/02/Aqa_Buzurg_of_Khurasan%2C_the_illustrious_Badi.png",
     featureImageAlt: "Aqa Buzurg of Khurasan, Badí‘, shown as a prisoner in chains",
+    featureImagePosition: "center 18%",
     addedOn: "2026-05-06",
     featuredOn: "2026-05-06",
     story: [
@@ -1769,7 +1731,7 @@ window.ClaraStories = [
     title: "The hermit offers dry bread with love.",
     quote: "He had never been more nobly entertained nor received greater hospitality and love.",
     readTime: "3 minute read",
-    tags: ["Hospitality", "Love", "Contentment", "Bahá'u'lláh", "Detachment"],
+    tags: ["Hospitality", "Love", "Contentment", "Bahá’u’lláh", "Detachment"],
     collectionTags: ["Anecdotes"],
     summary:
       "Mary Bolles Maxwell recounts the Master's story of a hermit whose poor cave became the setting for perfect hospitality.",
@@ -1793,7 +1755,7 @@ window.ClaraStories = [
     title: "Ruth Randall is healed after tea.",
     quote: "She was healed.",
     readTime: "4 minute read",
-    tags: ["Healing", "Faith", "Recognition", "Teaching", "‘Abdu'l-Bahá"],
+    tags: ["Healing", "Faith", "Recognition", "Teaching", "‘Abdu’l-Bahá"],
     collectionTags: ["Anecdotes"],
     summary:
       "Harry Randall reluctantly welcomes ‘Abdu’l-Bahá for tea, and the visit changes both his wife Ruth and the course of their lives.",
@@ -2203,7 +2165,7 @@ window.ClaraStories = [
     title: "Anybody can understand Him.",
     quote: "Nothing ‘Abdu’l-Bahá says needs translating",
     readTime: "1 minute read",
-    tags: ["Understanding", "Teaching", "Wonder", "Listening", "‘Abdu'l-Bahá"],
+    tags: ["Understanding", "Teaching", "Wonder", "Listening", "‘Abdu’l-Bahá"],
     collectionTags: ["Anecdotes"],
     summary:
       "A coal miner hears ‘Abdu’l-Bahá speak through an interpreter and insists the Master needs no translation.",
@@ -2229,7 +2191,7 @@ window.ClaraStories = [
     title: "The baby had seen more.",
     quote: "You have much insight.",
     readTime: "1 minute read",
-    tags: ["Insight", "Children", "Wonder", "Pilgrimage", "‘Abdu'l-Bahá"],
+    tags: ["Insight", "Children", "Wonder", "Pilgrimage", "‘Abdu’l-Bahá"],
     collectionTags: ["Anecdotes"],
     summary:
       "After a child cries on seeing ‘Abdu’l-Bahá, Agnes Parsons hears the Master confirm that the adults may have missed what the baby perceived.",

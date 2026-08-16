@@ -117,9 +117,9 @@ function storyResourceUrls(item) {
   const narrationAsset = getNarrationAsset(item);
   return uniqueResourceUrls([
     "./story.html",
-    "./stories.js?v=20260730-mother-consolation-audio",
-    "./narration-assets.js?v=20260730-mother-consolation-audio",
-    "./styles.css?v=20260730-mother-consolation-audio",
+    "./stories.js?v=20260816-cinematic-scroll-v6",
+    "./narration-assets.js?v=20260816-cinematic-scroll-v6",
+    "./styles.css?v=20260816-cinematic-scroll-v6",
     item.image,
     item.featureImage,
     ...(narrationAsset?.chunks ?? []).map((chunk) => chunk.src),
@@ -198,7 +198,7 @@ function storyHtml(item) {
   const tags = (item.tags ?? [item.theme])
     .map(
       (tag) =>
-        `<a class="tag-pill" href="./stories.html" data-story-tag="${escapeAttribute(
+        `<a class="tag-pill" href="./stories.html?tag=${encodeURIComponent(String(tag))}" data-story-tag="${escapeAttribute(
           String(tag).toLowerCase()
         )}">${escapeHtml(tag)}</a>`
     )

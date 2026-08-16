@@ -1,4 +1,4 @@
-const VERSION = "20260730-mother-consolation-audio";
+const VERSION = "20260816-cinematic-scroll-v6";
 const STATIC_CACHE = `clara-static-${VERSION}`;
 const CONTENT_CACHE = `clara-content-${VERSION}`;
 const RUNTIME_CACHE = `clara-runtime-${VERSION}`;
@@ -12,13 +12,22 @@ const APP_SHELL = [
   "./stories.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260730-mother-consolation-audio",
-  "./stories.js?v=20260730-mother-consolation-audio",
-  "./narration-assets.js?v=20260730-mother-consolation-audio",
-  "./install.js?v=20260730-mother-consolation-audio",
-  "./script.js?v=20260730-mother-consolation-audio",
-  "./story.js?v=20260730-mother-consolation-audio",
-  "./about.js?v=20260730-mother-consolation-audio",
+  "./styles.css?v=20260816-cinematic-scroll-v6",
+  "./taxonomy.js?v=20260816-cinematic-scroll-v6",
+  "./stories.js?v=20260816-cinematic-scroll-v6",
+  "./narration-assets.js?v=20260816-cinematic-scroll-v6",
+  "./install.js?v=20260816-cinematic-scroll-v6",
+  "./script.js?v=20260816-cinematic-scroll-v6",
+  "./story.js?v=20260816-cinematic-scroll-v6",
+  "./about.js?v=20260816-cinematic-scroll-v6",
+  "./assets/fonts/inter-latin.woff2",
+  "./assets/fonts/inter-latin-ext.woff2",
+  "./assets/fonts/newsreader-latin.woff2",
+  "./assets/fonts/newsreader-latin-ext.woff2",
+  "./assets/fonts/newsreader-italic-latin.woff2",
+  "./assets/fonts/newsreader-italic-latin-ext.woff2",
+  "./assets/hero/shrine-poster.jpg",
+  "./assets/hero/shrine-poster-wide.jpg",
   "./manifest.webmanifest",
   "./manifest.json",
   "./site.webmanifest",
@@ -33,8 +42,8 @@ const APP_SHELL = [
   "./icons/maskable-512.png"
 ].map(appUrl);
 
-const STATIC_DESTINATIONS = new Set(["audio", "font", "image", "manifest", "script", "style", "worker"]);
-const STATIC_EXTENSIONS = /\.(?:avif|css|gif|ico|jpe?g|js|json|mjs|mp3|png|svg|webmanifest|webp|woff2?)$/i;
+const STATIC_DESTINATIONS = new Set(["audio", "font", "image", "manifest", "script", "style", "video", "worker"]);
+const STATIC_EXTENSIONS = /\.(?:avif|css|gif|ico|jpe?g|js|json|mjs|mp3|mp4|png|svg|webmanifest|webp|woff2?)$/i;
 
 function canCache(response) {
   return Boolean(response && (response.ok || response.type === "opaque"));
@@ -58,7 +67,7 @@ function offlineStoryFallbackResponse() {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Story not saved offline | Clara's Stories</title>
     <meta name="theme-color" content="#fbf6e8" />
-    <link rel="stylesheet" href="./styles.css?v=20260730-mother-consolation-audio" />
+    <link rel="stylesheet" href="./styles.css?v=20260816-cinematic-scroll-v6" />
   </head>
   <body class="story-shell">
     <main class="story-page">

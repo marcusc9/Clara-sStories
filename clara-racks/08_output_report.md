@@ -4,6 +4,7 @@ Report:
 
 - whether 1 story was added or none
 - title chosen
+- library shelf and precise theme
 - why it won comparative ranking
 - source used
 - runner-up source
@@ -11,9 +12,11 @@ Report:
 - whether full verbatim text was confirmed
 - duplicate-check result
 - title/quote separation result
+- taxonomy and canonical-tag check result
 - reference label used
 - link check result
 - image selected and why
+- mobile and desktop crop/focal-position check result
 - whether a prior same-day featured story was replaced
 - newest-first result
 - image check result

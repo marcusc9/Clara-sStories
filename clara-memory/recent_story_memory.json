@@ -52,6 +52,16 @@
   ],
   "corrections": [
     {
+      "date": "2026-08-16",
+      "rejectedTitle": "The Village That Asked Them Back.",
+      "lesson": "Removed after owner review. Do not re-add the 2026-06-09 Bahá’í News / Quilhuay travelling-institute selection or treat its report-style community-development shape as an approved Clara story pattern."
+    },
+    {
+      "date": "2026-08-10",
+      "rejectedTitle": "The Gum Leaf Music.",
+      "lesson": "Removed after owner review: the 2026-08-03 Bahá’í News / Mrs. Pearce / Australian Aboriginal first-believer selection was not approved. Do not treat it as a successful addition or quality pattern; avoid returning soon to the same community-teaching, white-pioneer-to-Indigenous-community, deeds-not-words, Goolwa/Victor Harbour, gum-leaf/music lane."
+    },
+    {
       "date": "2026-07-01",
       "rejectedTitle": "I came to America.",
       "lesson": "Removed after review: the Ghodsia Ashraf Khanum passage was historically meaningful but not a strong Clara pick because the visible formatting was speech/editorial-heavy, the style was report-like rather than scene-driven, and the meaning did not land with enough story force. Do not let historical significance alone override formatting, style, and emotional/story shape."
@@ -61,5 +71,5 @@
       "lesson": "Story card titles should not simply repeat the quote. Use the title for the narrative angle, object, person, or scene; reserve the quote field for the exact memorable line."
     }
   ],
-  "lastUpdated": "2026-07-10T08:03:32Z"
+  "lastUpdated": "2026-08-16T11:04:54Z"
 }

@@ -23,12 +23,6 @@
         document.documentElement.dataset.theme = "light";
       }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
     <link rel="icon" href="./favicon.ico" sizes="any" />
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <link rel="icon" href="./icons/clara-logo.svg" type="image/svg+xml" />
@@ -41,7 +35,7 @@
     <meta name="apple-mobile-web-app-title" content="Clara's Stories" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="stylesheet" href="./styles.css?v=20260730-mother-consolation-audio" />
+    <link rel="stylesheet" href="./styles.css?v=20260816-cinematic-scroll-v6" />
   </head>
   <body class="home-page">
     <header class="site-header" data-header>
@@ -49,7 +43,7 @@
         <span class="brand-mark">C</span>
         <span>
           <strong>Clara's Stories</strong>
-          <small>Stories of light and<br />courage</small>
+          <small>Stories of light<br />and courage</small>
         </span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
@@ -102,12 +96,55 @@
           </div>
         </div>
 
-        <figure class="hero-image" aria-label="The Shrine of the Báb and gardens in Haifa">
+        <figure
+          class="hero-image"
+          data-hero-media
+          aria-label="The Shrine of the Báb and gardens in Haifa"
+        >
+          <video
+            data-hero-video
+            muted
+            playsinline
+            preload="none"
+            poster="./assets/hero/shrine-poster.jpg"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            <source src="./assets/hero/shrine-scroll.mp4" type="video/mp4" />
+          </video>
           <img
-            src="https://commons.wikimedia.org/wiki/Special:FilePath/Shrine%20of%20The%20Bab.jpg"
+            src="./assets/hero/shrine-poster-wide.jpg"
             alt="The Shrine of the Báb and gardens in Haifa"
+            fetchpriority="high"
+            decoding="async"
           />
         </figure>
+      </section>
+
+      <section class="story-stage home-mobile-library" id="stories" aria-labelledby="mobile-library-title">
+        <div class="section-heading">
+          <p class="kicker" id="stories-anchor">Stories</p>
+          <h2 id="mobile-library-title">Choose any, sit back and <span>settle in.</span></h2>
+        </div>
+
+        <div class="library-tools">
+          <label class="search-field">
+            <span>Search</span>
+            <input
+              type="search"
+              placeholder="Martha-Root, Peace, Táhirih..."
+              data-story-search
+              maxlength="120"
+              autocapitalize="none"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <div class="filters" aria-label="Story filters" data-story-filters></div>
+          <p class="library-count" data-story-count aria-live="polite">Showing stories</p>
+        </div>
+
+        <div class="story-grid" data-story-grid></div>
       </section>
 
       <section class="home-intro reveal" id="welcome" aria-labelledby="home-intro-title" data-floating-gallery>
@@ -179,8 +216,9 @@
       <a href="./about.html">About</a>
     </footer>
 
-    <script src="./stories.js?v=20260730-mother-consolation-audio"></script>
-    <script src="./install.js?v=20260730-mother-consolation-audio"></script>
-    <script src="./script.js?v=20260730-mother-consolation-audio"></script>
+    <script src="./taxonomy.js?v=20260816-cinematic-scroll-v6"></script>
+    <script src="./stories.js?v=20260816-cinematic-scroll-v6"></script>
+    <script src="./install.js?v=20260816-cinematic-scroll-v6"></script>
+    <script src="./script.js?v=20260816-cinematic-scroll-v6"></script>
   </body>
 </html>

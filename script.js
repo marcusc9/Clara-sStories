@@ -3,24 +3,36 @@ const grid = document.querySelector("[data-story-grid]");
 const filterList = document.querySelector("[data-story-filters]");
 const header = document.querySelector("[data-header]");
 const hero = document.querySelector(".hero");
+const heroVideo = document.querySelector("[data-hero-video]");
+const heroMedia = document.querySelector("[data-hero-media]");
+const mobileLibrary = document.querySelector(".home-mobile-library");
 const searchInput = document.querySelector("[data-story-search]");
 const storyCount = document.querySelector("[data-story-count]");
 const bahaiDate = document.querySelector("[data-bahai-date]");
 const themeToggles = document.querySelectorAll("[data-theme-toggle]");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const isHomePage = document.body.classList.contains("home-page");
+const mobileHomeQuery = window.matchMedia("(max-width: 620px)");
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const MAX_SEARCH_QUERY_LENGTH = 120;
-const FILTER_MENU_CLOSE_MS = 620;
-const FILTER_HEIGHT_BUFFER_MS = 80;
+const taxonomy = window.ClaraTaxonomy ?? { shelves: [], themeShelves: {} };
+const shelves = Array.isArray(taxonomy.shelves) ? taxonomy.shelves : [];
+const shelfById = new Map(shelves.map((shelf) => [filterKey(shelf.id), shelf]));
 
-const activeFilters = new Set();
+const activeFormatFilters = new Set();
+let activeShelf = "";
 let filtersExpanded = false;
-let filterCollapseTimer = null;
-let filterResizeTimer = null;
 let lastScroll = 0;
 let ticking = false;
 let programmaticScroll = false;
 let scrollAnimationFrame = null;
 let scrollDirectionDistance = 0;
+let heroVideoDuration = 0;
+let heroVideoActive = false;
+let heroVideoSeekReady = false;
+let lastHeroVideoTime = -1;
+let heroVideoTargetTime = 0;
+let heroVideoRenderedTime = 0;
 
 function normalise(value) {
   return String(value ?? "")
@@ -71,18 +83,33 @@ function safeResourceUrl(url) {
   return "";
 }
 
+function safeImagePosition(value) {
+  const position = String(value ?? "").trim();
+
+  if (!position) {
+    return "";
+  }
+
+  const tokens = position.split(/\s+/);
+  const keywords = new Set(["left", "center", "right", "top", "bottom"]);
+  const isSafeToken = (token) => {
+    if (keywords.has(token)) {
+      return true;
+    }
+
+    const percentage = token.match(/^(\d+(?:\.\d+)?)%$/);
+    return Boolean(percentage && Number(percentage[1]) <= 100);
+  };
+
+  return tokens.length <= 2 && tokens.every(isSafeToken) ? tokens.join(" ") : "";
+}
+
 function filterKey(value) {
   return normalise(value);
 }
 
-function storyFilterValues(story) {
-  return [
-    story.theme,
-    hasNarration(story) ? "Listen" : "",
-    ...(story.collectionTags ?? [])
-  ]
-    .map(filterKey)
-    .filter(Boolean);
+function storyShelf(story) {
+  return filterKey(taxonomy.themeShelves?.[filterKey(story.theme)]);
 }
 
 function isAnecdote(story) {
@@ -94,7 +121,11 @@ function hasNarration(story) {
 }
 
 function storySearchText(story) {
+  const shelf = shelfById.get(storyShelf(story));
+
   return [
+    shelf?.label,
+    shelf?.description,
     story.theme,
     story.title,
     story.quote,
@@ -111,7 +142,6 @@ function storySearchText(story) {
 
 function applyTheme(theme) {
   const isDark = theme === "dark";
-  const isHomePage = document.body.classList.contains("home-page");
   document.documentElement.dataset.theme = isDark ? "dark" : "light";
 
   if (themeColorMeta) {
@@ -271,6 +301,144 @@ function applyBahaiDate() {
   }
 }
 
+function getHeroProgress(currentScroll = window.scrollY) {
+  const heroHeight = Math.max(hero?.offsetHeight ?? 620, 1);
+
+  if (isHomePage && mobileHomeQuery.matches) {
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+    const scrollRunway = Math.max(heroHeight - viewportHeight, 1);
+    return Math.min(1, Math.max(0, currentScroll / scrollRunway));
+  }
+
+  return Math.min(1, Math.max(0, currentScroll / heroHeight));
+}
+
+function clampProgress(value) {
+  return Math.min(1, Math.max(0, value));
+}
+
+function progressBetween(progress, start, end) {
+  const phase = clampProgress((progress - start) / Math.max(end - start, 0.001));
+  return phase * phase * (3 - 2 * phase);
+}
+
+function mapHeroVideoProgress(progress) {
+  return clampProgress((progress - 0.045) / 0.91);
+}
+
+function setHeroVideoTime(time) {
+  if (!heroVideo) {
+    return false;
+  }
+
+  try {
+    heroVideo.currentTime = time;
+    lastHeroVideoTime = time;
+    return true;
+  } catch {
+    heroMedia?.classList.remove("has-scroll-video");
+    return false;
+  }
+}
+
+function syncHeroVideo(progress = getHeroProgress()) {
+  if (
+    !heroVideo ||
+    !heroVideoActive ||
+    !heroVideoDuration ||
+    heroVideo.readyState < 1
+  ) {
+    return;
+  }
+
+  heroVideoTargetTime = Math.min(
+    Math.max(heroVideoDuration - 1 / 30, 0),
+    mapHeroVideoProgress(progress) * heroVideoDuration
+  );
+
+  if (Math.abs(heroVideoTargetTime - lastHeroVideoTime) < 1 / 30) {
+    return;
+  }
+
+  heroVideoRenderedTime = heroVideoTargetTime;
+  setHeroVideoTime(heroVideoTargetTime);
+}
+
+function setHeroVideoMode() {
+  if (!heroVideo || !heroMedia) {
+    return;
+  }
+
+  const saveData = Boolean(navigator.connection?.saveData);
+  const wasActive = heroVideoActive;
+  heroVideoActive = Boolean(
+    isHomePage && mobileHomeQuery.matches && !reducedMotionQuery.matches && !saveData
+  );
+
+  if (!heroVideoActive) {
+    heroVideo.pause();
+    heroVideo.preload = "none";
+    heroVideoSeekReady = false;
+    heroMedia.classList.remove("has-scroll-video");
+    lastHeroVideoTime = -1;
+    heroVideoTargetTime = 0;
+    heroVideoRenderedTime = 0;
+    return;
+  }
+
+  heroVideo.preload = "auto";
+
+  if (heroVideo.readyState === 0) {
+    heroVideo.load();
+  } else if (heroVideo.readyState >= 4) {
+    heroVideoSeekReady = true;
+    heroMedia.classList.add("has-scroll-video");
+    heroVideoRenderedTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : 0;
+    syncHeroVideo(getHeroProgress(), !wasActive);
+  } else {
+    heroVideo.load();
+  }
+}
+
+function updateHeroMotion(currentScroll = window.scrollY) {
+  if (!hero) {
+    return;
+  }
+
+  const heroHeight = Math.max(hero.offsetHeight, 1);
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+  const isMobileCinematic = isHomePage && mobileHomeQuery.matches;
+  const scrollRunway = isMobileCinematic
+    ? Math.max(heroHeight - viewportHeight, 1)
+    : heroHeight;
+  const heroProgress = Math.min(1, Math.max(0, currentScroll / scrollRunway));
+  const heroShift = Math.min(currentScroll, viewportHeight * 0.62);
+  const copyProgress = isMobileCinematic
+    ? progressBetween(heroProgress, 0.08, 0.43)
+    : progressBetween(heroProgress, 0, 0.72);
+  const glowProgress = isMobileCinematic
+    ? Math.sin(Math.PI * progressBetween(heroProgress, 0.1, 0.88))
+    : 0;
+  const handoffProgress = isMobileCinematic
+    ? progressBetween(heroProgress, 0.76, 1)
+    : 0;
+  const heroFade = 1 - copyProgress;
+
+  hero.style.setProperty("--hero-shift", `${heroShift}px`);
+  hero.style.setProperty("--hero-image-opacity", heroFade.toFixed(3));
+  hero.style.setProperty("--hero-progress", heroProgress.toFixed(3));
+  hero.style.setProperty("--hero-copy-progress", copyProgress.toFixed(3));
+  hero.style.setProperty("--hero-glow-progress", glowProgress.toFixed(3));
+  hero.style.setProperty("--hero-handoff-progress", handoffProgress.toFixed(3));
+  mobileLibrary?.style.setProperty("--hero-handoff-progress", handoffProgress.toFixed(3));
+  header?.classList.toggle(
+    "is-cinematic-away",
+    isMobileCinematic && heroProgress > 0.14 && heroProgress < 0.91
+  );
+  syncHeroVideo(heroProgress);
+  syncHeaderSurface(currentScroll);
+}
+
 function syncHeaderSurface(currentScroll = window.scrollY) {
   if (!header || !hero) {
     return;
@@ -362,26 +530,43 @@ function renderStories() {
     return;
   }
 
+  if (isHomePage && !mobileHomeQuery.matches) {
+    grid.replaceChildren();
+    return;
+  }
+
   grid.innerHTML = getDailyStoryOrder()
     .map((story, index) => {
       const featureImage = index === 0 ? story.featureImage || story.image : "";
       const featureImageAlt = index === 0 ? story.featureImageAlt || story.imageAlt : "";
+      const featureImagePosition = index === 0 ? safeImagePosition(story.featureImagePosition) : "";
       const safeImage = safeResourceUrl(featureImage);
+      const imagePositionAttribute = featureImagePosition
+        ? ` style="object-position: ${escapeAttribute(featureImagePosition)}"`
+        : "";
+      const imageLoading = isHomePage
+        ? 'loading="lazy" decoding="async" fetchpriority="low"'
+        : 'loading="eager" decoding="async" fetchpriority="high"';
       const image = safeImage
         ? `<img src="${escapeAttribute(safeImage)}" alt="${escapeAttribute(
             featureImageAlt
-          )}" loading="eager" decoding="async" fetchpriority="high" />`
+          )}"${imagePositionAttribute} ${imageLoading} />`
         : "";
       const imageClass = safeImage ? " image-card" : "";
       const featureClass = index === 0 ? " feature" : "";
-      const filterValues = storyFilterValues(story).join(" ");
+      const revealClass = isHomePage ? " reveal is-visible" : " reveal";
+      const shelf = storyShelf(story);
       const searchText = normalise(storySearchText(story));
       return `
-        <a class="story-card${featureClass}${imageClass} reveal" href="${safeStoryHref(
+        <a class="story-card${featureClass}${imageClass}${revealClass}" href="${safeStoryHref(
           story.id
-        )}" data-story-id="${escapeAttribute(story.id)}" data-theme="${escapeAttribute(story.theme)}" data-filter-values="${escapeAttribute(
-          filterValues
-        )}" data-search="${escapeAttribute(searchText)}">
+        )}" data-story-id="${escapeAttribute(story.id)}" data-theme="${escapeAttribute(
+          story.theme
+        )}" data-story-shelf="${escapeAttribute(shelf)}" data-story-listen="${String(
+          hasNarration(story)
+        )}" data-story-anecdote="${String(isAnecdote(story))}" data-search="${escapeAttribute(
+          searchText
+        )}">
           ${image}
           <div class="story-meta">
             <span>${escapeHtml(story.theme)}</span>
@@ -410,165 +595,65 @@ function applyImageFallbacks() {
   });
 }
 
-function formatTheme(value) {
-  if (value === "anecdotes") {
-    return "Anecdotes";
-  }
-
-  return value.charAt(0).toUpperCase() + value.slice(1);
-}
-
 function renderFilters() {
   if (!filterList) {
     return;
   }
 
-  const filterMap = new Map([["all", "All"]]);
-  const themeCounts = new Map();
+  const shelfCounts = new Map(shelves.map((shelf) => [filterKey(shelf.id), 0]));
+  const listenCount = stories.filter(hasNarration).length;
+  const anecdoteCount = stories.filter(isAnecdote).length;
 
   stories.forEach((story) => {
-    const theme = filterKey(story.theme);
-    const current = themeCounts.get(theme) ?? { label: formatTheme(story.theme), total: 0, anecdotes: 0 };
-    current.total += 1;
-    current.anecdotes += isAnecdote(story) ? 1 : 0;
-    themeCounts.set(theme, current);
+    const shelf = storyShelf(story);
+    shelfCounts.set(shelf, (shelfCounts.get(shelf) ?? 0) + 1);
   });
 
-  themeCounts.forEach((count, theme) => {
-    if (count.total !== count.anecdotes) {
-      filterMap.set(theme, count.label);
-    }
-  });
-  stories.forEach((story) => {
-    (story.collectionTags ?? []).forEach((tag) => {
-      filterMap.set(filterKey(tag), formatTheme(filterKey(tag)));
-    });
-  });
+  const shelfButtons = shelves
+    .map((shelf) => {
+      const id = filterKey(shelf.id);
+      const count = shelfCounts.get(id) ?? 0;
+      return `
+        <button class="filter-shelf" type="button" data-shelf-filter="${escapeAttribute(
+          id
+        )}" aria-pressed="false">
+          <span class="filter-shelf-copy">
+            <strong>${escapeHtml(shelf.label)}</strong>
+            <small>${escapeHtml(shelf.description)}</small>
+          </span>
+          <span class="filter-shelf-count" aria-label="${count} ${
+            count === 1 ? "story" : "stories"
+          }">${count}</span>
+        </button>
+      `;
+    })
+    .join("");
 
-  const allFilter = filterMap.get("all");
-  const anecdotesFilter = filterMap.get("anecdotes");
-  const listenFilter = stories.some(hasNarration) ? "Listen" : null;
-  const themeFilters = Array.from(filterMap.entries()).filter(
-    ([filter]) => filter !== "all" && filter !== "anecdotes"
-  );
-  const visibleThemeFilters = themeFilters.slice(0, 6);
-  const overflowThemeFilters = themeFilters.slice(6);
-  const visibleFilters = [
-    ["all", allFilter],
-    ...(listenFilter ? [["listen", listenFilter]] : []),
-    ...visibleThemeFilters,
-    ...(anecdotesFilter ? [["anecdotes", anecdotesFilter]] : [])
-  ];
-
-  function renderFilterButton([filter, label], options = {}) {
-    const isActive = filter === "all" ? activeFilters.size === 0 : activeFilters.has(filter);
-    const activeClass = isActive ? " is-active" : "";
-    const extraClass = options.className ? ` ${options.className}` : "";
-    const style = options.style ? ` style="${options.style}"` : "";
-    return `<button class="filter${activeClass}${extraClass}" type="button" data-filter="${filter}" aria-pressed="${isActive}"${style}>${label}</button>`;
-  }
-
-  const panelFilters = [
-    ...overflowThemeFilters,
-    ...(anecdotesFilter ? [["anecdotes", anecdotesFilter]] : [])
-  ];
-
-  const overflowHasActiveFilter = panelFilters.some(([filter]) => activeFilters.has(filter));
-  const moreFilters = overflowThemeFilters.length
-    ? `
-      <button class="filter filter-more filter-toggle${overflowHasActiveFilter ? " has-active" : ""}" type="button" data-filter-toggle aria-expanded="${filtersExpanded}" aria-label="Show more filters">
-        <span class="visually-hidden">More filters</span>
+  filterList.innerHTML = `
+    <div class="filter-toolbar" role="group" aria-label="Story formats and qualities">
+      <button class="filter" type="button" data-filter-clear aria-pressed="true">All</button>
+      <button class="filter filter-listen" type="button" data-format-filter="listen" aria-pressed="false">
+        <span>Listen</span><span class="filter-count" aria-hidden="true">${listenCount}</span>
       </button>
-      ${panelFilters
-        .map((entry, index) =>
-          renderFilterButton(entry, {
-            className: `filter-overflow${entry[0] === "anecdotes" ? " filter-anecdotes-overflow" : ""}`,
-            style: `--filter-index: ${index}; --filter-count: ${panelFilters.length + 1};`
-          })
-        )
-        .join("")}
-      <button class="filter filter-more filter-less filter-overflow" type="button" data-filter-collapse aria-label="Hide more filters" style="--filter-index: ${panelFilters.length}; --filter-count: ${panelFilters.length + 1};">
-        <span class="visually-hidden">Fewer filters</span>
+      <button class="filter" type="button" data-format-filter="anecdotes" aria-pressed="false">
+        <span>Anecdotes</span><span class="filter-count" aria-hidden="true">${anecdoteCount}</span>
       </button>
-    `
-    : "";
-
-  filterList.innerHTML = `${visibleFilters
-    .map((entry) =>
-      renderFilterButton(entry, {
-        className: [
-          entry[0] === "listen" ? "filter-listen" : "",
-          entry[0] === "anecdotes" ? "filter-anecdotes-primary" : ""
-        ]
-          .filter(Boolean)
-          .join(" ")
-      })
-    )
-    .join("")}${moreFilters}`;
-  filterList.classList.toggle("has-expanded-filters", filtersExpanded);
+      <button class="filter filter-disclosure" type="button" data-filter-toggle aria-expanded="false" aria-controls="story-quality-filters">
+        <span data-filter-label>Browse qualities</span><span class="filter-chevron" aria-hidden="true"></span>
+      </button>
+    </div>
+    <section class="filter-panel" id="story-quality-filters" aria-label="Story qualities" hidden>
+      <div class="filter-panel-heading">
+        <div>
+          <p class="filter-panel-kicker">Browse by quality</p>
+          <p class="filter-panel-note">Choose one. Combine it with Listen or Anecdotes.</p>
+        </div>
+        <button class="filter-panel-close" type="button" data-filter-collapse aria-label="Close quality filters">Close</button>
+      </div>
+      <div class="filter-shelf-grid">${shelfButtons}</div>
+    </section>
+  `;
   syncFilterControls();
-}
-
-function prefersReducedMotion() {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function measureFilterHeight(nextClasses = []) {
-  if (!filterList) {
-    return 0;
-  }
-
-  const clone = filterList.cloneNode(true);
-  const width = filterList.getBoundingClientRect().width;
-  const transientClasses = [
-    "has-expanded-filters",
-    "is-closing",
-    "is-restoring-anecdotes",
-    "is-resizing"
-  ];
-
-  transientClasses.forEach((className) => clone.classList.remove(className));
-  nextClasses.forEach((className) => clone.classList.add(className));
-  clone.style.cssText = [
-    "position: absolute",
-    "visibility: hidden",
-    "pointer-events: none",
-    "inset: 0 auto auto -9999px",
-    `width: ${width}px`,
-    "height: auto",
-    "overflow: visible"
-  ].join(";");
-  document.body.append(clone);
-  const height = clone.getBoundingClientRect().height;
-  clone.remove();
-  return height;
-}
-
-function prepareFilterResize() {
-  if (!filterList || prefersReducedMotion()) {
-    return false;
-  }
-
-  window.clearTimeout(filterResizeTimer);
-  filterList.classList.add("is-resizing");
-  filterList.style.height = `${filterList.getBoundingClientRect().height}px`;
-  filterList.getBoundingClientRect();
-  return true;
-}
-
-function finishFilterResize(targetHeight, shouldAnimate) {
-  if (!filterList || !shouldAnimate) {
-    return;
-  }
-
-  window.requestAnimationFrame(() => {
-    filterList.style.height = `${targetHeight}px`;
-  });
-
-  filterResizeTimer = window.setTimeout(() => {
-    filterList.classList.remove("is-resizing");
-    filterList.style.height = "";
-  }, FILTER_MENU_CLOSE_MS + FILTER_HEIGHT_BUFFER_MS);
 }
 
 function expandFilterMenu() {
@@ -576,44 +661,29 @@ function expandFilterMenu() {
     return;
   }
 
-  window.clearTimeout(filterCollapseTimer);
-  const shouldAnimate = prepareFilterResize();
   filtersExpanded = true;
-  filterList.classList.add("has-expanded-filters");
-  filterList.classList.remove("is-closing", "is-restoring-anecdotes");
-  filterList.querySelector("[data-filter-toggle]")?.setAttribute("aria-expanded", "true");
-  finishFilterResize(measureFilterHeight(["has-expanded-filters"]), shouldAnimate);
+  const panel = filterList.querySelector(".filter-panel");
+  panel?.removeAttribute("hidden");
+  window.requestAnimationFrame(() => panel?.classList.add("is-open"));
+  syncFilterControls();
 }
 
 function collapseFilterMenu() {
-  if (!filterList || filterList.classList.contains("is-closing")) {
+  if (!filterList || !filtersExpanded) {
     return;
   }
 
-  if (!filtersExpanded) {
-    return;
-  }
-
-  window.clearTimeout(filterCollapseTimer);
-  const reduceMotion = prefersReducedMotion();
-  const shouldAnimate = prepareFilterResize();
-  const collapsedHeight = measureFilterHeight();
   filtersExpanded = false;
-  filterList.classList.remove("has-expanded-filters");
-  filterList.classList.add("is-closing", "is-restoring-anecdotes");
-  filterList.querySelector("[data-filter-toggle]")?.setAttribute("aria-expanded", "false");
-  finishFilterResize(collapsedHeight, shouldAnimate);
-
-  filterCollapseTimer = window.setTimeout(() => {
-    filterList.classList.remove("is-closing", "is-restoring-anecdotes");
-  }, reduceMotion ? 0 : FILTER_MENU_CLOSE_MS);
+  const panel = filterList.querySelector(".filter-panel");
+  panel?.classList.remove("is-open");
+  panel?.setAttribute("hidden", "");
+  syncFilterControls();
 }
 
 function updateStories() {
-  const cards = Array.from(document.querySelectorAll(".story-card[data-filter-values]"));
+  const cards = Array.from(document.querySelectorAll(".story-card[data-story-shelf]"));
   const cleanSearch = sanitiseSearchInput(searchInput?.value);
   const query = normalise(cleanSearch).trim();
-  const selectedFilters = Array.from(activeFilters);
   let visibleCount = 0;
 
   if (searchInput && searchInput.value !== cleanSearch) {
@@ -621,11 +691,13 @@ function updateStories() {
   }
 
   cards.forEach((card) => {
-    const filterValues = (card.dataset.filterValues ?? "").split(/\s+/);
-    const matchesFilter =
-      selectedFilters.length === 0 || selectedFilters.some((filter) => filterValues.includes(filter));
+    const matchesShelf = !activeShelf || card.dataset.storyShelf === activeShelf;
+    const matchesListen =
+      !activeFormatFilters.has("listen") || card.dataset.storyListen === "true";
+    const matchesAnecdotes =
+      !activeFormatFilters.has("anecdotes") || card.dataset.storyAnecdote === "true";
     const matchesSearch = !query || (card.dataset.search ?? normalise(card.textContent)).includes(query);
-    const isVisible = matchesFilter && matchesSearch;
+    const isVisible = matchesShelf && matchesListen && matchesAnecdotes && matchesSearch;
 
     card.classList.toggle("is-hidden", !isVisible);
     if (isVisible) {
@@ -639,21 +711,106 @@ function updateStories() {
 }
 
 function syncFilterControls() {
-  const hasActiveFilters = activeFilters.size > 0;
+  if (!filterList) {
+    return;
+  }
 
-  Array.from(document.querySelectorAll("[data-filter]")).forEach((item) => {
-    const filter = item.dataset.filter ?? "all";
-    const isActive = filter === "all" ? !hasActiveFilters : activeFilters.has(filter);
+  const hasActiveFilters = Boolean(activeShelf || activeFormatFilters.size);
+  const allFilter = filterList.querySelector("[data-filter-clear]");
+  allFilter?.classList.toggle("is-active", !hasActiveFilters);
+  allFilter?.setAttribute("aria-pressed", String(!hasActiveFilters));
+
+  Array.from(filterList.querySelectorAll("[data-format-filter]")).forEach((item) => {
+    const isActive = activeFormatFilters.has(item.dataset.formatFilter ?? "");
     item.classList.toggle("is-active", isActive);
     item.setAttribute("aria-pressed", String(isActive));
   });
 
-  const overflowHasActiveFilter = Array.from(document.querySelectorAll(".filter-overflow[data-filter]")).some(
-    (item) => activeFilters.has(item.dataset.filter ?? "")
-  );
-  const filterToggle = document.querySelector("[data-filter-toggle]");
-  filterToggle?.classList.toggle("has-active", overflowHasActiveFilter);
+  Array.from(filterList.querySelectorAll("[data-shelf-filter]")).forEach((item) => {
+    const isActive = item.dataset.shelfFilter === activeShelf;
+    item.classList.toggle("is-active", isActive);
+    item.setAttribute("aria-pressed", String(isActive));
+  });
+
+  const filterToggle = filterList.querySelector("[data-filter-toggle]");
+  const selectedShelf = shelfById.get(activeShelf);
+  filterToggle?.classList.toggle("has-active", Boolean(selectedShelf));
   filterToggle?.setAttribute("aria-expanded", String(filtersExpanded));
+  const filterLabel = filterToggle?.querySelector("[data-filter-label]");
+
+  if (filterLabel) {
+    filterLabel.textContent = selectedShelf?.label ?? "Browse qualities";
+  }
+}
+
+function initialiseLibraryState() {
+  if (!filterList) {
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedShelf = filterKey(params.get("shelf"));
+
+  if (shelfById.has(requestedShelf)) {
+    activeShelf = requestedShelf;
+  }
+
+  if (params.get("listen") === "1") {
+    activeFormatFilters.add("listen");
+  }
+
+  if (filterKey(params.get("collection")) === "anecdotes") {
+    activeFormatFilters.add("anecdotes");
+  }
+
+  const initialSearch = sanitiseSearchInput(params.get("tag") ?? params.get("q"));
+
+  if (searchInput && initialSearch) {
+    searchInput.value = initialSearch;
+  }
+}
+
+function syncLibraryUrl(searchChanged = false) {
+  if (!filterList) {
+    return;
+  }
+
+  const url = new URL(window.location.href);
+
+  if (activeShelf) {
+    url.searchParams.set("shelf", activeShelf);
+  } else {
+    url.searchParams.delete("shelf");
+  }
+
+  if (activeFormatFilters.has("listen")) {
+    url.searchParams.set("listen", "1");
+  } else {
+    url.searchParams.delete("listen");
+  }
+
+  if (activeFormatFilters.has("anecdotes")) {
+    url.searchParams.set("collection", "anecdotes");
+  } else {
+    url.searchParams.delete("collection");
+  }
+
+  const cleanSearch = sanitiseSearchInput(searchInput?.value);
+
+  if (cleanSearch) {
+    if (searchChanged || !url.searchParams.has("tag")) {
+      url.searchParams.set("q", cleanSearch);
+      url.searchParams.delete("tag");
+    } else {
+      url.searchParams.set("tag", cleanSearch);
+      url.searchParams.delete("q");
+    }
+  } else {
+    url.searchParams.delete("q");
+    url.searchParams.delete("tag");
+  }
+
+  window.history.replaceState(window.history.state, "", url);
 }
 
 function observeReveals() {
@@ -842,8 +999,10 @@ function initialiseHomeSectionScroll() {
 }
 
 filterList?.addEventListener("click", (event) => {
-  const filter = event.target.closest("[data-filter]");
   const toggleControl = event.target.closest("[data-filter-toggle]");
+  const clearControl = event.target.closest("[data-filter-clear]");
+  const formatControl = event.target.closest("[data-format-filter]");
+  const shelfControl = event.target.closest("[data-shelf-filter]");
 
   if (event.target.closest("[data-filter-collapse]")) {
     event.preventDefault();
@@ -861,25 +1020,122 @@ filterList?.addEventListener("click", (event) => {
     return;
   }
 
-  if (filter) {
-    const selectedFilter = filter.dataset.filter ?? "all";
+  if (clearControl) {
+    activeShelf = "";
+    activeFormatFilters.clear();
+  } else if (formatControl) {
+    const format = formatControl.dataset.formatFilter ?? "";
 
-    if (selectedFilter === "all") {
-      activeFilters.clear();
-    } else if (activeFilters.has(selectedFilter)) {
-      activeFilters.delete(selectedFilter);
+    if (activeFormatFilters.has(format)) {
+      activeFormatFilters.delete(format);
     } else {
-      activeFilters.add(selectedFilter);
+      activeFormatFilters.add(format);
     }
-
-    syncFilterControls();
-    updateStories();
+  } else if (shelfControl) {
+    const shelf = shelfControl.dataset.shelfFilter ?? "";
+    activeShelf = activeShelf === shelf ? "" : shelf;
+  } else {
+    return;
   }
+
+  syncFilterControls();
+  updateStories();
+  syncLibraryUrl();
+});
+
+filterList?.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !filtersExpanded) {
+    return;
+  }
+
+  event.preventDefault();
+  collapseFilterMenu();
+  filterList.querySelector("[data-filter-toggle]")?.focus();
 });
 
 searchInput?.addEventListener("input", () => {
   searchInput.value = sanitiseSearchInput(searchInput.value);
   updateStories();
+  syncLibraryUrl(true);
+});
+
+if (heroVideo) {
+  heroVideo.addEventListener("loadedmetadata", () => {
+    heroVideoDuration = Number.isFinite(heroVideo.duration) ? heroVideo.duration : 0;
+
+    if (heroVideoActive && heroVideoDuration) {
+      heroVideoSeekReady = true;
+      heroVideoRenderedTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : 0;
+      syncHeroVideo(getHeroProgress(), true);
+    }
+  });
+
+  heroVideo.addEventListener("loadeddata", () => {
+    if (!heroVideoActive) {
+      return;
+    }
+
+    heroVideoSeekReady = true;
+    heroMedia?.classList.add("has-scroll-video");
+    heroVideoRenderedTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : 0;
+    heroVideoTargetTime = heroVideoRenderedTime;
+    lastHeroVideoTime = heroVideoRenderedTime;
+    syncHeroVideo(getHeroProgress(), true);
+  });
+
+  const markHeroVideoReady = () => {
+    if (!heroVideoActive) {
+      return;
+    }
+
+    const wasReady = heroVideoSeekReady;
+    heroVideoSeekReady = true;
+    heroMedia?.classList.add("has-scroll-video");
+    heroVideoRenderedTime = Number.isFinite(heroVideo.currentTime) ? heroVideo.currentTime : 0;
+    syncHeroVideo(getHeroProgress(), !wasReady);
+  };
+
+  heroVideo.addEventListener("canplaythrough", markHeroVideoReady);
+  heroVideo.addEventListener("progress", () => {
+    if (!heroVideoDuration || !heroVideo.buffered.length) {
+      return;
+    }
+
+    const bufferedEnd = heroVideo.buffered.end(heroVideo.buffered.length - 1);
+
+    if (bufferedEnd >= heroVideoDuration - 0.12) {
+      markHeroVideoReady();
+    }
+  });
+
+  heroVideo.addEventListener("seeked", () => {
+    if (heroVideoActive) {
+      heroMedia?.classList.add("has-scroll-video");
+    }
+  });
+
+  heroVideo.addEventListener("error", () => {
+    heroVideoActive = false;
+    heroVideoSeekReady = false;
+    heroMedia?.classList.remove("has-scroll-video");
+  });
+}
+
+mobileHomeQuery.addEventListener?.("change", () => {
+  if (!isHomePage) {
+    return;
+  }
+
+  renderStories();
+  applyImageFallbacks();
+  updateStories();
+  setHeroVideoMode();
+  updateHeroMotion();
+});
+
+reducedMotionQuery.addEventListener?.("change", () => {
+  setHeroVideoMode();
+  updateHeroMotion();
 });
 
 themeToggles.forEach((toggle) => {
@@ -934,7 +1190,12 @@ window.addEventListener(
           ? scrollDirectionDistance + scrollDelta
           : scrollDelta;
 
-        if (programmaticScroll) {
+        const isMobileCinematic = isHomePage && mobileHomeQuery.matches;
+
+        if (isMobileCinematic) {
+          header?.classList.remove("is-hidden");
+          scrollDirectionDistance = 0;
+        } else if (programmaticScroll) {
           header?.classList.remove("is-hidden");
           scrollDirectionDistance = 0;
         } else if (currentScroll < 80) {
@@ -948,12 +1209,7 @@ window.addEventListener(
           scrollDirectionDistance = 0;
         }
 
-        const heroShift = Math.min(currentScroll, 520);
-        const heroFade = Math.max(0, 1 - currentScroll / 620);
-
-        hero?.style.setProperty("--hero-shift", `${heroShift}px`);
-        hero?.style.setProperty("--hero-image-opacity", heroFade.toFixed(3));
-        syncHeaderSurface(currentScroll);
+        updateHeroMotion(currentScroll);
         lastScroll = Math.max(currentScroll, 0);
         ticking = false;
       });
@@ -963,7 +1219,17 @@ window.addEventListener(
   { passive: true }
 );
 
+window.addEventListener(
+  "resize",
+  () => {
+    setHeroVideoMode();
+    updateHeroMotion();
+  },
+  { passive: true }
+);
+
 initialiseTheme();
+initialiseLibraryState();
 renderStories();
 applyImageFallbacks();
 renderFilters();
@@ -972,7 +1238,8 @@ initialiseFloatingGallery();
 initialiseScrollBoard();
 initialiseHomeSectionScroll();
 applyBahaiDate();
-syncHeaderSurface();
+setHeroVideoMode();
+updateHeroMotion();
 updateStories();
 
 if (window.location.hash === "#stories") {
