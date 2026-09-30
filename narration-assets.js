@@ -143,7 +143,7 @@ window.ClaraNarrationAssets["never-did-she-utter-one-word-of-complaint"] = {
   ],
   chunks: [
     {
-      src: "./audio/never-did-she-utter-one-word-of-complaint/never-did-she-utter-one-word-of-complaint.mp3",
+      src: "./audio/never-did-she-utter-one-word-of-complaint/ElevenLabs_Mother_of_Consolation.mp3",
       start: 0
     }
   ],
@@ -174,6 +174,96 @@ window.ClaraNarrationAssets["that-star-nabil-will-shine-forever"] = {
   chunks: [
     {
       src: "./audio/that-star-nabil-will-shine-forever/that-star-nabil-will-shine-forever.mp3",
+      start: 0
+    }
+  ],
+  cues: []
+};
+
+window.ClaraNarrationAssets["no-bride-had-ever-chanted-so"] = {
+  title: "The Prison-Room Wedding.",
+  artist: "Clara's Stories",
+  album: "Munirih Khanum: Memoirs and Letters",
+  artwork: [
+    {
+      src: "./icons/icon-512.png",
+      sizes: "512x512",
+      type: "image/png"
+    },
+    {
+      src: "./icons/icon-192.png",
+      sizes: "192x192",
+      type: "image/png"
+    },
+    {
+      src: "./icons/apple-touch-icon.png",
+      sizes: "180x180",
+      type: "image/png"
+    }
+  ],
+  chunks: [
+    {
+      src: "./audio/no-bride-had-ever-chanted-so/no-bride-had-ever-chanted-so.mp3",
+      start: 0
+    }
+  ],
+  cues: []
+};
+
+window.ClaraNarrationAssets["when-you-brought-her-your-darkness"] = {
+  title: "The Heart of the House.",
+  artist: "Clara's Stories",
+  album: "Bahá’í World",
+  artwork: [
+    {
+      src: "./icons/icon-512.png",
+      sizes: "512x512",
+      type: "image/png"
+    },
+    {
+      src: "./icons/icon-192.png",
+      sizes: "192x192",
+      type: "image/png"
+    },
+    {
+      src: "./icons/apple-touch-icon.png",
+      sizes: "180x180",
+      type: "image/png"
+    }
+  ],
+  chunks: [
+    {
+      src: "./audio/when-you-brought-her-your-darkness/ElevenLabs_Marjorie_Morten_tribute.mp3",
+      start: 0
+    }
+  ],
+  cues: []
+};
+
+window.ClaraNarrationAssets["awake-for-the-morning-light-has-broken"] = {
+  title: "The Night in Shíráz.",
+  artist: "Clara's Stories",
+  album: "The Dawn-Breakers",
+  artwork: [
+    {
+      src: "./icons/icon-512.png",
+      sizes: "512x512",
+      type: "image/png"
+    },
+    {
+      src: "./icons/icon-192.png",
+      sizes: "192x192",
+      type: "image/png"
+    },
+    {
+      src: "./icons/apple-touch-icon.png",
+      sizes: "180x180",
+      type: "image/png"
+    }
+  ],
+  chunks: [
+    {
+      src: "./audio/awake-for-the-morning-light-has-broken/ElevenLabs_The_night_in_Shiraz.mp3",
       start: 0
     }
   ],
