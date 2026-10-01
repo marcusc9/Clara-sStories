@@ -1,4 +1,4 @@
-const VERSION = "20260816-cinematic-scroll-v6";
+const VERSION = "20260930-listen-stories-v1";
 const STATIC_CACHE = `clara-static-${VERSION}`;
 const CONTENT_CACHE = `clara-content-${VERSION}`;
 const RUNTIME_CACHE = `clara-runtime-${VERSION}`;
@@ -12,14 +12,14 @@ const APP_SHELL = [
   "./stories.html",
   "./about.html",
   "./story.html",
-  "./styles.css?v=20260816-cinematic-scroll-v6",
-  "./taxonomy.js?v=20260816-cinematic-scroll-v6",
-  "./stories.js?v=20260816-cinematic-scroll-v6",
-  "./narration-assets.js?v=20260816-cinematic-scroll-v6",
-  "./install.js?v=20260816-cinematic-scroll-v6",
-  "./script.js?v=20260816-cinematic-scroll-v6",
-  "./story.js?v=20260816-cinematic-scroll-v6",
-  "./about.js?v=20260816-cinematic-scroll-v6",
+  "./styles.css?v=20260930-listen-stories-v1",
+  "./taxonomy.js?v=20260930-listen-stories-v1",
+  "./stories.js?v=20260930-listen-stories-v1",
+  "./narration-assets.js?v=20260930-listen-stories-v1",
+  "./install.js?v=20260930-listen-stories-v1",
+  "./script.js?v=20260930-listen-stories-v1",
+  "./story.js?v=20260930-listen-stories-v1",
+  "./about.js?v=20260930-listen-stories-v1",
   "./assets/fonts/inter-latin.woff2",
   "./assets/fonts/inter-latin-ext.woff2",
   "./assets/fonts/newsreader-latin.woff2",
@@ -67,7 +67,7 @@ function offlineStoryFallbackResponse() {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Story not saved offline | Clara's Stories</title>
     <meta name="theme-color" content="#fbf6e8" />
-    <link rel="stylesheet" href="./styles.css?v=20260816-cinematic-scroll-v6" />
+    <link rel="stylesheet" href="./styles.css?v=20260930-listen-stories-v1" />
   </head>
   <body class="story-shell">
     <main class="story-page">
